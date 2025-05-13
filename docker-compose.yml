@@ -1,0 +1,52 @@
+services:
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: frontend.dockerfile
+    ports:
+      - "5173:5173"
+    networks:
+      - tcm_net
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+
+  backend:
+    container_name: backend
+    build:
+      context: ./backend
+      dockerfile: backend.dockerfile
+    env_file:
+      - ./backend/.env
+    ports:
+      - "3000:3000"
+    networks:
+      - tcm_net
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      - db
+
+  db:
+    container_name: tcm
+    image: postgres:14
+    restart: always
+    ports:
+      - "5432:5432"
+    networks:
+      - tcm_net
+    env_file:
+      - ./backend/.env
+    volumes:
+      - pgdata:/data/tcm
+
+networks:
+  tcm_net:
+    driver: bridge
+
+volumes:
+  pgdata: {}
