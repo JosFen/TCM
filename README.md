@@ -1,0 +1,3 @@
+- [ER Diagram](https://app.eraser.io/workspace/irLYV7LIsEDyhWA05VLE)
+- [Project Management Kanban](https://rosadolab.atlassian.net/jira/software/projects/BD/boards/1?selectedIssue=BD-1)
+- [Project Files](https://ubcca-my.sharepoint.com/:f:/r/personal/christiaan_spangenberg_ubc_ca/Documents/Project%20Orientation%20Files%20Folder-%20Worklearn?csf=1&web=1&e=PNNfJE)
