@@ -1,112 +1,130 @@
-import express, { Request, RequestHandler, Response } from "express"
-import "dotenv/config"
-import cors from "cors"
-import { corsOptions } from "./constants/config"
-import { PrismaClient } from './generated/prisma'
+import express, { Request, Response } from "express";
+import "dotenv/config";
+import cors from "cors";
+import { corsOptions } from "./constants/config";
+import { PrismaClient } from './generated/prisma';
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
-const app = express()
-const PORT = process.env.PORT || 3000
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors(corsOptions));
+
+// Type definitions for request bodies
+interface DeleteUserRequest {
+    username: string;
+}
+
+interface UpdatePasswordRequest {
+    username: string;
+    newPassword: string;
+}
+
+// Helper type for async route handlers
+type AsyncRouteHandler = (req: Request, res: Response) => Promise<void>;
 
 // for testing setup:
 app.get("/", (req: Request, res: Response) => {
-  res.json({
-    message: "Hello, TypeScript with Express! Updated!",
-    client_url: "http://frontend:5173",
-  })
-})
+    res.json({
+        message: "Hello, TypeScript with Express! Updated!",
+        client_url: "http://frontend:5173",
+    });
+});
 
-app.post("/register", async (req: Request, res: Response) => {
-  const {  username, password } = req.body
+app.post("/register", (async (req: Request, res: Response) => {
+    const { username, password } = req.body;
 
-  const user = await prisma.user.create({
-    data: {
-      username,
-      password,
-    },
-    select: {
-      id: true,
-      username: true,
-      createdAt: true,
-      updatedAt: true,
-    },
-  })
-
-  // Return the created user data in the response
-  res.json({
-    message: "User created successfully",
-    user,  // Include the created user data in the response
-  })
-})
-
-// delete endpoint:
-app.delete("/delete", async (req: Request, res: Response) => {
-  const { username } = req.body;
-
-  if (!username) {
-    return res.status(400).json({ message: "Username is required" });
-  }
-
-  try {
-    const deletedUser = await prisma.user.delete({
-      where: { username },
+    const user = await prisma.user.create({
+        data: {
+            username,
+            password,
+        },
+        select: {
+            id: true,
+            username: true,
+            createdAt: true,
+            updatedAt: true,
+        },
     });
 
     res.json({
-      message: "User deleted successfully",
-      deletedUser,
+        message: "User created successfully",
+        user,
     });
-  } catch (error: any) {
-    console.error('Error during user deletion:', error);
-    res.status(404).json({
-      message: "User not found",
-      error: error.message,
-    });
-  }
-});
+}) as AsyncRouteHandler);
 
+// Delete user by username
+app.delete('/delete', (async (req: Request, res: Response) => {
+    const { username } = req.body as DeleteUserRequest;
 
-// const deleteUserHandler: RequestHandler = async (req: Request, res: Response) => {
-//   const { id } = req.body;
+    if (!username) {
+        res.status(400).json({ error: 'Username is required' });
+        return;
+    }
 
-//   if (!id) {
-//     return res.status(400).json({ message: "ID is required" });
-//   }
+    try {
+        const deletedUser = await prisma.user.delete({
+            where: { username }
+        });
 
-//   try {
-//     const deletedUser = await prisma.user.delete({
-//       where: { id },
-//     });
+        res.status(200).json({
+            message: 'User deleted successfully',
+            deletedUser
+        });
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            if (error.message.includes('Record to delete does not exist')) {
+                res.status(404).json({ error: 'User not found' });
+                return;
+            }
+            res.status(500).json({ error: error.message });
+        } else {
+            res.status(500).json({ error: 'An unknown error occurred' });
+        }
+    }
+}) as AsyncRouteHandler);
 
-//     return res.json({
-//       message: "User deleted successfully",
-//       deletedUser,
-//     });
-//   } catch (error: any) {
-//     console.error("Error during user deletion:", error);
-//     return res.status(404).json({
-//       message: "User not found",
-//       error: error.message,
-//     });
-//   }
-// };
+// Update user password
+app.patch('/update-password', (async (req: Request, res: Response) => {
+    const { username, newPassword } = req.body as UpdatePasswordRequest;
 
-// app.delete("/delete", deleteUserHandler);
+    if (!username || !newPassword) {
+        res.status(400).json({ 
+            error: 'Both username and newPassword are required' 
+        });
+        return;
+    }
 
+    try {
+        const updatedUser = await prisma.user.update({
+            where: { username },
+            data: { password: newPassword }
+        });
 
+        res.status(200).json({
+            message: 'Password updated successfully',
+            updatedUser: {
+                id: updatedUser.id,
+                username: updatedUser.username,
+                createdAt: updatedUser.createdAt
+            }
+        });
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            if (error.message.includes('Record to update not found')) {
+                res.status(404).json({ error: 'User not found' });
+                return;
+            }
+            res.status(500).json({ error: error.message });
+        } else {
+            res.status(500).json({ error: 'An unknown error occurred' });
+        }
+    }
+}) as AsyncRouteHandler);
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`)
-})
-
-
-// app.listen(PORT, () => {
-//   console.log(`Server is listening on port ${PORT}`);
-// }).on('error', (err) => {
-//   console.error('Error starting server:', err);
-// });
+    console.log(`Server is running on port ${PORT}`);
+});
