@@ -25,253 +25,281 @@ model User {
   @@map("users")
 }
 
-// // TCM Schema:
+// // TCM Schema: - TO BE RECONCILED!
 
-// Enums
+// Enums: 
+
+// List of 51 posssible values? Make autocomplete text/string instead?
+// enum GrowthHabit {  
+//   Herbaceous
+//   WoodyVine
+//   Shrub
+//   Tree
+//   Grass
+//   Vine
+// }
+
 enum Lifecycle {
-  Annuals
-  Biennials
-  Perennials
-}
-
-enum GrowthHabit {
-  Herb
-  Shrub
-  Tree
-  Vine
-  Grass
+  ANNUAL
+  BIENNIAL
+  PERENNIAL
 }
 
 enum DeciduousType {
-  Deciduous
-  Evergreen
+  DECIDUOUS
+  EVERGREEN
 }
 
 enum ReproductiveSystem {
-  Monoecious
-  Dioecious
-  Other
+  MONOECIOUS
+  DIOECIOUS
+  OTHER
 }
 
-enum MonthSeason {
-  January
-  February
-  March
-  April
-  May
-  June
-  July
-  August
-  September
-  October
-  November
-  December
-  Spring
-  Summer
-  Autumn
-  Winter
+enum Month {
+  JANUARY
+  FEBRUARY
+  MARCH
+  APRIL
+  MAY
+  JUNE
+  JULY
+  AUGUST
+  SEPTEMBER
+  OCTOBER
+  NOVEMBER
+  DECEMBER
+}
+
+enum Season {
+  SPRING
+  SUMMER
+  AUTUMN
+  WINTER
 }
 
 enum Taste {
-  Sweet
-  Bitter
-  Sour
-  Salty
-  Pungent
-  Bland
+  SWEET
+  BITTER
+  SOUR
+  SALTY
+  PUNGENT
+  BLAND
 }
 
 enum EnergyFlow {
-  Warm
-  Cool
-  Hot
-  Cold
-  Neutral
+  WARM
+  COOL
+  HOT
+  COLD
+  NEUTRAL
 }
 
-enum Meridians {
-  Heart
-  Liver
-  Spleen
-  Lung
-  Kidney
-  Stomach
-  LargeIntestine
-  SmallIntestine
-  Bladder
-  Gallbladder
-  Pericardium
-  TripleBurner
+enum Meridian {
+  HEART
+  LIVER
+  SPLEEN
+  LUNG
+  KIDNEY
+  STOMACH
+  LARGE_INTESTINE
+  SMALL_INTESTINE
+  BLADDER
+  GALLBLADDER
+  PERICARDIUM
+  TRIPLE_BURNER
 }
 
 enum GlobalConservationStatus {
-  LeastConcern
-  NearThreatened
-  Vulnerable
-  Endangered
-  CriticallyEndangered
-  Extinct
+  LEAST_CONCERN
+  NEAR_THREATENED
+  VULNERABLE
+  ENDANGERED
+  CRITICALLY_ENDANGERED
+  EXTINCT
 }
 
 enum ProtectedStatus {
-  NationalProtected
-  ProvincialProtected
-  Unprotected
+  NATIONAL_PROTECTED
+  PROVINCIAL_PROTECTED
+  UNPROTECTED
 }
 
 enum PlantPartUsed {
-  Leaf
-  Root
-  Flower
-  Stem
-  Bark
-  Seed
-  WholePlant
-  Fruit
-  Rhizome
+  LEAF
+  ROOT
+  FLOWER
+  STEM
+  BARK
+  SEED
+  WHOLE_PLANT
+  FRUIT
+  RHIZOME
 }
 
 enum HarvestingPractice {
-  Manual
-  Mechanical
-  Sustainable
-  NonSustainable
+  MANUAL
+  MECHANICAL
+  SUSTAINABLE
+  NON_SUSTAINABLE
 }
 
-// Models
+// Entity Models: with @map and @@map for names in DBMS:
+
 model PlantTaxonomy {
-  id        Int    @id @default(autoincrement())
-  class     String
-  family    String
-  vascular  Boolean
+  id        Int                 @id @default(autoincrement()) @map("id")
+  class     String              @map("class")
+  family    String              @map("family")
+  vascular  Boolean             @map("vascular")
   plants    PlantNomenclature[]
+
+  @@map("plant_taxonomy")
 }
 
 model PlantNomenclature {
-  internalId           Int                @id @default(autoincrement())
-  plantScientificName  String             @unique
-  taxonomyId           Int
-  plantCommonName      String[]
-  plantPinyin          String             @unique
-  plantChineseName     String             @unique
-  botanicalGardenList  Int[]
+  internalId           Int                        @id @default(autoincrement()) @map("internal_id")
+  plantScientificName  String                     @unique @map("scientific_name")
+  taxonomyId           Int                        @map("taxonomy_id")
+  plantCommonName      String[]                   @map("common_names")
+  plantPinyin          String                     @unique @map("pinyin")
+  plantChineseName     String                     @unique @map("chinese_name")
+  botanicalGardenList  Int[]                      @map("botanical_garden_ids")
 
-  taxonomy             PlantTaxonomy      @relation(fields: [taxonomyId], references: [id])
+  taxonomy             PlantTaxonomy              @relation(fields: [taxonomyId], references: [id])
   synonyms             PlantSynonym[]
   morphologies         PlantMorphology[]
-  ecologyDistributions PlantEcologyDistribution[]
+  ecologyDistributions PlantEcologyDistribution[] 
   conservation         PlantConservation?
-  herbalDrugs          HerbalDrugBackground[]
-  ethnobotanies        Ethnobotany[]
+  herbalDrugs          HerbalDrugBackground[]    
+  ethnobotanies        Ethnobotany[]              
+
+  @@map("plant_nomenclature")
 }
 
 model PlantSynonym {
-  id      Int    @id @default(autoincrement())
-  plantId Int
-  name    String
+  id      Int               @id @default(autoincrement()) @map("id")
+  plantId Int               @map("plant_id")
+  name    String            @map("name")
 
   plant   PlantNomenclature @relation(fields: [plantId], references: [internalId])
+
+  @@map("plant_synonym")
 }
 
 model PlantMorphology {
-  id                 Int          @id @default(autoincrement())
-  plantId            Int
-  lifecycle          Lifecycle
-  terrestrial        Boolean
-  growthHabit        GrowthHabit
-  deciduous          DeciduousType?
-  reproductiveSystem ReproductiveSystem
-  floweringPeriod    MonthSeason[]
-  fruitingPeriod     MonthSeason[]
+  id                 Int               @id @default(autoincrement()) @map("id")
+  plantId            Int               @map("plant_id")
+  lifecycle          Lifecycle         @map("lifecycle")
+  terrestrial        Boolean           @map("terrestrial")
+  growthHabit        String            @map("growth_habit")
+  deciduous          DeciduousType?    @map("deciduous")
+  reproductiveSystem ReproductiveSystem @map("reproductive_system")
+  floweringPeriod    Month[]           @map("flowering_period")
+  fruitingPeriod     Month[]           @map("fruiting_period")
 
   plant              PlantNomenclature @relation(fields: [plantId], references: [internalId])
+
+  @@map("plant_morphology")
 }
 
 model PlantEcologyDistribution {
-  id           Int      @id @default(autoincrement())
-  plantId      Int
-  habitat      String   @unique
-  plantOrigin  String[]
-  globalRange  String[]
-  endemic      Boolean
-  chinaRange   String[]
+  id           Int               @id @default(autoincrement()) @map("id")
+  plantId      Int               @map("plant_id")
+  habitat      String            @unique @map("habitat")
+  plantOrigin  String[]          @map("plant_origins")
+  globalRange  String[]          @map("global_range")
+  endemic      Boolean           @map("endemic")
+  chinaRange   String[]          @map("china_range")
 
   plant        PlantNomenclature @relation(fields: [plantId], references: [internalId])
+
+  @@map("plant_ecology_distribution")
 }
 
 model PlantConservation {
-  id                      Int      @id @default(autoincrement())
-  plantId                 Int      @unique
-  globalConservationStatus GlobalConservationStatus
-  chinaConservationStatus String
-  remarks                 String?
-  protectedStatus         ProtectedStatus
-  invasiveStatus          Boolean
-  invasiveRange           String[]
+  id                      Int                     @id @default(autoincrement()) @map("id")
+  plantId                 Int                     @unique @map("plant_id")
+  globalConservationStatus GlobalConservationStatus @map("global_status")
+  chinaConservationStatus String                  @map("china_status")
+  remarks                 String?                 @map("remarks")
+  protectedStatus         ProtectedStatus          @map("protected_status")
+  invasiveStatus          Boolean                  @map("invasive")
+  invasiveRange           String[]                 @map("invasive_range")
 
-  plant                   PlantNomenclature @relation(fields: [plantId], references: [internalId])
+  plant                   PlantNomenclature        @relation(fields: [plantId], references: [internalId])
+
+  @@map("plant_conservation")
 }
 
 model BotanicalGardenList {
-  id                  Int    @id @default(autoincrement())
-  botanicalGardenName String
+  id                  Int    @id @default(autoincrement()) @map("id")
+  botanicalGardenName String @map("name")
+
+  @@map("botanical_garden")
 }
 
 model MedicinalProperties {
-  id                       Int      @id @default(autoincrement())
-  pharmaceuticalName       String   @unique
-  herbalDrugPinyin         String   @unique
-  taste                    Taste?
-  energyFlow               EnergyFlow?
-  meridians                Meridians[]
-  actions                  String?
-  pharmacologicalProperties String[]
-  indications              String?
-  toxicity                 String?
-  secondaryMetabolites     String[]
+  id                         Int      @id @default(autoincrement()) @map("id")
+  pharmaceuticalName         String   @unique @map("pharmaceutical_name")
+  herbalDrugPinyin           String   @unique @map("pinyin")
+  taste                      Taste?   @map("taste")
+  energyFlow                 EnergyFlow? @map("energy_flow")
+  meridians                  Meridian[] @map("meridians")
+  actions                    String?  @map("actions")
+  pharmacologicalProperties  String[] @map("pharmacological_properties")
+  indications                String?  @map("indications")
+  toxicity                   String?  @map("toxicity")
+  secondaryMetabolites       String[] @map("secondary_metabolites")
 
-  herbalDrugs              HerbalDrugBackground[]
+  herbalDrugs                HerbalDrugBackground[] 
+
+  @@map("medicinal_properties")
 }
 
 model HerbalDrugBackground {
-  id                   Int       @id @default(autoincrement())
-  plantId              Int
-  medicinalPropertyId  Int
-  herbalDrugPinyin     String
-  plantPartUsed        PlantPartUsed[]
-  plantPartDesc        String?
-  officialStatus       Boolean
-  harvestingTime       MonthSeason[]
-  primaryProcessing    String?
-  secondaryProcessing  String?
-  medicinalMaterialImage String?
+  id                    Int       @id @default(autoincrement()) @map("id")
+  plantId               Int       @map("plant_id")
+  medicinalPropertyId   Int       @map("medicinal_property_id")
+  herbalDrugPinyin      String    @map("pinyin")
+  plantPartUsed         PlantPartUsed[] @map("parts_used")
+  plantPartDesc         String?   @map("part_description")
+  officialStatus        Boolean   @map("official_status")
+  harvestingTime        Month[]   @map("harvesting_time")
+  primaryProcessing     String?   @map("primary_processing")
+  secondaryProcessing   String?   @map("secondary_processing")
+  medicinalMaterialImage String?  @map("material_image")
 
-  plant                PlantNomenclature @relation(fields: [plantId], references: [internalId])
-  medicinalProperty    MedicinalProperties @relation(fields: [medicinalPropertyId], references: [id])
-  sourcingBackgrounds  SourcingBackground[]
+  plant                 PlantNomenclature    @relation(fields: [plantId], references: [internalId])
+  medicinalProperty     MedicinalProperties  @relation(fields: [medicinalPropertyId], references: [id])
+  sourcingBackgrounds   SourcingBackground[] 
+
+  @@map("herbal_drug_background")
 }
 
 model SourcingBackground {
-  id                    Int       @id @default(autoincrement())
-  herbalDrugId          Int
-  cultivationStatus     Boolean
-  cultivationRegions    String[]
-  wildHarvestingRegions String[]
-  harvestingPractice    HarvestingPractice[]
-  daodiStatus           Boolean
-  daodiRegions          String[]
-  daodiDesc             String?
+  id                     Int       @id @default(autoincrement()) @map("id")
+  herbalDrugId           Int       @map("herbal_drug_id")
+  cultivationStatus      Boolean   @map("cultivated")
+  cultivationRegions     String[]  @map("cultivation_regions")
+  wildHarvestingRegions  String[]  @map("wild_regions")
+  harvestingPractice     HarvestingPractice[] @map("practices")
+  daodiStatus            Boolean   @map("daodi")
+  daodiRegions           String[]  @map("daodi_regions")
+  daodiDesc              String?   @map("daodi_description")
 
-  herbalDrug            HerbalDrugBackground @relation(fields: [herbalDrugId], references: [id])
+  herbalDrug             HerbalDrugBackground @relation(fields: [herbalDrugId], references: [id])
+
+  @@map("sourcing_background")
 }
 
 model Ethnobotany {
-  id                 Int    @id @default(autoincrement())
-  plantId            Int
-  folkMedicinalUses  String
-  otherCulturalUses  String[]
-  references         String?
+  id                 Int    @id @default(autoincrement()) @map("id")
+  plantId            Int    @map("plant_id")
+  folkMedicinalUses  String @map("folk_uses")
+  otherCulturalUses  String[] @map("cultural_uses")
+  references         String? @map("references")
 
   plant              PlantNomenclature @relation(fields: [plantId], references: [internalId])
-}
 
+  @@map("ethnobotany")
+}
