@@ -24,3 +24,254 @@ model User {
 
   @@map("users")
 }
+
+// // TCM Schema:
+
+// Enums
+enum Lifecycle {
+  Annuals
+  Biennials
+  Perennials
+}
+
+enum GrowthHabit {
+  Herb
+  Shrub
+  Tree
+  Vine
+  Grass
+}
+
+enum DeciduousType {
+  Deciduous
+  Evergreen
+}
+
+enum ReproductiveSystem {
+  Monoecious
+  Dioecious
+  Other
+}
+
+enum MonthSeason {
+  January
+  February
+  March
+  April
+  May
+  June
+  July
+  August
+  September
+  October
+  November
+  December
+  Spring
+  Summer
+  Autumn
+  Winter
+}
+
+enum Taste {
+  Sweet
+  Bitter
+  Sour
+  Salty
+  Pungent
+  Bland
+}
+
+enum EnergyFlow {
+  Warm
+  Cool
+  Hot
+  Cold
+  Neutral
+}
+
+enum Meridians {
+  Heart
+  Liver
+  Spleen
+  Lung
+  Kidney
+  Stomach
+  LargeIntestine
+  SmallIntestine
+  Bladder
+  Gallbladder
+  Pericardium
+  TripleBurner
+}
+
+enum GlobalConservationStatus {
+  LeastConcern
+  NearThreatened
+  Vulnerable
+  Endangered
+  CriticallyEndangered
+  Extinct
+}
+
+enum ProtectedStatus {
+  NationalProtected
+  ProvincialProtected
+  Unprotected
+}
+
+enum PlantPartUsed {
+  Leaf
+  Root
+  Flower
+  Stem
+  Bark
+  Seed
+  WholePlant
+  Fruit
+  Rhizome
+}
+
+enum HarvestingPractice {
+  Manual
+  Mechanical
+  Sustainable
+  NonSustainable
+}
+
+// Models
+model PlantTaxonomy {
+  id        Int    @id @default(autoincrement())
+  class     String
+  family    String
+  vascular  Boolean
+  plants    PlantNomenclature[]
+}
+
+model PlantNomenclature {
+  internalId           Int                @id @default(autoincrement())
+  plantScientificName  String             @unique
+  taxonomyId           Int
+  plantCommonName      String[]
+  plantPinyin          String             @unique
+  plantChineseName     String             @unique
+  botanicalGardenList  Int[]
+
+  taxonomy             PlantTaxonomy      @relation(fields: [taxonomyId], references: [id])
+  synonyms             PlantSynonym[]
+  morphologies         PlantMorphology[]
+  ecologyDistributions PlantEcologyDistribution[]
+  conservation         PlantConservation?
+  herbalDrugs          HerbalDrugBackground[]
+  ethnobotanies        Ethnobotany[]
+}
+
+model PlantSynonym {
+  id      Int    @id @default(autoincrement())
+  plantId Int
+  name    String
+
+  plant   PlantNomenclature @relation(fields: [plantId], references: [internalId])
+}
+
+model PlantMorphology {
+  id                 Int          @id @default(autoincrement())
+  plantId            Int
+  lifecycle          Lifecycle
+  terrestrial        Boolean
+  growthHabit        GrowthHabit
+  deciduous          DeciduousType?
+  reproductiveSystem ReproductiveSystem
+  floweringPeriod    MonthSeason[]
+  fruitingPeriod     MonthSeason[]
+
+  plant              PlantNomenclature @relation(fields: [plantId], references: [internalId])
+}
+
+model PlantEcologyDistribution {
+  id           Int      @id @default(autoincrement())
+  plantId      Int
+  habitat      String   @unique
+  plantOrigin  String[]
+  globalRange  String[]
+  endemic      Boolean
+  chinaRange   String[]
+
+  plant        PlantNomenclature @relation(fields: [plantId], references: [internalId])
+}
+
+model PlantConservation {
+  id                      Int      @id @default(autoincrement())
+  plantId                 Int      @unique
+  globalConservationStatus GlobalConservationStatus
+  chinaConservationStatus String
+  remarks                 String?
+  protectedStatus         ProtectedStatus
+  invasiveStatus          Boolean
+  invasiveRange           String[]
+
+  plant                   PlantNomenclature @relation(fields: [plantId], references: [internalId])
+}
+
+model BotanicalGardenList {
+  id                  Int    @id @default(autoincrement())
+  botanicalGardenName String
+}
+
+model MedicinalProperties {
+  id                       Int      @id @default(autoincrement())
+  pharmaceuticalName       String   @unique
+  herbalDrugPinyin         String   @unique
+  taste                    Taste?
+  energyFlow               EnergyFlow?
+  meridians                Meridians[]
+  actions                  String?
+  pharmacologicalProperties String[]
+  indications              String?
+  toxicity                 String?
+  secondaryMetabolites     String[]
+
+  herbalDrugs              HerbalDrugBackground[]
+}
+
+model HerbalDrugBackground {
+  id                   Int       @id @default(autoincrement())
+  plantId              Int
+  medicinalPropertyId  Int
+  herbalDrugPinyin     String
+  plantPartUsed        PlantPartUsed[]
+  plantPartDesc        String?
+  officialStatus       Boolean
+  harvestingTime       MonthSeason[]
+  primaryProcessing    String?
+  secondaryProcessing  String?
+  medicinalMaterialImage String?
+
+  plant                PlantNomenclature @relation(fields: [plantId], references: [internalId])
+  medicinalProperty    MedicinalProperties @relation(fields: [medicinalPropertyId], references: [id])
+  sourcingBackgrounds  SourcingBackground[]
+}
+
+model SourcingBackground {
+  id                    Int       @id @default(autoincrement())
+  herbalDrugId          Int
+  cultivationStatus     Boolean
+  cultivationRegions    String[]
+  wildHarvestingRegions String[]
+  harvestingPractice    HarvestingPractice[]
+  daodiStatus           Boolean
+  daodiRegions          String[]
+  daodiDesc             String?
+
+  herbalDrug            HerbalDrugBackground @relation(fields: [herbalDrugId], references: [id])
+}
+
+model Ethnobotany {
+  id                 Int    @id @default(autoincrement())
+  plantId            Int
+  folkMedicinalUses  String
+  otherCulturalUses  String[]
+  references         String?
+
+  plant              PlantNomenclature @relation(fields: [plantId], references: [internalId])
+}
+

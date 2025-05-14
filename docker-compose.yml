@@ -43,11 +43,14 @@ services:
       - ./backend/.env
     volumes:
       - pgdata:/data/tcm
+  
   studio:
+    container_name: prisma_studio
     build:
       context: ./backend
       dockerfile: backend.dockerfile
-    command: npx prisma studio
+    command: sh -c "npx prisma studio"
+    working_dir: /app
     env_file:
       - ./backend/.env
     ports:
@@ -56,7 +59,9 @@ services:
       - db
     networks:
       - tcm_net
-    entrypoint: ["sh", "-c", "DATABASE_URL=$DATABASE_URL npx prisma studio"]
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
 
 networks:
   tcm_net:
