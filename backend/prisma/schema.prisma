@@ -1,9 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
@@ -25,7 +22,7 @@ model User {
   @@map("users")
 }
 
-// // TCM Schema: - TO BE RECONCILED!
+// // TCM Schema: - TO BE CONFIRMED (for relation mapping and ?) & RECONCILED with dataframe!
 
 // Enums: 
 
@@ -39,23 +36,24 @@ model User {
 //   Vine
 // }
 
+// enum DeciduousType { // to be confirmed for being binary or not?
+//   DECIDUOUS
+//   EVERGREEN
+// }
+
 enum Lifecycle {
   ANNUAL
   BIENNIAL
   PERENNIAL
 }
 
-enum DeciduousType {
-  DECIDUOUS
-  EVERGREEN
-}
-
 enum ReproductiveSystem {
-  MONOECIOUS
   DIOECIOUS
-  OTHER
+  MONOECIOUS
+  PARADIOECIOUS
 }
 
+// May 19 todo:
 enum Month {
   JANUARY
   FEBRUARY
@@ -187,15 +185,15 @@ model PlantSynonym {
 }
 
 model PlantMorphology {
-  id                 Int                @id @default(autoincrement()) @map("id")
-  plantId            Int                @map("plant_id")
-  lifecycle          Lifecycle          @map("lifecycle")
-  terrestrial        Boolean            @map("terrestrial")
-  growthHabit        String             @map("growth_habit")
-  deciduous          DeciduousType?     @map("deciduous")
-  reproductiveSystem ReproductiveSystem @map("reproductive_system")
-  floweringPeriod    Month[]            @map("flowering_period")
-  fruitingPeriod     Month[]            @map("fruiting_period")
+  id                 Int                 @id @default(autoincrement()) @map("id")
+  plantId            Int                 @map("plant_id")
+  lifecycle          Lifecycle?          @map("lifecycle")
+  terrestrial        Boolean             @map("terrestrial")
+  growthHabit        String              @map("growth_habit")
+  isDeciduous        Boolean?            @map("is_deciduous")
+  reproductiveSystem ReproductiveSystem? @map("reproductive_system")
+  floweringPeriod    Month[]             @map("flowering_period")
+  fruitingPeriod     Month[]             @map("fruiting_period")
 
   plant PlantNomenclature @relation(fields: [plantId], references: [internalId])
 
