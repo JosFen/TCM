@@ -130,6 +130,13 @@ enum ProtectedStatus {
   WTR_ANNEX_D // WTR: Annex D
 }
 
+enum InvasiveStatus {
+  NON_INVASIVE
+  // POSSIBLY_INVASIVE //?
+  POTENTIALLY_INVASIVE
+  INVASIVE
+}
+
 // //  Make autocomplete text/string instead?
 // enum PlantPartUsed { 
 //   LEAF
@@ -163,7 +170,7 @@ model PlantNomenclature {
   botanicalGardenList  BotanicalGarden[] // implicit many-to-many in Prisma
   synonyms             PlantSynonym[]
   morphologies         PlantMorphology[]
-  ecologyDistributions PlantEcologyDistribution[]
+  ecologyDistributions PlantEcologyDistribution?
   conservation         PlantConservation?
   herbalDrugs          HerbalDrugBackground[]
   ethnobotanies        Ethnobotany[]
@@ -214,7 +221,7 @@ model PlantEcologyDistribution {
   chinaRange  String?  @map("china_range") // see comments in Kanban, either String or Json - refer Pivot table
   endemic     Boolean? @map("endemic") // add another field endemic_remarks? 
 
-  plantId Int               @map("plant_id")
+  plantId Int               @unique @map("plant_id")
   plant   PlantNomenclature @relation(fields: [plantId], references: [internalId])
 
   @@map("plant_ecology_distribution")
@@ -222,15 +229,15 @@ model PlantEcologyDistribution {
 
 model PlantConservation {
   id                       Int                       @id @default(autoincrement()) @map("id")
-  plantId                  Int                       @unique @map("plant_id")
-  globalConservationStatus GlobalConservationStatus? @map("global_status")
-  chinaConservationStatus  String                    @map("china_status")
-  remarks                  String?                   @map("remarks")
+  globalConservationStatus GlobalConservationStatus? @map("global_conservation_status")
+  chinaConservationStatus  String?                   @map("china_conservation_status") // just use String for fuzzy search
+  // remarks                  String?                   @map("remarks")
   protectedStatus          ProtectedStatus?          @map("protected_status") // or enum[] TBC
-  invasiveStatus           Boolean                   @map("invasive")
-  invasiveRange            String[]                  @map("invasive_range")
+  invasiveStatus           InvasiveStatus?           @map("invasive_status") // enum? difference in values: Possible or Potential
+  invasiveRange            String?                   @map("invasive_range") // just use String for fuzzy/prefix search
 
-  plant PlantNomenclature @relation(fields: [plantId], references: [internalId])
+  plantId Int               @unique @map("plant_id")
+  plant   PlantNomenclature @relation(fields: [plantId], references: [internalId])
 
   @@map("plant_conservation")
 }
