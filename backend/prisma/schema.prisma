@@ -154,12 +154,12 @@ enum HarvestingPractice {
 // May 21 todo:
 // Entity Models: with @map and @@map for names in DBMS:
 model PlantNomenclature {
-  internalId          Int      @id @default(autoincrement()) @map("internal_id")
-  plantScientificName String   @unique @map("scientific_name")
-  taxonomyId          Int      @map("taxonomy_id")
-  plantCommonName     String[] @map("common_names")
-  plantPinyin         String   @unique @map("pinyin")
-  plantChineseName    String   @unique @map("chinese_name")
+  internalId          Int      @id @default(autoincrement()) @map("plant_internal_id")
+  plantScientificName String   @unique @map("plant_scientific_name")
+  taxonomyId          Int      @map("plant_taxonomy_id")
+  plantCommonName     String[] @map("plant_common_names")
+  plantPinyin         String   @unique @map("plant_pinyin")  // verified as UNIQUE
+  plantChineseName    String   @unique @map("plant_chinese_name") // verified as UNIQUE
   botanicalGardenList Int[]    @map("botanical_garden_ids")
 
   taxonomy             PlantTaxonomy              @relation(fields: [taxonomyId], references: [id])
