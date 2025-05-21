@@ -23,6 +23,9 @@ model User {
 }
 
 // // TCM Schema: - TO BE CONFIRMED (for relation mapping and ?) & RECONCILED with dataframe!
+// // DO NOT IMPORT VALUE FOR OPTIONAL FIELDS FIRST - Types might need to be confirmed/adjusted later
+
+
 
 // Enums:  -- REFER TO DATAFRAME for CONFIRMATION! -- 
 
@@ -154,15 +157,15 @@ enum HarvestingPractice {
 // May 21 todo:
 // Entity Models: with @map and @@map for names in DBMS:
 model PlantNomenclature {
-  internalId          Int      @id @default(autoincrement()) @map("plant_internal_id")
-  plantScientificName String   @unique @map("plant_scientific_name")
-  taxonomyId          Int      @map("plant_taxonomy_id")
-  plantCommonName     String[] @map("plant_common_names")
-  plantPinyin         String   @unique @map("plant_pinyin")  // verified as UNIQUE
-  plantChineseName    String   @unique @map("plant_chinese_name") // verified as UNIQUE
-  botanicalGardenList BotanicalGarden[]    // implicit many-to-many in Prisma
-
+  internalId          Int      @id @default(autoincrement()) @map("internal_id")
+  plantScientificName String   @unique @map("scientific_name")
+  plantCommonName     String[] @map("common_names")
+  plantPinyin         String   @unique @map("pinyin")  // verified as UNIQUE
+  plantChineseName    String   @unique @map("chinese_name") // verified as UNIQUE
+  taxonomyId          Int      @map("taxonomy_id")
   taxonomy             PlantTaxonomy              @relation(fields: [taxonomyId], references: [id])
+  
+  botanicalGardenList BotanicalGarden[]    // implicit many-to-many in Prisma
   synonyms             PlantSynonym[]
   morphologies         PlantMorphology[]
   ecologyDistributions PlantEcologyDistribution[]
@@ -175,9 +178,9 @@ model PlantNomenclature {
 
 model PlantTaxonomy {
   id       Int                 @id @default(autoincrement()) @map("id")
-  class    String?              @map("plant_class")
-  family   String              @map("plant_family")
-  vascular Boolean?             @map("is_plant_vascular")
+  class    String?              @map("class")
+  family   String              @map("family")
+  vascular Boolean?             @map("is_vascular")
   plants   PlantNomenclature[]
 
   @@map("plant_taxonomy")
@@ -186,25 +189,24 @@ model PlantTaxonomy {
 model PlantSynonym {
   id      Int    @id @default(autoincrement()) @map("id")
   plantId Int    @map("plant_id")
-  name    String @map("name")
+  name    String? @map("name")
 
   plant PlantNomenclature @relation(fields: [plantId], references: [internalId])
 
   @@map("plant_synonym")
 }
 
-model PlantMorphology {
+model PlantMorphology { // many-to-many relationship with plants?
   id                 Int                 @id @default(autoincrement()) @map("id")
-  plantId            Int                 @map("plant_id")
   lifecycle          Lifecycle[]         @map("lifecycle") // refer to dataframe
-  terrestrial        Boolean             @map("terrestrial")
-  growthHabit        String              @map("growth_habit")
-  isDeciduous        Boolean?            @map("is_deciduous")
+  isTerrestrial      Boolean?             @map("is_terrestrial")
+  growthHabit        String?              @map("growth_habit")
+  isDeciduous        Boolean?            @map("is_deciduous")  // Semi-deciduous valid? convert to enum
   reproductiveSystem ReproductiveSystem? @map("reproductive_system")
   floweringPeriod    Month[]             @map("flowering_period")
   fruitingPeriod     Month[]             @map("fruiting_period")
 
-  plant PlantNomenclature @relation(fields: [plantId], references: [internalId])
+  plants      PlantNomenclature[]   // implicit many-to-many
 
   @@map("plant_morphology")
 }
