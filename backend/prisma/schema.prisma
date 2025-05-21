@@ -170,11 +170,11 @@ model PlantNomenclature {
   botanicalGardenList  BotanicalGarden[] // implicit many-to-many in Prisma
   synonyms             PlantSynonym[]
   morphologies         PlantMorphology[]
-  ecologyDistributions PlantEcologyDistribution?
-  conservation         PlantConservation?
+  ecologyDistributions PlantEcologyDistribution? // one-to-one
+  conservation         PlantConservation? // one-to-one
 
   herbalDrugs   HerbalDrugBackground[]
-  ethnobotanies Ethnobotany[]
+  ethnobotanies Ethnobotany? // one-to-one
 
   @@map("plant_nomenclature")
 }
@@ -311,10 +311,10 @@ model SourcingBackground {
 
 model Ethnobotany {
   id                Int      @id @default(autoincrement()) @map("id")
-  plantId           Int      @map("plant_id")
-  folkMedicinalUses String   @map("folk_uses")
-  otherCulturalUses String[] @map("cultural_uses")
-  references        String?  @map("references")
+  plantId           Int      @unique @map("plant_id")
+  folkMedicinalUses String?   @map("folk_medicinal_uses")
+  otherCulturalUses String[] @map("other_cultural_uses")
+  references        String[]  @map("references") // better use String[] instead of String, as it will make search/render easier
 
   plant PlantNomenclature @relation(fields: [plantId], references: [internalId])
 
