@@ -160,7 +160,7 @@ model PlantNomenclature {
   plantCommonName     String[] @map("plant_common_names")
   plantPinyin         String   @unique @map("plant_pinyin")  // verified as UNIQUE
   plantChineseName    String   @unique @map("plant_chinese_name") // verified as UNIQUE
-  botanicalGardenList Int[]    @map("botanical_garden_ids")
+  botanicalGardenList BotanicalGarden[]    // implicit many-to-many in Prisma
 
   taxonomy             PlantTaxonomy              @relation(fields: [taxonomyId], references: [id])
   synonyms             PlantSynonym[]
@@ -175,9 +175,9 @@ model PlantNomenclature {
 
 model PlantTaxonomy {
   id       Int                 @id @default(autoincrement()) @map("id")
-  class    String              @map("class")
-  family   String              @map("family")
-  vascular Boolean             @map("vascular")
+  class    String?              @map("plant_class")
+  family   String              @map("plant_family")
+  vascular Boolean?             @map("is_plant_vascular")
   plants   PlantNomenclature[]
 
   @@map("plant_taxonomy")
@@ -238,10 +238,10 @@ model PlantConservation {
   @@map("plant_conservation")
 }
 
-model BotanicalGardenList {
+model BotanicalGarden {
   id                  Int    @id @default(autoincrement()) @map("id")
   botanicalGardenName String @map("name")
-
+  plants               PlantNomenclature[]
   @@map("botanical_garden")
 }
 
