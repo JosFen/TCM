@@ -25,8 +25,6 @@ model User {
 // // TCM Schema: - TO BE CONFIRMED (for relation mapping and ?) & RECONCILED with dataframe!
 // // DO NOT IMPORT VALUE FOR OPTIONAL FIELDS FIRST - Types might need to be confirmed/adjusted later
 
-
-
 // Enums:  -- REFER TO DATAFRAME for CONFIRMATION! -- 
 
 // List of 51 posssible values? Make autocomplete text/string instead?
@@ -55,7 +53,6 @@ enum ReproductiveSystem {
   MONOECIOUS
   PARADIOECIOUS
 }
-
 
 enum Month {
   JANUARY
@@ -125,14 +122,13 @@ enum GlobalConservationStatus {
 }
 
 enum ProtectedStatus {
-  CHINA_CAT_II               // (China) Cat. II
-  CHINA_SEPA_CAT_II          // (China/ SEPA) Cat. II
-  SEPA_CATEGORY_II           // Category II (SEPA)
-  CITES_APPENDIX_I           // CITES: Appendix I
-  CITES_APPENDIX_II          // CITES: Appendix II
-  WTR_ANNEX_D                // WTR: Annex D
+  CHINA_CAT_II // (China) Cat. II
+  CHINA_SEPA_CAT_II // (China/ SEPA) Cat. II
+  SEPA_CATEGORY_II // Category II (SEPA)
+  CITES_APPENDIX_I // CITES: Appendix I
+  CITES_APPENDIX_II // CITES: Appendix II
+  WTR_ANNEX_D // WTR: Annex D
 }
-
 
 // //  Make autocomplete text/string instead?
 // enum PlantPartUsed { 
@@ -153,19 +149,18 @@ enum HarvestingPractice {
   WILD_HARVESTED
 }
 
-
 // May 21 todo:
 // Entity Models: with @map and @@map for names in DBMS:
 model PlantNomenclature {
-  internalId          Int      @id @default(autoincrement()) @map("internal_id")
-  plantScientificName String   @unique @map("scientific_name")
-  plantCommonName     String[] @map("common_names")
-  plantPinyin         String   @unique @map("pinyin")  // verified as UNIQUE
-  plantChineseName    String   @unique @map("chinese_name") // verified as UNIQUE
-  taxonomyId          Int      @map("taxonomy_id")
-  taxonomy             PlantTaxonomy              @relation(fields: [taxonomyId], references: [id])
-  
-  botanicalGardenList BotanicalGarden[]    // implicit many-to-many in Prisma
+  internalId          Int           @id @default(autoincrement()) @map("internal_id")
+  plantScientificName String        @unique @map("scientific_name")
+  plantCommonName     String[]      @map("common_names")
+  plantPinyin         String        @unique @map("pinyin") // verified as UNIQUE
+  plantChineseName    String        @unique @map("chinese_name") // verified as UNIQUE
+  taxonomyId          Int           @map("taxonomy_id")
+  taxonomy            PlantTaxonomy @relation(fields: [taxonomyId], references: [id])
+
+  botanicalGardenList  BotanicalGarden[] // implicit many-to-many in Prisma
   synonyms             PlantSynonym[]
   morphologies         PlantMorphology[]
   ecologyDistributions PlantEcologyDistribution[]
@@ -178,17 +173,17 @@ model PlantNomenclature {
 
 model PlantTaxonomy {
   id       Int                 @id @default(autoincrement()) @map("id")
-  class    String?              @map("class")
+  class    String?             @map("class")
   family   String              @map("family")
-  vascular Boolean?             @map("is_vascular")
+  vascular Boolean?            @map("is_vascular")
   plants   PlantNomenclature[]
 
   @@map("plant_taxonomy")
 }
 
 model PlantSynonym {
-  id      Int    @id @default(autoincrement()) @map("id")
-  plantId Int    @map("plant_id")
+  id      Int     @id @default(autoincrement()) @map("id")
+  plantId Int     @map("plant_id")
   name    String? @map("name")
 
   plant PlantNomenclature @relation(fields: [plantId], references: [internalId])
@@ -196,31 +191,31 @@ model PlantSynonym {
   @@map("plant_synonym")
 }
 
-model PlantMorphology { // many-to-many relationship with plants?
+model PlantMorphology {
   id                 Int                 @id @default(autoincrement()) @map("id")
   lifecycle          Lifecycle[]         @map("lifecycle") // refer to dataframe
-  isTerrestrial      Boolean?             @map("is_terrestrial")
-  growthHabit        String?              @map("growth_habit")
-  isDeciduous        Boolean?            @map("is_deciduous")  // Semi-deciduous valid? convert to enum
+  isTerrestrial      Boolean?            @map("is_terrestrial")
+  growthHabit        String?             @map("growth_habit")
+  isDeciduous        Boolean?            @map("is_deciduous") // Semi-deciduous valid? convert to enum
   reproductiveSystem ReproductiveSystem? @map("reproductive_system")
   floweringPeriod    Month[]             @map("flowering_period")
   fruitingPeriod     Month[]             @map("fruiting_period")
 
-  plants      PlantNomenclature[]   // implicit many-to-many
+  plants PlantNomenclature[] // implicit many-to-many
 
   @@map("plant_morphology")
 }
 
 model PlantEcologyDistribution {
   id          Int      @id @default(autoincrement()) @map("id")
-  plantId     Int      @map("plant_id")
-  habitat     String   @unique @map("habitat")
-  plantOrigin String[] @map("plant_origins")
-  globalRange String[] @map("global_range")
-  endemic     Boolean  @map("endemic")
-  chinaRange  String[] @map("china_range")
+  habitat     String?  @map("habitat") // unique necessary? seems not based on pivot table of this
+  plantOrigin String?  @map("plant_origins") // see comments in Kanban, either String or Json - refer Pivot table
+  globalRange String?  @map("global_range") // see comments in Kanban, either String or Json - refer Pivot table
+  chinaRange  String?  @map("china_range") // see comments in Kanban, either String or Json - refer Pivot table
+  endemic     Boolean? @map("endemic") // add another field endemic_remarks? 
 
-  plant PlantNomenclature @relation(fields: [plantId], references: [internalId])
+  plantId Int               @map("plant_id")
+  plant   PlantNomenclature @relation(fields: [plantId], references: [internalId])
 
   @@map("plant_ecology_distribution")
 }
@@ -231,7 +226,7 @@ model PlantConservation {
   globalConservationStatus GlobalConservationStatus? @map("global_status")
   chinaConservationStatus  String                    @map("china_status")
   remarks                  String?                   @map("remarks")
-  protectedStatus          ProtectedStatus?          @map("protected_status")  // or enum[] TBC
+  protectedStatus          ProtectedStatus?          @map("protected_status") // or enum[] TBC
   invasiveStatus           Boolean                   @map("invasive")
   invasiveRange            String[]                  @map("invasive_range")
 
@@ -241,9 +236,10 @@ model PlantConservation {
 }
 
 model BotanicalGarden {
-  id                  Int    @id @default(autoincrement()) @map("id")
-  botanicalGardenName String @map("name")
-  plants               PlantNomenclature[]
+  id                  Int                 @id @default(autoincrement()) @map("id")
+  botanicalGardenName String              @map("name")
+  plants              PlantNomenclature[]
+
   @@map("botanical_garden")
 }
 
@@ -266,18 +262,18 @@ model MedicinalProperties {
 }
 
 model HerbalDrugBackground {
-  id                     Int             @id @default(autoincrement()) @map("id")
-  plantId                Int             @map("plant_id")
-  medicinalPropertyId    Int             @map("medicinal_property_id")
-  herbalDrugPinyin       String          @map("pinyin")
+  id                     Int     @id @default(autoincrement()) @map("id")
+  plantId                Int     @map("plant_id")
+  medicinalPropertyId    Int     @map("medicinal_property_id")
+  herbalDrugPinyin       String  @map("pinyin")
   // plantPartUsed          PlantPartUsed[] @map("parts_used")
-  plantPartUsed          String?         @map("parts_used")
-  plantPartDesc          String?         @map("part_description")
-  officialStatus         Boolean         @map("official_status")
-  harvestingTime         Month[]         @map("harvesting_time")
-  primaryProcessing      String?         @map("primary_processing")
-  secondaryProcessing    String?         @map("secondary_processing")
-  medicinalMaterialImage String?         @map("material_image")
+  plantPartUsed          String? @map("parts_used")
+  plantPartDesc          String? @map("part_description")
+  officialStatus         Boolean @map("official_status")
+  harvestingTime         Month[] @map("harvesting_time")
+  primaryProcessing      String? @map("primary_processing")
+  secondaryProcessing    String? @map("secondary_processing")
+  medicinalMaterialImage String? @map("material_image")
 
   plant               PlantNomenclature    @relation(fields: [plantId], references: [internalId])
   medicinalProperty   MedicinalProperties  @relation(fields: [medicinalPropertyId], references: [id])
@@ -293,8 +289,8 @@ model SourcingBackground {
   cultivationRegions    String[]             @map("cultivation_regions")
   wildHarvestingRegions String[]             @map("harvesting_practice")
   harvestingPractice    HarvestingPractice[] @map("practices")
-  daodiStatus           Boolean?              @map("daodi")
-  daodiRegions          String?             @map("daodi_regions")
+  daodiStatus           Boolean?             @map("daodi")
+  daodiRegions          String?              @map("daodi_regions")
   daodiDesc             String?              @map("daodi_description")
 
   herbalDrug HerbalDrugBackground @relation(fields: [herbalDrugId], references: [id])
