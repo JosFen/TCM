@@ -24,7 +24,7 @@ model User {
 
 // // TCM Schema: - TO BE CONFIRMED (for relation mapping and ?) & RECONCILED with dataframe!
 
-// Enums: 
+// Enums:  -- REFER TO DATAFRAME for CONFIRMATION! -- 
 
 // List of 51 posssible values? Make autocomplete text/string instead?
 // enum GrowthHabit {  
@@ -53,7 +53,7 @@ enum ReproductiveSystem {
   PARADIOECIOUS
 }
 
-// May 19 todo:
+
 enum Month {
   JANUARY
   FEBRUARY
@@ -77,83 +77,82 @@ enum Season {
 }
 
 enum Taste {
-  SWEET
+  ACRID
+  ASTRINGENT
   BITTER
-  SOUR
-  SALTY
-  PUNGENT
   BLAND
+  PUNGENT
+  SALTY
+  SOUR
+  SWEET
 }
 
 enum EnergyFlow {
-  WARM
+  COLD
   COOL
   HOT
-  COLD
   NEUTRAL
+  WARM
 }
 
 enum Meridian {
-  HEART
-  LIVER
-  SPLEEN
-  LUNG
-  KIDNEY
-  STOMACH
-  LARGE_INTESTINE
-  SMALL_INTESTINE
   BLADDER
   GALLBLADDER
+  HEART
+  INTESTINE
+  KIDNEY
+  LARGE_INTESTINE
+  LIVER
+  LUNG
   PERICARDIUM
-  TRIPLE_BURNER
+  SAN_JIAO
+  SMALL_INTESTINE
+  SPLEEN
+  STOMACH
 }
 
 enum GlobalConservationStatus {
+  CRITICALLY_ENDANGERED
+  DATA_DEFICIENT
+  ENDANGERED
   LEAST_CONCERN
   NEAR_THREATENED
+  NOT_EVALUATED
   VULNERABLE
-  ENDANGERED
-  CRITICALLY_ENDANGERED
-  EXTINCT
 }
 
 enum ProtectedStatus {
-  NATIONAL_PROTECTED
-  PROVINCIAL_PROTECTED
-  UNPROTECTED
+  CHINA_CAT_II               // (China) Cat. II
+  CHINA_SEPA_CAT_II          // (China/ SEPA) Cat. II
+  SEPA_CATEGORY_II           // Category II (SEPA)
+  CITES_APPENDIX_I           // CITES: Appendix I
+  CITES_APPENDIX_II          // CITES: Appendix II
+  WTR_ANNEX_D                // WTR: Annex D
 }
 
-enum PlantPartUsed {
-  LEAF
-  ROOT
-  FLOWER
-  STEM
-  BARK
-  SEED
-  WHOLE_PLANT
-  FRUIT
-  RHIZOME
-}
+
+// //  Make autocomplete text/string instead?
+// enum PlantPartUsed { 
+//   LEAF
+//   ROOT
+//   FLOWER
+//   STEM
+//   BARK
+//   SEED
+//   WHOLE_PLANT
+//   FRUIT
+//   RHIZOME
+// }
 
 enum HarvestingPractice {
-  MANUAL
-  MECHANICAL
-  SUSTAINABLE
-  NON_SUSTAINABLE
+  CULTIVATED
+  FOSTERED
+  WILD_HARVESTED
 }
 
+
+// May 21 todo:
 // Entity Models: with @map and @@map for names in DBMS:
-
-model PlantTaxonomy {
-  id       Int                 @id @default(autoincrement()) @map("id")
-  class    String              @map("class")
-  family   String              @map("family")
-  vascular Boolean             @map("vascular")
-  plants   PlantNomenclature[]
-
-  @@map("plant_taxonomy")
-}
-
 model PlantNomenclature {
   internalId          Int      @id @default(autoincrement()) @map("internal_id")
   plantScientificName String   @unique @map("scientific_name")
@@ -174,6 +173,16 @@ model PlantNomenclature {
   @@map("plant_nomenclature")
 }
 
+model PlantTaxonomy {
+  id       Int                 @id @default(autoincrement()) @map("id")
+  class    String              @map("class")
+  family   String              @map("family")
+  vascular Boolean             @map("vascular")
+  plants   PlantNomenclature[]
+
+  @@map("plant_taxonomy")
+}
+
 model PlantSynonym {
   id      Int    @id @default(autoincrement()) @map("id")
   plantId Int    @map("plant_id")
@@ -187,7 +196,7 @@ model PlantSynonym {
 model PlantMorphology {
   id                 Int                 @id @default(autoincrement()) @map("id")
   plantId            Int                 @map("plant_id")
-  lifecycle          Lifecycle?          @map("lifecycle")
+  lifecycle          Lifecycle[]         @map("lifecycle") // refer to dataframe
   terrestrial        Boolean             @map("terrestrial")
   growthHabit        String              @map("growth_habit")
   isDeciduous        Boolean?            @map("is_deciduous")
@@ -215,14 +224,14 @@ model PlantEcologyDistribution {
 }
 
 model PlantConservation {
-  id                       Int                      @id @default(autoincrement()) @map("id")
-  plantId                  Int                      @unique @map("plant_id")
-  globalConservationStatus GlobalConservationStatus @map("global_status")
-  chinaConservationStatus  String                   @map("china_status")
-  remarks                  String?                  @map("remarks")
-  protectedStatus          ProtectedStatus          @map("protected_status")
-  invasiveStatus           Boolean                  @map("invasive")
-  invasiveRange            String[]                 @map("invasive_range")
+  id                       Int                       @id @default(autoincrement()) @map("id")
+  plantId                  Int                       @unique @map("plant_id")
+  globalConservationStatus GlobalConservationStatus? @map("global_status")
+  chinaConservationStatus  String                    @map("china_status")
+  remarks                  String?                   @map("remarks")
+  protectedStatus          ProtectedStatus?          @map("protected_status")  // or enum[] TBC
+  invasiveStatus           Boolean                   @map("invasive")
+  invasiveRange            String[]                  @map("invasive_range")
 
   plant PlantNomenclature @relation(fields: [plantId], references: [internalId])
 
@@ -237,17 +246,17 @@ model BotanicalGardenList {
 }
 
 model MedicinalProperties {
-  id                        Int         @id @default(autoincrement()) @map("id")
-  pharmaceuticalName        String      @unique @map("pharmaceutical_name")
-  herbalDrugPinyin          String      @unique @map("pinyin")
-  taste                     Taste?      @map("taste")
-  energyFlow                EnergyFlow? @map("energy_flow")
-  meridians                 Meridian[]  @map("meridians")
-  actions                   String?     @map("actions")
-  pharmacologicalProperties String[]    @map("pharmacological_properties")
-  indications               String?     @map("indications")
-  toxicity                  String?     @map("toxicity")
-  secondaryMetabolites      String[]    @map("secondary_metabolites")
+  id                        Int          @id @default(autoincrement()) @map("id")
+  pharmaceuticalName        String       @unique @map("pharmaceutical_name")
+  herbalDrugPinyin          String       @unique @map("pinyin")
+  taste                     Taste[]      @map("taste") // or string ? 'slightly' not included
+  energyFlow                EnergyFlow[] @map("energy_flow") // refer to dataframe; 'slightly' not included
+  meridians                 Meridian[]   @map("meridians")
+  actions                   String?      @map("actions")
+  pharmacologicalProperties String[]     @map("pharmacological_properties")
+  indications               String?      @map("indications")
+  toxicity                  String?      @map("toxicity")
+  secondaryMetabolites      String[]     @map("secondary_metabolites")
 
   herbalDrugs HerbalDrugBackground[]
 
@@ -259,7 +268,8 @@ model HerbalDrugBackground {
   plantId                Int             @map("plant_id")
   medicinalPropertyId    Int             @map("medicinal_property_id")
   herbalDrugPinyin       String          @map("pinyin")
-  plantPartUsed          PlantPartUsed[] @map("parts_used")
+  // plantPartUsed          PlantPartUsed[] @map("parts_used")
+  plantPartUsed          String?         @map("parts_used")
   plantPartDesc          String?         @map("part_description")
   officialStatus         Boolean         @map("official_status")
   harvestingTime         Month[]         @map("harvesting_time")
@@ -279,10 +289,10 @@ model SourcingBackground {
   herbalDrugId          Int                  @map("herbal_drug_id")
   cultivationStatus     Boolean              @map("cultivated")
   cultivationRegions    String[]             @map("cultivation_regions")
-  wildHarvestingRegions String[]             @map("wild_regions")
+  wildHarvestingRegions String[]             @map("harvesting_practice")
   harvestingPractice    HarvestingPractice[] @map("practices")
-  daodiStatus           Boolean              @map("daodi")
-  daodiRegions          String[]             @map("daodi_regions")
+  daodiStatus           Boolean?              @map("daodi")
+  daodiRegions          String?             @map("daodi_regions")
   daodiDesc             String?              @map("daodi_description")
 
   herbalDrug HerbalDrugBackground @relation(fields: [herbalDrugId], references: [id])
