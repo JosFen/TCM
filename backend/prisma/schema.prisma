@@ -173,8 +173,8 @@ model PlantNomenclature {
   ecologyDistributions PlantEcologyDistribution?
   conservation         PlantConservation?
 
-  herbalDrugs          HerbalDrugBackground[]
-  ethnobotanies        Ethnobotany[]
+  herbalDrugs   HerbalDrugBackground[]
+  ethnobotanies Ethnobotany[]
 
   @@map("plant_nomenclature")
 }
@@ -253,52 +253,56 @@ model BotanicalGarden {
 
 model MedicinalProperties {
   id                        Int          @id @default(autoincrement()) @map("id")
-  pharmaceuticalName        String?       @unique @map("pharmaceutical_name") // use col N in dataframe, some do not have values
+  pharmaceuticalName        String?      @unique @map("pharmaceutical_name") // use col N in dataframe, some do not have values
   herbalDrugPinyin          String       @unique @map("pinyin") // every Medicinal Material has pinyin in dataframe
   taste                     Taste[]      @map("taste") // or string ? 'slightly' not included
   energyFlow                EnergyFlow[] @map("energy_flow") // refer to dataframe; 'slightly' not included
   meridians                 Meridian[]   @map("meridians")
   actions                   String?      @map("actions")
   pharmacologicalProperties String[]     @map("pharmacological_properties") // better use string[] which can be normalized later
-  indications               String[]      @map("indications") // better use string[] which can be normalized later
+  indications               String[]     @map("indications") // better use string[] which can be normalized later
   toxicity                  String?      @map("toxicity")
   secondaryMetabolites      String[]     @map("secondary_metabolites") // values to be standardized as input,e.g., Plantainoside A, B, C, D, E, F
 
   herbalDrugs HerbalDrugBackground[] // implicit many-to-many
+  // HerbalDrugBackground HerbalDrugBackground[]
 
   @@map("medicinal_properties")
 }
 
 model HerbalDrugBackground {
-  id                     Int     @id @default(autoincrement()) @map("id")
-  plantId                Int     @map("plant_id")
-  herbalDrugPinyin       String  @map("pinyin")
+  id                  Int      @id @default(autoincrement()) @map("id")
+  herbalDrugPinyin    String   @map("pinyin")
   // plantPartUsed          PlantPartUsed[] @map("parts_used")
-  plantPartUsed          String? @map("parts_used")
-  plantPartDesc          String? @map("part_description")
-  officialStatus         Boolean @map("official_status")
-  harvestingTime         Month[] @map("harvesting_time")
-  primaryProcessing      String? @map("primary_processing")
-  secondaryProcessing    String? @map("secondary_processing")
-  medicinalMaterialImage String? @map("material_image")
+  plantPartUsed       String?  @map("parts_used") // has remarks in (), just make it String type, later we could standardize 
+  // plantPartDesc          String? @map("part_description")
+  officialStatus      Boolean? @map("official_status")
+  harvestingTime      Month[]  @map("harvesting_time")
+  primaryProcessing   String?  @map("primary_processing")
+  secondaryProcessing String?  @map("secondary_processing")
+  herbalDruglImage    String?  @map("herbal_drug_image")
 
-  plant               PlantNomenclature    @relation(fields: [plantId], references: [internalId])
-  medicinalProperty   MedicinalProperties[]
-  sourcingBackgrounds SourcingBackground[]
+  plantId              Int                 @map("plant_id")
+  plant                PlantNomenclature   @relation(fields: [plantId], references: [internalId])
+  merdicinalPropertyId Int                 @map("medicinal_property_id")
+  merdicinalProperty   MedicinalProperties @relation(fields: [merdicinalPropertyId], references: [id])
 
+  sourcingBackgrounds SourcingBackground?
+
+  @@unique([plantId, merdicinalPropertyId])
   @@map("herbal_drug_background")
 }
 
 model SourcingBackground {
   id                    Int                  @id @default(autoincrement()) @map("id")
-  herbalDrugId          Int                  @map("herbal_drug_id")
-  cultivationStatus     Boolean              @map("cultivated")
-  cultivationRegions    String[]             @map("cultivation_regions")
-  wildHarvestingRegions String[]             @map("harvesting_practice")
+  herbalDrugId          Int                  @unique @map("herbal_drug_id")
+  cultivationStatus     Boolean?             @map("cultivated")
+  cultivationRegions    String?              @map("cultivation_regions") // use String due to remarks, prefix/partial search
+  wildHarvestingRegions String?              @map("harvesting_practice") //  due to remarks, or use Json type
   harvestingPractice    HarvestingPractice[] @map("practices")
   daodiStatus           Boolean?             @map("daodi")
-  daodiRegions          String?              @map("daodi_regions")
-  daodiDesc             String?              @map("daodi_description")
+  daodiRegions          String?              @map("daodi_regions") // use String due to remarks, prefix/partial search
+  // daodiDesc             String?              @map("daodi_description")
 
   herbalDrug HerbalDrugBackground @relation(fields: [herbalDrugId], references: [id])
 
