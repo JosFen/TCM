@@ -172,6 +172,7 @@ model PlantNomenclature {
   morphologies         PlantMorphology[]
   ecologyDistributions PlantEcologyDistribution?
   conservation         PlantConservation?
+
   herbalDrugs          HerbalDrugBackground[]
   ethnobotanies        Ethnobotany[]
 
@@ -252,18 +253,18 @@ model BotanicalGarden {
 
 model MedicinalProperties {
   id                        Int          @id @default(autoincrement()) @map("id")
-  pharmaceuticalName        String       @unique @map("pharmaceutical_name")
-  herbalDrugPinyin          String       @unique @map("pinyin")
+  pharmaceuticalName        String?       @unique @map("pharmaceutical_name") // use col N in dataframe, some do not have values
+  herbalDrugPinyin          String       @unique @map("pinyin") // every Medicinal Material has pinyin in dataframe
   taste                     Taste[]      @map("taste") // or string ? 'slightly' not included
   energyFlow                EnergyFlow[] @map("energy_flow") // refer to dataframe; 'slightly' not included
   meridians                 Meridian[]   @map("meridians")
   actions                   String?      @map("actions")
-  pharmacologicalProperties String[]     @map("pharmacological_properties")
-  indications               String?      @map("indications")
+  pharmacologicalProperties String[]     @map("pharmacological_properties") // better use string[] which can be normalized later
+  indications               String[]      @map("indications") // better use string[] which can be normalized later
   toxicity                  String?      @map("toxicity")
-  secondaryMetabolites      String[]     @map("secondary_metabolites")
+  secondaryMetabolites      String[]     @map("secondary_metabolites") // values to be standardized as input,e.g., Plantainoside A, B, C, D, E, F
 
-  herbalDrugs HerbalDrugBackground[]
+  herbalDrugs HerbalDrugBackground[] // implicit many-to-many
 
   @@map("medicinal_properties")
 }
@@ -271,7 +272,6 @@ model MedicinalProperties {
 model HerbalDrugBackground {
   id                     Int     @id @default(autoincrement()) @map("id")
   plantId                Int     @map("plant_id")
-  medicinalPropertyId    Int     @map("medicinal_property_id")
   herbalDrugPinyin       String  @map("pinyin")
   // plantPartUsed          PlantPartUsed[] @map("parts_used")
   plantPartUsed          String? @map("parts_used")
@@ -283,7 +283,7 @@ model HerbalDrugBackground {
   medicinalMaterialImage String? @map("material_image")
 
   plant               PlantNomenclature    @relation(fields: [plantId], references: [internalId])
-  medicinalProperty   MedicinalProperties  @relation(fields: [medicinalPropertyId], references: [id])
+  medicinalProperty   MedicinalProperties[]
   sourcingBackgrounds SourcingBackground[]
 
   @@map("herbal_drug_background")
