@@ -128,6 +128,110 @@ exports.Prisma.UserScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.PlantNomenclatureScalarFieldEnum = {
+  internalId: 'internalId',
+  plantScientificName: 'plantScientificName',
+  plantCommonName: 'plantCommonName',
+  plantPinyin: 'plantPinyin',
+  plantChineseName: 'plantChineseName',
+  taxonomyId: 'taxonomyId'
+};
+
+exports.Prisma.PlantTaxonomyScalarFieldEnum = {
+  id: 'id',
+  class: 'class',
+  family: 'family',
+  vascular: 'vascular'
+};
+
+exports.Prisma.PlantSynonymScalarFieldEnum = {
+  id: 'id',
+  plantId: 'plantId',
+  name: 'name'
+};
+
+exports.Prisma.PlantMorphologyScalarFieldEnum = {
+  id: 'id',
+  lifecycle: 'lifecycle',
+  isTerrestrial: 'isTerrestrial',
+  growthHabit: 'growthHabit',
+  isDeciduous: 'isDeciduous',
+  reproductiveSystem: 'reproductiveSystem',
+  floweringPeriod: 'floweringPeriod',
+  fruitingPeriod: 'fruitingPeriod'
+};
+
+exports.Prisma.PlantEcologyDistributionScalarFieldEnum = {
+  id: 'id',
+  habitat: 'habitat',
+  plantOrigin: 'plantOrigin',
+  globalRange: 'globalRange',
+  chinaRange: 'chinaRange',
+  endemic: 'endemic',
+  plantId: 'plantId'
+};
+
+exports.Prisma.PlantConservationScalarFieldEnum = {
+  id: 'id',
+  globalConservationStatus: 'globalConservationStatus',
+  chinaConservationStatus: 'chinaConservationStatus',
+  protectedStatus: 'protectedStatus',
+  invasiveStatus: 'invasiveStatus',
+  invasiveRange: 'invasiveRange',
+  plantId: 'plantId'
+};
+
+exports.Prisma.BotanicalGardenScalarFieldEnum = {
+  id: 'id',
+  botanicalGardenName: 'botanicalGardenName'
+};
+
+exports.Prisma.MedicinalPropertiesScalarFieldEnum = {
+  id: 'id',
+  pharmaceuticalName: 'pharmaceuticalName',
+  herbalDrugPinyin: 'herbalDrugPinyin',
+  taste: 'taste',
+  energyFlow: 'energyFlow',
+  meridians: 'meridians',
+  actions: 'actions',
+  pharmacologicalProperties: 'pharmacologicalProperties',
+  indications: 'indications',
+  toxicity: 'toxicity',
+  secondaryMetabolites: 'secondaryMetabolites'
+};
+
+exports.Prisma.HerbalDrugBackgroundScalarFieldEnum = {
+  id: 'id',
+  herbalDrugPinyin: 'herbalDrugPinyin',
+  plantPartUsed: 'plantPartUsed',
+  officialStatus: 'officialStatus',
+  harvestingTime: 'harvestingTime',
+  primaryProcessing: 'primaryProcessing',
+  secondaryProcessing: 'secondaryProcessing',
+  herbalDruglImage: 'herbalDruglImage',
+  plantId: 'plantId',
+  merdicinalPropertyId: 'merdicinalPropertyId'
+};
+
+exports.Prisma.SourcingBackgroundScalarFieldEnum = {
+  id: 'id',
+  herbalDrugId: 'herbalDrugId',
+  cultivationStatus: 'cultivationStatus',
+  cultivationRegions: 'cultivationRegions',
+  wildHarvestingRegions: 'wildHarvestingRegions',
+  harvestingPractice: 'harvestingPractice',
+  daodiStatus: 'daodiStatus',
+  daodiRegions: 'daodiRegions'
+};
+
+exports.Prisma.EthnobotanyScalarFieldEnum = {
+  id: 'id',
+  plantId: 'plantId',
+  folkMedicinalUses: 'folkMedicinalUses',
+  otherCulturalUses: 'otherCulturalUses',
+  references: 'references'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -138,9 +242,116 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+exports.ReproductiveSystem = exports.$Enums.ReproductiveSystem = {
+  DIOECIOUS: 'DIOECIOUS',
+  MONOECIOUS: 'MONOECIOUS',
+  PARADIOECIOUS: 'PARADIOECIOUS'
+};
+
+exports.Lifecycle = exports.$Enums.Lifecycle = {
+  ANNUAL: 'ANNUAL',
+  BIENNIAL: 'BIENNIAL',
+  PERENNIAL: 'PERENNIAL'
+};
+
+exports.Month = exports.$Enums.Month = {
+  JANUARY: 'JANUARY',
+  FEBRUARY: 'FEBRUARY',
+  MARCH: 'MARCH',
+  APRIL: 'APRIL',
+  MAY: 'MAY',
+  JUNE: 'JUNE',
+  JULY: 'JULY',
+  AUGUST: 'AUGUST',
+  SEPTEMBER: 'SEPTEMBER',
+  OCTOBER: 'OCTOBER',
+  NOVEMBER: 'NOVEMBER',
+  DECEMBER: 'DECEMBER'
+};
+
+exports.GlobalConservationStatus = exports.$Enums.GlobalConservationStatus = {
+  CRITICALLY_ENDANGERED: 'CRITICALLY_ENDANGERED',
+  DATA_DEFICIENT: 'DATA_DEFICIENT',
+  ENDANGERED: 'ENDANGERED',
+  LEAST_CONCERN: 'LEAST_CONCERN',
+  NEAR_THREATENED: 'NEAR_THREATENED',
+  NOT_EVALUATED: 'NOT_EVALUATED',
+  VULNERABLE: 'VULNERABLE'
+};
+
+exports.ProtectedStatus = exports.$Enums.ProtectedStatus = {
+  CHINA_CAT_II: 'CHINA_CAT_II',
+  CHINA_SEPA_CAT_II: 'CHINA_SEPA_CAT_II',
+  SEPA_CATEGORY_II: 'SEPA_CATEGORY_II',
+  CITES_APPENDIX_I: 'CITES_APPENDIX_I',
+  CITES_APPENDIX_II: 'CITES_APPENDIX_II',
+  WTR_ANNEX_D: 'WTR_ANNEX_D'
+};
+
+exports.InvasiveStatus = exports.$Enums.InvasiveStatus = {
+  NON_INVASIVE: 'NON_INVASIVE',
+  POTENTIALLY_INVASIVE: 'POTENTIALLY_INVASIVE',
+  INVASIVE: 'INVASIVE'
+};
+
+exports.Taste = exports.$Enums.Taste = {
+  ACRID: 'ACRID',
+  ASTRINGENT: 'ASTRINGENT',
+  BITTER: 'BITTER',
+  BLAND: 'BLAND',
+  PUNGENT: 'PUNGENT',
+  SALTY: 'SALTY',
+  SOUR: 'SOUR',
+  SWEET: 'SWEET'
+};
+
+exports.EnergyFlow = exports.$Enums.EnergyFlow = {
+  COLD: 'COLD',
+  COOL: 'COOL',
+  HOT: 'HOT',
+  NEUTRAL: 'NEUTRAL',
+  WARM: 'WARM'
+};
+
+exports.Meridian = exports.$Enums.Meridian = {
+  BLADDER: 'BLADDER',
+  GALLBLADDER: 'GALLBLADDER',
+  HEART: 'HEART',
+  INTESTINE: 'INTESTINE',
+  KIDNEY: 'KIDNEY',
+  LARGE_INTESTINE: 'LARGE_INTESTINE',
+  LIVER: 'LIVER',
+  LUNG: 'LUNG',
+  PERICARDIUM: 'PERICARDIUM',
+  SAN_JIAO: 'SAN_JIAO',
+  SMALL_INTESTINE: 'SMALL_INTESTINE',
+  SPLEEN: 'SPLEEN',
+  STOMACH: 'STOMACH'
+};
+
+exports.HarvestingPractice = exports.$Enums.HarvestingPractice = {
+  CULTIVATED: 'CULTIVATED',
+  FOSTERED: 'FOSTERED',
+  WILD_HARVESTED: 'WILD_HARVESTED'
+};
 
 exports.Prisma.ModelName = {
-  User: 'User'
+  User: 'User',
+  PlantNomenclature: 'PlantNomenclature',
+  PlantTaxonomy: 'PlantTaxonomy',
+  PlantSynonym: 'PlantSynonym',
+  PlantMorphology: 'PlantMorphology',
+  PlantEcologyDistribution: 'PlantEcologyDistribution',
+  PlantConservation: 'PlantConservation',
+  BotanicalGarden: 'BotanicalGarden',
+  MedicinalProperties: 'MedicinalProperties',
+  HerbalDrugBackground: 'HerbalDrugBackground',
+  SourcingBackground: 'SourcingBackground',
+  Ethnobotany: 'Ethnobotany'
 };
 
 /**

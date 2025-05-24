@@ -156,20 +156,19 @@ enum HarvestingPractice {
   WILD_HARVESTED
 }
 
-// May 21 todo:
 // Entity Models: with @map and @@map for names in DBMS:
 model PlantNomenclature {
   internalId          Int           @id @default(autoincrement()) @map("internal_id")
   plantScientificName String        @unique @map("scientific_name")
   plantCommonName     String[]      @map("common_names")
-  plantPinyin         String        @unique @map("pinyin") // verified as UNIQUE
-  plantChineseName    String        @unique @map("chinese_name") // verified as UNIQUE
+  plantPinyin         String?       @unique @map("pinyin") // verified as UNIQUE -- NULL possible
+  plantChineseName    String?       @unique @map("chinese_name") // verified as UNIQUE -- NULL possible
   taxonomyId          Int           @map("taxonomy_id")
   taxonomy            PlantTaxonomy @relation(fields: [taxonomyId], references: [id])
 
   botanicalGardenList  BotanicalGarden[] // implicit many-to-many in Prisma
   synonyms             PlantSynonym[]
-  morphologies         PlantMorphology[]
+  morphologies         PlantMorphology[] // implicit many-to-many in Prisma
   ecologyDistributions PlantEcologyDistribution? // one-to-one
   conservation         PlantConservation? // one-to-one
 
