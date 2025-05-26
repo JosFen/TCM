@@ -3403,8 +3403,8 @@ export namespace Prisma {
     internalId: number
     plantScientificName: string
     plantCommonName: string[]
-    plantPinyin: string
-    plantChineseName: string
+    plantPinyin: string | null
+    plantChineseName: string | null
     taxonomyId: number
     _count: PlantNomenclatureCountAggregateOutputType | null
     _avg: PlantNomenclatureAvgAggregateOutputType | null
@@ -3509,8 +3509,8 @@ export namespace Prisma {
       internalId: number
       plantScientificName: string
       plantCommonName: string[]
-      plantPinyin: string
-      plantChineseName: string
+      plantPinyin: string | null
+      plantChineseName: string | null
       taxonomyId: number
     }, ExtArgs["result"]["plantNomenclature"]>
     composites: {}
@@ -16142,8 +16142,8 @@ export namespace Prisma {
     internalId?: IntFilter<"PlantNomenclature"> | number
     plantScientificName?: StringFilter<"PlantNomenclature"> | string
     plantCommonName?: StringNullableListFilter<"PlantNomenclature">
-    plantPinyin?: StringFilter<"PlantNomenclature"> | string
-    plantChineseName?: StringFilter<"PlantNomenclature"> | string
+    plantPinyin?: StringNullableFilter<"PlantNomenclature"> | string | null
+    plantChineseName?: StringNullableFilter<"PlantNomenclature"> | string | null
     taxonomyId?: IntFilter<"PlantNomenclature"> | number
     taxonomy?: XOR<PlantTaxonomyScalarRelationFilter, PlantTaxonomyWhereInput>
     botanicalGardenList?: BotanicalGardenListRelationFilter
@@ -16159,8 +16159,8 @@ export namespace Prisma {
     internalId?: SortOrder
     plantScientificName?: SortOrder
     plantCommonName?: SortOrder
-    plantPinyin?: SortOrder
-    plantChineseName?: SortOrder
+    plantPinyin?: SortOrderInput | SortOrder
+    plantChineseName?: SortOrderInput | SortOrder
     taxonomyId?: SortOrder
     taxonomy?: PlantTaxonomyOrderByWithRelationInput
     botanicalGardenList?: BotanicalGardenOrderByRelationAggregateInput
@@ -16196,8 +16196,8 @@ export namespace Prisma {
     internalId?: SortOrder
     plantScientificName?: SortOrder
     plantCommonName?: SortOrder
-    plantPinyin?: SortOrder
-    plantChineseName?: SortOrder
+    plantPinyin?: SortOrderInput | SortOrder
+    plantChineseName?: SortOrderInput | SortOrder
     taxonomyId?: SortOrder
     _count?: PlantNomenclatureCountOrderByAggregateInput
     _avg?: PlantNomenclatureAvgOrderByAggregateInput
@@ -16213,8 +16213,8 @@ export namespace Prisma {
     internalId?: IntWithAggregatesFilter<"PlantNomenclature"> | number
     plantScientificName?: StringWithAggregatesFilter<"PlantNomenclature"> | string
     plantCommonName?: StringNullableListFilter<"PlantNomenclature">
-    plantPinyin?: StringWithAggregatesFilter<"PlantNomenclature"> | string
-    plantChineseName?: StringWithAggregatesFilter<"PlantNomenclature"> | string
+    plantPinyin?: StringNullableWithAggregatesFilter<"PlantNomenclature"> | string | null
+    plantChineseName?: StringNullableWithAggregatesFilter<"PlantNomenclature"> | string | null
     taxonomyId?: IntWithAggregatesFilter<"PlantNomenclature"> | number
   }
 
@@ -16929,8 +16929,8 @@ export namespace Prisma {
   export type PlantNomenclatureCreateInput = {
     plantScientificName: string
     plantCommonName?: PlantNomenclatureCreateplantCommonNameInput | string[]
-    plantPinyin: string
-    plantChineseName: string
+    plantPinyin?: string | null
+    plantChineseName?: string | null
     taxonomy: PlantTaxonomyCreateNestedOneWithoutPlantsInput
     botanicalGardenList?: BotanicalGardenCreateNestedManyWithoutPlantsInput
     synonyms?: PlantSynonymCreateNestedManyWithoutPlantInput
@@ -16945,8 +16945,8 @@ export namespace Prisma {
     internalId?: number
     plantScientificName: string
     plantCommonName?: PlantNomenclatureCreateplantCommonNameInput | string[]
-    plantPinyin: string
-    plantChineseName: string
+    plantPinyin?: string | null
+    plantChineseName?: string | null
     taxonomyId: number
     botanicalGardenList?: BotanicalGardenUncheckedCreateNestedManyWithoutPlantsInput
     synonyms?: PlantSynonymUncheckedCreateNestedManyWithoutPlantInput
@@ -16960,8 +16960,8 @@ export namespace Prisma {
   export type PlantNomenclatureUpdateInput = {
     plantScientificName?: StringFieldUpdateOperationsInput | string
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
-    plantPinyin?: StringFieldUpdateOperationsInput | string
-    plantChineseName?: StringFieldUpdateOperationsInput | string
+    plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
+    plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
     taxonomy?: PlantTaxonomyUpdateOneRequiredWithoutPlantsNestedInput
     botanicalGardenList?: BotanicalGardenUpdateManyWithoutPlantsNestedInput
     synonyms?: PlantSynonymUpdateManyWithoutPlantNestedInput
@@ -16976,8 +16976,8 @@ export namespace Prisma {
     internalId?: IntFieldUpdateOperationsInput | number
     plantScientificName?: StringFieldUpdateOperationsInput | string
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
-    plantPinyin?: StringFieldUpdateOperationsInput | string
-    plantChineseName?: StringFieldUpdateOperationsInput | string
+    plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
+    plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
     taxonomyId?: IntFieldUpdateOperationsInput | number
     botanicalGardenList?: BotanicalGardenUncheckedUpdateManyWithoutPlantsNestedInput
     synonyms?: PlantSynonymUncheckedUpdateManyWithoutPlantNestedInput
@@ -16992,24 +16992,24 @@ export namespace Prisma {
     internalId?: number
     plantScientificName: string
     plantCommonName?: PlantNomenclatureCreateplantCommonNameInput | string[]
-    plantPinyin: string
-    plantChineseName: string
+    plantPinyin?: string | null
+    plantChineseName?: string | null
     taxonomyId: number
   }
 
   export type PlantNomenclatureUpdateManyMutationInput = {
     plantScientificName?: StringFieldUpdateOperationsInput | string
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
-    plantPinyin?: StringFieldUpdateOperationsInput | string
-    plantChineseName?: StringFieldUpdateOperationsInput | string
+    plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
+    plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PlantNomenclatureUncheckedUpdateManyInput = {
     internalId?: IntFieldUpdateOperationsInput | number
     plantScientificName?: StringFieldUpdateOperationsInput | string
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
-    plantPinyin?: StringFieldUpdateOperationsInput | string
-    plantChineseName?: StringFieldUpdateOperationsInput | string
+    plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
+    plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
     taxonomyId?: IntFieldUpdateOperationsInput | number
   }
 
@@ -17762,6 +17762,21 @@ export namespace Prisma {
     isEmpty?: boolean
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type PlantTaxonomyScalarRelationFilter = {
     is?: PlantTaxonomyWhereInput
     isNot?: PlantTaxonomyWhereInput
@@ -17804,6 +17819,11 @@ export namespace Prisma {
   export type EthnobotanyNullableScalarRelationFilter = {
     is?: EthnobotanyWhereInput | null
     isNot?: EthnobotanyWhereInput | null
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
   }
 
   export type BotanicalGardenOrderByRelationAggregateInput = {
@@ -17873,7 +17893,7 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
     notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -17885,7 +17905,10 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type BoolNullableFilter<$PrismaModel = never> = {
@@ -17897,11 +17920,6 @@ export namespace Prisma {
     every?: PlantNomenclatureWhereInput
     some?: PlantNomenclatureWhereInput
     none?: PlantNomenclatureWhereInput
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
   }
 
   export type PlantNomenclatureOrderByRelationAggregateInput = {
@@ -17935,24 +17953,6 @@ export namespace Prisma {
 
   export type PlantTaxonomySumOrderByAggregateInput = {
     id?: SortOrder
-  }
-
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -18539,6 +18539,10 @@ export namespace Prisma {
     push?: string | string[]
   }
 
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
   export type PlantTaxonomyUpdateOneRequiredWithoutPlantsNestedInput = {
     create?: XOR<PlantTaxonomyCreateWithoutPlantsInput, PlantTaxonomyUncheckedCreateWithoutPlantsInput>
     connectOrCreate?: PlantTaxonomyCreateOrConnectWithoutPlantsInput
@@ -18735,10 +18739,6 @@ export namespace Prisma {
     connectOrCreate?: PlantNomenclatureCreateOrConnectWithoutTaxonomyInput | PlantNomenclatureCreateOrConnectWithoutTaxonomyInput[]
     createMany?: PlantNomenclatureCreateManyTaxonomyInputEnvelope
     connect?: PlantNomenclatureWhereUniqueInput | PlantNomenclatureWhereUniqueInput[]
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type NullableBoolFieldUpdateOperationsInput = {
@@ -19221,6 +19221,20 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -19246,25 +19260,6 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
-  export type NestedBoolNullableFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
-    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -19293,6 +19288,11 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedBoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
   }
 
   export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -19763,8 +19763,8 @@ export namespace Prisma {
   export type PlantNomenclatureCreateWithoutTaxonomyInput = {
     plantScientificName: string
     plantCommonName?: PlantNomenclatureCreateplantCommonNameInput | string[]
-    plantPinyin: string
-    plantChineseName: string
+    plantPinyin?: string | null
+    plantChineseName?: string | null
     botanicalGardenList?: BotanicalGardenCreateNestedManyWithoutPlantsInput
     synonyms?: PlantSynonymCreateNestedManyWithoutPlantInput
     morphologies?: PlantMorphologyCreateNestedManyWithoutPlantsInput
@@ -19778,8 +19778,8 @@ export namespace Prisma {
     internalId?: number
     plantScientificName: string
     plantCommonName?: PlantNomenclatureCreateplantCommonNameInput | string[]
-    plantPinyin: string
-    plantChineseName: string
+    plantPinyin?: string | null
+    plantChineseName?: string | null
     botanicalGardenList?: BotanicalGardenUncheckedCreateNestedManyWithoutPlantsInput
     synonyms?: PlantSynonymUncheckedCreateNestedManyWithoutPlantInput
     morphologies?: PlantMorphologyUncheckedCreateNestedManyWithoutPlantsInput
@@ -19822,16 +19822,16 @@ export namespace Prisma {
     internalId?: IntFilter<"PlantNomenclature"> | number
     plantScientificName?: StringFilter<"PlantNomenclature"> | string
     plantCommonName?: StringNullableListFilter<"PlantNomenclature">
-    plantPinyin?: StringFilter<"PlantNomenclature"> | string
-    plantChineseName?: StringFilter<"PlantNomenclature"> | string
+    plantPinyin?: StringNullableFilter<"PlantNomenclature"> | string | null
+    plantChineseName?: StringNullableFilter<"PlantNomenclature"> | string | null
     taxonomyId?: IntFilter<"PlantNomenclature"> | number
   }
 
   export type PlantNomenclatureCreateWithoutSynonymsInput = {
     plantScientificName: string
     plantCommonName?: PlantNomenclatureCreateplantCommonNameInput | string[]
-    plantPinyin: string
-    plantChineseName: string
+    plantPinyin?: string | null
+    plantChineseName?: string | null
     taxonomy: PlantTaxonomyCreateNestedOneWithoutPlantsInput
     botanicalGardenList?: BotanicalGardenCreateNestedManyWithoutPlantsInput
     morphologies?: PlantMorphologyCreateNestedManyWithoutPlantsInput
@@ -19845,8 +19845,8 @@ export namespace Prisma {
     internalId?: number
     plantScientificName: string
     plantCommonName?: PlantNomenclatureCreateplantCommonNameInput | string[]
-    plantPinyin: string
-    plantChineseName: string
+    plantPinyin?: string | null
+    plantChineseName?: string | null
     taxonomyId: number
     botanicalGardenList?: BotanicalGardenUncheckedCreateNestedManyWithoutPlantsInput
     morphologies?: PlantMorphologyUncheckedCreateNestedManyWithoutPlantsInput
@@ -19875,8 +19875,8 @@ export namespace Prisma {
   export type PlantNomenclatureUpdateWithoutSynonymsInput = {
     plantScientificName?: StringFieldUpdateOperationsInput | string
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
-    plantPinyin?: StringFieldUpdateOperationsInput | string
-    plantChineseName?: StringFieldUpdateOperationsInput | string
+    plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
+    plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
     taxonomy?: PlantTaxonomyUpdateOneRequiredWithoutPlantsNestedInput
     botanicalGardenList?: BotanicalGardenUpdateManyWithoutPlantsNestedInput
     morphologies?: PlantMorphologyUpdateManyWithoutPlantsNestedInput
@@ -19890,8 +19890,8 @@ export namespace Prisma {
     internalId?: IntFieldUpdateOperationsInput | number
     plantScientificName?: StringFieldUpdateOperationsInput | string
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
-    plantPinyin?: StringFieldUpdateOperationsInput | string
-    plantChineseName?: StringFieldUpdateOperationsInput | string
+    plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
+    plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
     taxonomyId?: IntFieldUpdateOperationsInput | number
     botanicalGardenList?: BotanicalGardenUncheckedUpdateManyWithoutPlantsNestedInput
     morphologies?: PlantMorphologyUncheckedUpdateManyWithoutPlantsNestedInput
@@ -19904,8 +19904,8 @@ export namespace Prisma {
   export type PlantNomenclatureCreateWithoutMorphologiesInput = {
     plantScientificName: string
     plantCommonName?: PlantNomenclatureCreateplantCommonNameInput | string[]
-    plantPinyin: string
-    plantChineseName: string
+    plantPinyin?: string | null
+    plantChineseName?: string | null
     taxonomy: PlantTaxonomyCreateNestedOneWithoutPlantsInput
     botanicalGardenList?: BotanicalGardenCreateNestedManyWithoutPlantsInput
     synonyms?: PlantSynonymCreateNestedManyWithoutPlantInput
@@ -19919,8 +19919,8 @@ export namespace Prisma {
     internalId?: number
     plantScientificName: string
     plantCommonName?: PlantNomenclatureCreateplantCommonNameInput | string[]
-    plantPinyin: string
-    plantChineseName: string
+    plantPinyin?: string | null
+    plantChineseName?: string | null
     taxonomyId: number
     botanicalGardenList?: BotanicalGardenUncheckedCreateNestedManyWithoutPlantsInput
     synonyms?: PlantSynonymUncheckedCreateNestedManyWithoutPlantInput
@@ -19954,8 +19954,8 @@ export namespace Prisma {
   export type PlantNomenclatureCreateWithoutEcologyDistributionsInput = {
     plantScientificName: string
     plantCommonName?: PlantNomenclatureCreateplantCommonNameInput | string[]
-    plantPinyin: string
-    plantChineseName: string
+    plantPinyin?: string | null
+    plantChineseName?: string | null
     taxonomy: PlantTaxonomyCreateNestedOneWithoutPlantsInput
     botanicalGardenList?: BotanicalGardenCreateNestedManyWithoutPlantsInput
     synonyms?: PlantSynonymCreateNestedManyWithoutPlantInput
@@ -19969,8 +19969,8 @@ export namespace Prisma {
     internalId?: number
     plantScientificName: string
     plantCommonName?: PlantNomenclatureCreateplantCommonNameInput | string[]
-    plantPinyin: string
-    plantChineseName: string
+    plantPinyin?: string | null
+    plantChineseName?: string | null
     taxonomyId: number
     botanicalGardenList?: BotanicalGardenUncheckedCreateNestedManyWithoutPlantsInput
     synonyms?: PlantSynonymUncheckedCreateNestedManyWithoutPlantInput
@@ -19999,8 +19999,8 @@ export namespace Prisma {
   export type PlantNomenclatureUpdateWithoutEcologyDistributionsInput = {
     plantScientificName?: StringFieldUpdateOperationsInput | string
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
-    plantPinyin?: StringFieldUpdateOperationsInput | string
-    plantChineseName?: StringFieldUpdateOperationsInput | string
+    plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
+    plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
     taxonomy?: PlantTaxonomyUpdateOneRequiredWithoutPlantsNestedInput
     botanicalGardenList?: BotanicalGardenUpdateManyWithoutPlantsNestedInput
     synonyms?: PlantSynonymUpdateManyWithoutPlantNestedInput
@@ -20014,8 +20014,8 @@ export namespace Prisma {
     internalId?: IntFieldUpdateOperationsInput | number
     plantScientificName?: StringFieldUpdateOperationsInput | string
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
-    plantPinyin?: StringFieldUpdateOperationsInput | string
-    plantChineseName?: StringFieldUpdateOperationsInput | string
+    plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
+    plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
     taxonomyId?: IntFieldUpdateOperationsInput | number
     botanicalGardenList?: BotanicalGardenUncheckedUpdateManyWithoutPlantsNestedInput
     synonyms?: PlantSynonymUncheckedUpdateManyWithoutPlantNestedInput
@@ -20028,8 +20028,8 @@ export namespace Prisma {
   export type PlantNomenclatureCreateWithoutConservationInput = {
     plantScientificName: string
     plantCommonName?: PlantNomenclatureCreateplantCommonNameInput | string[]
-    plantPinyin: string
-    plantChineseName: string
+    plantPinyin?: string | null
+    plantChineseName?: string | null
     taxonomy: PlantTaxonomyCreateNestedOneWithoutPlantsInput
     botanicalGardenList?: BotanicalGardenCreateNestedManyWithoutPlantsInput
     synonyms?: PlantSynonymCreateNestedManyWithoutPlantInput
@@ -20043,8 +20043,8 @@ export namespace Prisma {
     internalId?: number
     plantScientificName: string
     plantCommonName?: PlantNomenclatureCreateplantCommonNameInput | string[]
-    plantPinyin: string
-    plantChineseName: string
+    plantPinyin?: string | null
+    plantChineseName?: string | null
     taxonomyId: number
     botanicalGardenList?: BotanicalGardenUncheckedCreateNestedManyWithoutPlantsInput
     synonyms?: PlantSynonymUncheckedCreateNestedManyWithoutPlantInput
@@ -20073,8 +20073,8 @@ export namespace Prisma {
   export type PlantNomenclatureUpdateWithoutConservationInput = {
     plantScientificName?: StringFieldUpdateOperationsInput | string
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
-    plantPinyin?: StringFieldUpdateOperationsInput | string
-    plantChineseName?: StringFieldUpdateOperationsInput | string
+    plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
+    plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
     taxonomy?: PlantTaxonomyUpdateOneRequiredWithoutPlantsNestedInput
     botanicalGardenList?: BotanicalGardenUpdateManyWithoutPlantsNestedInput
     synonyms?: PlantSynonymUpdateManyWithoutPlantNestedInput
@@ -20088,8 +20088,8 @@ export namespace Prisma {
     internalId?: IntFieldUpdateOperationsInput | number
     plantScientificName?: StringFieldUpdateOperationsInput | string
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
-    plantPinyin?: StringFieldUpdateOperationsInput | string
-    plantChineseName?: StringFieldUpdateOperationsInput | string
+    plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
+    plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
     taxonomyId?: IntFieldUpdateOperationsInput | number
     botanicalGardenList?: BotanicalGardenUncheckedUpdateManyWithoutPlantsNestedInput
     synonyms?: PlantSynonymUncheckedUpdateManyWithoutPlantNestedInput
@@ -20102,8 +20102,8 @@ export namespace Prisma {
   export type PlantNomenclatureCreateWithoutBotanicalGardenListInput = {
     plantScientificName: string
     plantCommonName?: PlantNomenclatureCreateplantCommonNameInput | string[]
-    plantPinyin: string
-    plantChineseName: string
+    plantPinyin?: string | null
+    plantChineseName?: string | null
     taxonomy: PlantTaxonomyCreateNestedOneWithoutPlantsInput
     synonyms?: PlantSynonymCreateNestedManyWithoutPlantInput
     morphologies?: PlantMorphologyCreateNestedManyWithoutPlantsInput
@@ -20117,8 +20117,8 @@ export namespace Prisma {
     internalId?: number
     plantScientificName: string
     plantCommonName?: PlantNomenclatureCreateplantCommonNameInput | string[]
-    plantPinyin: string
-    plantChineseName: string
+    plantPinyin?: string | null
+    plantChineseName?: string | null
     taxonomyId: number
     synonyms?: PlantSynonymUncheckedCreateNestedManyWithoutPlantInput
     morphologies?: PlantMorphologyUncheckedCreateNestedManyWithoutPlantsInput
@@ -20203,8 +20203,8 @@ export namespace Prisma {
   export type PlantNomenclatureCreateWithoutHerbalDrugsInput = {
     plantScientificName: string
     plantCommonName?: PlantNomenclatureCreateplantCommonNameInput | string[]
-    plantPinyin: string
-    plantChineseName: string
+    plantPinyin?: string | null
+    plantChineseName?: string | null
     taxonomy: PlantTaxonomyCreateNestedOneWithoutPlantsInput
     botanicalGardenList?: BotanicalGardenCreateNestedManyWithoutPlantsInput
     synonyms?: PlantSynonymCreateNestedManyWithoutPlantInput
@@ -20218,8 +20218,8 @@ export namespace Prisma {
     internalId?: number
     plantScientificName: string
     plantCommonName?: PlantNomenclatureCreateplantCommonNameInput | string[]
-    plantPinyin: string
-    plantChineseName: string
+    plantPinyin?: string | null
+    plantChineseName?: string | null
     taxonomyId: number
     botanicalGardenList?: BotanicalGardenUncheckedCreateNestedManyWithoutPlantsInput
     synonyms?: PlantSynonymUncheckedCreateNestedManyWithoutPlantInput
@@ -20304,8 +20304,8 @@ export namespace Prisma {
   export type PlantNomenclatureUpdateWithoutHerbalDrugsInput = {
     plantScientificName?: StringFieldUpdateOperationsInput | string
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
-    plantPinyin?: StringFieldUpdateOperationsInput | string
-    plantChineseName?: StringFieldUpdateOperationsInput | string
+    plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
+    plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
     taxonomy?: PlantTaxonomyUpdateOneRequiredWithoutPlantsNestedInput
     botanicalGardenList?: BotanicalGardenUpdateManyWithoutPlantsNestedInput
     synonyms?: PlantSynonymUpdateManyWithoutPlantNestedInput
@@ -20319,8 +20319,8 @@ export namespace Prisma {
     internalId?: IntFieldUpdateOperationsInput | number
     plantScientificName?: StringFieldUpdateOperationsInput | string
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
-    plantPinyin?: StringFieldUpdateOperationsInput | string
-    plantChineseName?: StringFieldUpdateOperationsInput | string
+    plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
+    plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
     taxonomyId?: IntFieldUpdateOperationsInput | number
     botanicalGardenList?: BotanicalGardenUncheckedUpdateManyWithoutPlantsNestedInput
     synonyms?: PlantSynonymUncheckedUpdateManyWithoutPlantNestedInput
@@ -20467,8 +20467,8 @@ export namespace Prisma {
   export type PlantNomenclatureCreateWithoutEthnobotaniesInput = {
     plantScientificName: string
     plantCommonName?: PlantNomenclatureCreateplantCommonNameInput | string[]
-    plantPinyin: string
-    plantChineseName: string
+    plantPinyin?: string | null
+    plantChineseName?: string | null
     taxonomy: PlantTaxonomyCreateNestedOneWithoutPlantsInput
     botanicalGardenList?: BotanicalGardenCreateNestedManyWithoutPlantsInput
     synonyms?: PlantSynonymCreateNestedManyWithoutPlantInput
@@ -20482,8 +20482,8 @@ export namespace Prisma {
     internalId?: number
     plantScientificName: string
     plantCommonName?: PlantNomenclatureCreateplantCommonNameInput | string[]
-    plantPinyin: string
-    plantChineseName: string
+    plantPinyin?: string | null
+    plantChineseName?: string | null
     taxonomyId: number
     botanicalGardenList?: BotanicalGardenUncheckedCreateNestedManyWithoutPlantsInput
     synonyms?: PlantSynonymUncheckedCreateNestedManyWithoutPlantInput
@@ -20512,8 +20512,8 @@ export namespace Prisma {
   export type PlantNomenclatureUpdateWithoutEthnobotaniesInput = {
     plantScientificName?: StringFieldUpdateOperationsInput | string
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
-    plantPinyin?: StringFieldUpdateOperationsInput | string
-    plantChineseName?: StringFieldUpdateOperationsInput | string
+    plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
+    plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
     taxonomy?: PlantTaxonomyUpdateOneRequiredWithoutPlantsNestedInput
     botanicalGardenList?: BotanicalGardenUpdateManyWithoutPlantsNestedInput
     synonyms?: PlantSynonymUpdateManyWithoutPlantNestedInput
@@ -20527,8 +20527,8 @@ export namespace Prisma {
     internalId?: IntFieldUpdateOperationsInput | number
     plantScientificName?: StringFieldUpdateOperationsInput | string
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
-    plantPinyin?: StringFieldUpdateOperationsInput | string
-    plantChineseName?: StringFieldUpdateOperationsInput | string
+    plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
+    plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
     taxonomyId?: IntFieldUpdateOperationsInput | number
     botanicalGardenList?: BotanicalGardenUncheckedUpdateManyWithoutPlantsNestedInput
     synonyms?: PlantSynonymUncheckedUpdateManyWithoutPlantNestedInput
@@ -20656,15 +20656,15 @@ export namespace Prisma {
     internalId?: number
     plantScientificName: string
     plantCommonName?: PlantNomenclatureCreateplantCommonNameInput | string[]
-    plantPinyin: string
-    plantChineseName: string
+    plantPinyin?: string | null
+    plantChineseName?: string | null
   }
 
   export type PlantNomenclatureUpdateWithoutTaxonomyInput = {
     plantScientificName?: StringFieldUpdateOperationsInput | string
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
-    plantPinyin?: StringFieldUpdateOperationsInput | string
-    plantChineseName?: StringFieldUpdateOperationsInput | string
+    plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
+    plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
     botanicalGardenList?: BotanicalGardenUpdateManyWithoutPlantsNestedInput
     synonyms?: PlantSynonymUpdateManyWithoutPlantNestedInput
     morphologies?: PlantMorphologyUpdateManyWithoutPlantsNestedInput
@@ -20678,8 +20678,8 @@ export namespace Prisma {
     internalId?: IntFieldUpdateOperationsInput | number
     plantScientificName?: StringFieldUpdateOperationsInput | string
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
-    plantPinyin?: StringFieldUpdateOperationsInput | string
-    plantChineseName?: StringFieldUpdateOperationsInput | string
+    plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
+    plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
     botanicalGardenList?: BotanicalGardenUncheckedUpdateManyWithoutPlantsNestedInput
     synonyms?: PlantSynonymUncheckedUpdateManyWithoutPlantNestedInput
     morphologies?: PlantMorphologyUncheckedUpdateManyWithoutPlantsNestedInput
@@ -20693,15 +20693,15 @@ export namespace Prisma {
     internalId?: IntFieldUpdateOperationsInput | number
     plantScientificName?: StringFieldUpdateOperationsInput | string
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
-    plantPinyin?: StringFieldUpdateOperationsInput | string
-    plantChineseName?: StringFieldUpdateOperationsInput | string
+    plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
+    plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PlantNomenclatureUpdateWithoutMorphologiesInput = {
     plantScientificName?: StringFieldUpdateOperationsInput | string
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
-    plantPinyin?: StringFieldUpdateOperationsInput | string
-    plantChineseName?: StringFieldUpdateOperationsInput | string
+    plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
+    plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
     taxonomy?: PlantTaxonomyUpdateOneRequiredWithoutPlantsNestedInput
     botanicalGardenList?: BotanicalGardenUpdateManyWithoutPlantsNestedInput
     synonyms?: PlantSynonymUpdateManyWithoutPlantNestedInput
@@ -20715,8 +20715,8 @@ export namespace Prisma {
     internalId?: IntFieldUpdateOperationsInput | number
     plantScientificName?: StringFieldUpdateOperationsInput | string
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
-    plantPinyin?: StringFieldUpdateOperationsInput | string
-    plantChineseName?: StringFieldUpdateOperationsInput | string
+    plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
+    plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
     taxonomyId?: IntFieldUpdateOperationsInput | number
     botanicalGardenList?: BotanicalGardenUncheckedUpdateManyWithoutPlantsNestedInput
     synonyms?: PlantSynonymUncheckedUpdateManyWithoutPlantNestedInput
@@ -20730,16 +20730,16 @@ export namespace Prisma {
     internalId?: IntFieldUpdateOperationsInput | number
     plantScientificName?: StringFieldUpdateOperationsInput | string
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
-    plantPinyin?: StringFieldUpdateOperationsInput | string
-    plantChineseName?: StringFieldUpdateOperationsInput | string
+    plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
+    plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
     taxonomyId?: IntFieldUpdateOperationsInput | number
   }
 
   export type PlantNomenclatureUpdateWithoutBotanicalGardenListInput = {
     plantScientificName?: StringFieldUpdateOperationsInput | string
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
-    plantPinyin?: StringFieldUpdateOperationsInput | string
-    plantChineseName?: StringFieldUpdateOperationsInput | string
+    plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
+    plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
     taxonomy?: PlantTaxonomyUpdateOneRequiredWithoutPlantsNestedInput
     synonyms?: PlantSynonymUpdateManyWithoutPlantNestedInput
     morphologies?: PlantMorphologyUpdateManyWithoutPlantsNestedInput
@@ -20753,8 +20753,8 @@ export namespace Prisma {
     internalId?: IntFieldUpdateOperationsInput | number
     plantScientificName?: StringFieldUpdateOperationsInput | string
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
-    plantPinyin?: StringFieldUpdateOperationsInput | string
-    plantChineseName?: StringFieldUpdateOperationsInput | string
+    plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
+    plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
     taxonomyId?: IntFieldUpdateOperationsInput | number
     synonyms?: PlantSynonymUncheckedUpdateManyWithoutPlantNestedInput
     morphologies?: PlantMorphologyUncheckedUpdateManyWithoutPlantsNestedInput
@@ -20768,8 +20768,8 @@ export namespace Prisma {
     internalId?: IntFieldUpdateOperationsInput | number
     plantScientificName?: StringFieldUpdateOperationsInput | string
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
-    plantPinyin?: StringFieldUpdateOperationsInput | string
-    plantChineseName?: StringFieldUpdateOperationsInput | string
+    plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
+    plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
     taxonomyId?: IntFieldUpdateOperationsInput | number
   }
 
