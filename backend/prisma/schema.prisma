@@ -86,12 +86,12 @@ enum Taste {
 }
 
 enum EnergyFlow {
-  COLD
   SLIGHTLY_COLD
-  HOT
+  COLD
   NEUTRAL
   SLIGHTLY_WARM
   WARM
+  HOT
 }
 
 enum Meridian {
@@ -152,7 +152,6 @@ enum InvasiveStatus {
 
 enum HarvestingPractice {
   CULTIVATED
-  // FOSTERED
   WILD_HARVESTED
 }
 
@@ -205,7 +204,7 @@ model PlantMorphology {
   isTerrestrial      Boolean?    @map("is_terrestrial")
   growthHabit        String?     @map("growth_habit") // reconcile the dataframe for spelling
   isDeciduous        Boolean?    @map("is_deciduous") //  add a note col for list value, and semi
-  isDeciduousNote    String?     @map("is_deciduous_note") 
+  isDeciduousNote    String?     @map("is_deciduous_note") // for list and semi- values
   // reproductiveSystem ReproductiveSystem? @map("reproductive_system")
   reproductiveSystem String?     @map("reproductive_system") // standardize some rows and keep the edge case values
   floweringPeriod    Month[]     @map("flowering_period")
@@ -217,14 +216,13 @@ model PlantMorphology {
 }
 
 model PlantEcologyDistribution {
-  id          Int      @id @default(autoincrement()) @map("id")
-  habitat     String?  @map("habitat") // unique necessary? seems not based on pivot table of this
-  plantOrigin String?  @map("plant_origins") // see comments in Kanban, either String or Json - refer Pivot table
-  globalRange String?  @map("global_range") // see comments in Kanban, either String or Json - refer Pivot table
-  chinaRange  String?  @map("china_range") // see comments in Kanban, either String or Json - refer Pivot table
+  id          Int     @id @default(autoincrement()) @map("id")
+  habitat     String? @map("habitat") // unique necessary? seems not based on pivot table of this
+  plantOrigin String? @map("plant_origins") // see comments in Kanban, either String or Json - refer Pivot table
+  globalRange String? @map("global_range") // see comments in Kanban, either String or Json - refer Pivot table
+  chinaRange  String? @map("china_range") // see comments in Kanban, either String or Json - refer Pivot table
   // endemic     Boolean? @map("endemic") // add another field endemic_remarks? 
   endemic     String? @map("endemic") // show the whole value for Yes 
-
 
   plantId Int               @unique @map("plant_id")
   plant   PlantNomenclature @relation(fields: [plantId], references: [internalId])
@@ -238,7 +236,7 @@ model PlantConservation {
   chinaConservationStatus  String?                   @map("china_conservation_status") // just use String for fuzzy search
   // remarks                  String?                   @map("remarks")
   // protectedStatus          ProtectedStatus?          @map("protected_status") // or enum[] TBC
-  protectedStatus          String?                   @map("protected_status") // or enum[] TBC
+  protectedStatus          String?                   @map("protected_status")
   invasiveStatus           InvasiveStatus?           @map("invasive_status") // enum? difference in values: Possible or Potential
   invasiveRange            String?                   @map("invasive_range") // just use String for fuzzy/prefix search
 
@@ -258,17 +256,18 @@ model BotanicalGarden {
 
 model MedicinalProperties {
   id                        Int          @id @default(autoincrement()) @map("id")
-  pharmaceuticalName        String?      @unique @map("pharmaceutical_name") // use col N in dataframe, some do not have values
+  // use col N in dataframe for pharmaceuticalName, some do not have values (DO NOT IMPORT THOSE ROWS): 
+  pharmaceuticalName        String?      @unique @map("pharmaceutical_name")
   herbalDrugPinyin          String       @unique @map("pinyin") // every Medicinal Material has pinyin in dataframe
-  taste                     Taste[]      @map("taste") // or string ? 
+  taste                     Taste[]      @map("taste")
   energyFlow                EnergyFlow[] @map("energy_flow") // refer to dataframe; 
-  meridians                 Meridian[]   @map("meridians")
+  meridians                 Meridian[]   @map("meridians") // stored in a sorted String list
   actions                   String?      @map("actions")
   pharmacologicalProperties String[]     @map("pharmacological_properties") // better use string[] which can be normalized later
   indications               String[]     @map("indications") // better use string[] which can be normalized later
   toxicity                  String?      @map("toxicity")
   // secondaryMetabolites      String[]     @map("secondary_metabolites") // values to be standardized as input,e.g., Plantainoside A, B, C, D, E, F
-  secondaryMetabolites      String?     @map("secondary_metabolites") // 
+  secondaryMetabolites      String?      @map("secondary_metabolites") // 
 
   herbalDrugs HerbalDrugBackground[] // implicit many-to-many
   // HerbalDrugBackground HerbalDrugBackground[]
@@ -281,7 +280,6 @@ model HerbalDrugBackground {
   herbalDrugPinyin    String   @map("pinyin")
   // plantPartUsed          PlantPartUsed[] @map("parts_used")
   plantPartUsed       String?  @map("parts_used") // has remarks in (), just make it String type, later we could standardize 
-  // plantPartDesc          String? @map("part_description")
   officialStatus      Boolean? @map("official_status")
   harvestingTime      Month[]  @map("harvesting_time")
   primaryProcessing   String?  @map("primary_processing")
@@ -300,16 +298,16 @@ model HerbalDrugBackground {
 }
 
 model SourcingBackground {
-  id                    Int                  @id @default(autoincrement()) @map("id")
-  herbalDrugId          Int                  @unique @map("herbal_drug_id")
-  cultivationStatus     Boolean?             @map("cultivated")
-  cultivationRegions    String?              @map("cultivation_regions") // use String due to remarks, prefix/partial search
-  wildHarvestingRegions String?              @map("harvesting_practice") //  due to remarks, or use Json type
-  harvestingPractice    HarvestingPractice[] @map("practices")
-  daodiStatus           Boolean?             @map("daodi")
-  daodiRegions          String?              @map("daodi_regions") // use String due to remarks, prefix/partial search, standardize later
-  // daodiDesc             String?              @map("daodi_description")
-  productionRegions     String?              @map("production_regions") // new col from datafram
+  id                     Int                  @id @default(autoincrement()) @map("id")
+  herbalDrugId           Int                  @unique @map("herbal_drug_id")
+  cultivationStatus      Boolean?             @map("cultivated") // yes = 1
+  cultivationRegions     String?              @map("cultivation_regions") // use String due to remarks, prefix/partial search
+  wildHarvestingRegions  String?              @map("wild_harvesting_regions") //  due to remarks, or use Json type
+  harvestingPractice     HarvestingPractice[] @map("harvesting_practice") // make a note for this field to explain "Fostered"
+  harvestingPracticeNote String?              @map("harvesting_practice_note")
+  daodiStatus            Boolean?             @map("daodi")
+  daodiRegions           String?              @map("daodi_regions") // use String due to remarks, prefix/partial search, standardize later
+  productionRegions      String?              @map("production_regions") // new col from datafram
 
   herbalDrug HerbalDrugBackground @relation(fields: [herbalDrugId], references: [id])
 
@@ -321,7 +319,7 @@ model Ethnobotany {
   plantId           Int      @unique @map("plant_id")
   folkMedicinalUses String?  @map("folk_medicinal_uses")
   otherCulturalUses String[] @map("other_cultural_uses")
-  references        String? @map("references") // leave blank
+  references        String?  @map("references") // leave blank
 
   plant PlantNomenclature @relation(fields: [plantId], references: [internalId])
 
