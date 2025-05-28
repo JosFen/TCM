@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
@@ -48,11 +45,12 @@ enum Lifecycle {
   PERENNIAL
 }
 
-enum ReproductiveSystem {
-  DIOECIOUS
-  MONOECIOUS
-  PARADIOECIOUS
-}
+// make it string:
+// enum ReproductiveSystem {
+//   DIOECIOUS
+//   MONOECIOUS
+//   PARADIOECIOUS
+// }
 
 enum Month {
   JANUARY
@@ -89,9 +87,10 @@ enum Taste {
 
 enum EnergyFlow {
   COLD
-  COOL
+  SLIGHTLY_COLD
   HOT
   NEUTRAL
+  SLIGHTLY_WARM
   WARM
 }
 
@@ -112,28 +111,29 @@ enum Meridian {
 }
 
 enum GlobalConservationStatus {
-  CRITICALLY_ENDANGERED
-  DATA_DEFICIENT
+  CRITICALLY_ENDANGERED // Highest risk
   ENDANGERED
-  LEAST_CONCERN
-  NEAR_THREATENED
-  NOT_EVALUATED
   VULNERABLE
+  NEAR_THREATENED
+  LEAST_CONCERN // Least risk
+  DATA_DEFICIENT // Uncertain, no clear data
+  NOT_EVALUATED // No evaluation yet
 }
 
-enum ProtectedStatus {
-  CHINA_CAT_II // (China) Cat. II
-  CHINA_SEPA_CAT_II // (China/ SEPA) Cat. II
-  SEPA_CATEGORY_II // Category II (SEPA)
-  CITES_APPENDIX_I // CITES: Appendix I
-  CITES_APPENDIX_II // CITES: Appendix II
-  WTR_ANNEX_D // WTR: Annex D
-}
+// to String
+// enum ProtectedStatus {
+//   CHINA_CAT_II // (China) Cat. II
+//   CHINA_SEPA_CAT_II // (China/ SEPA) Cat. II
+//   SEPA_CATEGORY_II // Category II (SEPA)
+//   CITES_APPENDIX_I // CITES: Appendix I
+//   CITES_APPENDIX_II // CITES: Appendix II
+//   WTR_ANNEX_D // WTR: Annex D
+// }
 
 enum InvasiveStatus {
   NON_INVASIVE
-  // POSSIBLY_INVASIVE //?
-  POTENTIALLY_INVASIVE
+  POSSIBLY_INVASIVE //?
+  // POTENTIALLY_INVASIVE
   INVASIVE
 }
 
@@ -152,7 +152,7 @@ enum InvasiveStatus {
 
 enum HarvestingPractice {
   CULTIVATED
-  FOSTERED
+  // FOSTERED
   WILD_HARVESTED
 }
 
@@ -165,6 +165,7 @@ model PlantNomenclature {
   plantChineseName    String?       @unique @map("chinese_name") // verified as UNIQUE -- NULL possible
   taxonomyId          Int           @map("taxonomy_id")
   taxonomy            PlantTaxonomy @relation(fields: [taxonomyId], references: [id])
+  links               String[]      @map("links")
 
   botanicalGardenList  BotanicalGarden[] // implicit many-to-many in Prisma
   synonyms             PlantSynonym[]
@@ -199,14 +200,16 @@ model PlantSynonym {
 }
 
 model PlantMorphology {
-  id                 Int                 @id @default(autoincrement()) @map("id")
-  lifecycle          Lifecycle[]         @map("lifecycle") // refer to dataframe
-  isTerrestrial      Boolean?            @map("is_terrestrial")
-  growthHabit        String?             @map("growth_habit")
-  isDeciduous        Boolean?            @map("is_deciduous") // Semi-deciduous valid? convert to enum
-  reproductiveSystem ReproductiveSystem? @map("reproductive_system")
-  floweringPeriod    Month[]             @map("flowering_period")
-  fruitingPeriod     Month[]             @map("fruiting_period")
+  id                 Int         @id @default(autoincrement()) @map("id")
+  lifecycle          Lifecycle[] @map("lifecycle") // refer to dataframe - enum dataframe
+  isTerrestrial      Boolean?    @map("is_terrestrial")
+  growthHabit        String?     @map("growth_habit") // reconcile the dataframe for spelling
+  isDeciduous        Boolean?    @map("is_deciduous") //  add a note col for list value, and semi
+  isDeciduousNote    String?     @map("is_deciduous_note") 
+  // reproductiveSystem ReproductiveSystem? @map("reproductive_system")
+  reproductiveSystem String?     @map("reproductive_system") // standardize some rows and keep the edge case values
+  floweringPeriod    Month[]     @map("flowering_period")
+  fruitingPeriod     Month[]     @map("fruiting_period")
 
   plants PlantNomenclature[] // implicit many-to-many
 
@@ -219,7 +222,9 @@ model PlantEcologyDistribution {
   plantOrigin String?  @map("plant_origins") // see comments in Kanban, either String or Json - refer Pivot table
   globalRange String?  @map("global_range") // see comments in Kanban, either String or Json - refer Pivot table
   chinaRange  String?  @map("china_range") // see comments in Kanban, either String or Json - refer Pivot table
-  endemic     Boolean? @map("endemic") // add another field endemic_remarks? 
+  // endemic     Boolean? @map("endemic") // add another field endemic_remarks? 
+  endemic     String? @map("endemic") // show the whole value for Yes 
+
 
   plantId Int               @unique @map("plant_id")
   plant   PlantNomenclature @relation(fields: [plantId], references: [internalId])
@@ -232,7 +237,8 @@ model PlantConservation {
   globalConservationStatus GlobalConservationStatus? @map("global_conservation_status")
   chinaConservationStatus  String?                   @map("china_conservation_status") // just use String for fuzzy search
   // remarks                  String?                   @map("remarks")
-  protectedStatus          ProtectedStatus?          @map("protected_status") // or enum[] TBC
+  // protectedStatus          ProtectedStatus?          @map("protected_status") // or enum[] TBC
+  protectedStatus          String?                   @map("protected_status") // or enum[] TBC
   invasiveStatus           InvasiveStatus?           @map("invasive_status") // enum? difference in values: Possible or Potential
   invasiveRange            String?                   @map("invasive_range") // just use String for fuzzy/prefix search
 
@@ -254,14 +260,15 @@ model MedicinalProperties {
   id                        Int          @id @default(autoincrement()) @map("id")
   pharmaceuticalName        String?      @unique @map("pharmaceutical_name") // use col N in dataframe, some do not have values
   herbalDrugPinyin          String       @unique @map("pinyin") // every Medicinal Material has pinyin in dataframe
-  taste                     Taste[]      @map("taste") // or string ? 'slightly' not included
-  energyFlow                EnergyFlow[] @map("energy_flow") // refer to dataframe; 'slightly' not included
+  taste                     Taste[]      @map("taste") // or string ? 
+  energyFlow                EnergyFlow[] @map("energy_flow") // refer to dataframe; 
   meridians                 Meridian[]   @map("meridians")
   actions                   String?      @map("actions")
   pharmacologicalProperties String[]     @map("pharmacological_properties") // better use string[] which can be normalized later
   indications               String[]     @map("indications") // better use string[] which can be normalized later
   toxicity                  String?      @map("toxicity")
-  secondaryMetabolites      String[]     @map("secondary_metabolites") // values to be standardized as input,e.g., Plantainoside A, B, C, D, E, F
+  // secondaryMetabolites      String[]     @map("secondary_metabolites") // values to be standardized as input,e.g., Plantainoside A, B, C, D, E, F
+  secondaryMetabolites      String?     @map("secondary_metabolites") // 
 
   herbalDrugs HerbalDrugBackground[] // implicit many-to-many
   // HerbalDrugBackground HerbalDrugBackground[]
@@ -300,8 +307,9 @@ model SourcingBackground {
   wildHarvestingRegions String?              @map("harvesting_practice") //  due to remarks, or use Json type
   harvestingPractice    HarvestingPractice[] @map("practices")
   daodiStatus           Boolean?             @map("daodi")
-  daodiRegions          String?              @map("daodi_regions") // use String due to remarks, prefix/partial search
+  daodiRegions          String?              @map("daodi_regions") // use String due to remarks, prefix/partial search, standardize later
   // daodiDesc             String?              @map("daodi_description")
+  productionRegions     String?              @map("production_regions") // new col from datafram
 
   herbalDrug HerbalDrugBackground @relation(fields: [herbalDrugId], references: [id])
 
@@ -311,9 +319,9 @@ model SourcingBackground {
 model Ethnobotany {
   id                Int      @id @default(autoincrement()) @map("id")
   plantId           Int      @unique @map("plant_id")
-  folkMedicinalUses String?   @map("folk_medicinal_uses")
+  folkMedicinalUses String?  @map("folk_medicinal_uses")
   otherCulturalUses String[] @map("other_cultural_uses")
-  references        String[]  @map("references") // better use String[] instead of String, as it will make search/render easier
+  references        String? @map("references") // leave blank
 
   plant PlantNomenclature @relation(fields: [plantId], references: [internalId])
 

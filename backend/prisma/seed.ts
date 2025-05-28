@@ -9,8 +9,8 @@ const processedScientifNames = new Set<string>();
 
 async function processPlantRow(row: any, index: number) {
   try {
-    if (!row.Genus || !row['Specific Epiphet']) {
-      console.warn(`Skipping row ${index}: Missing Genus or Specific Epiphet`);
+    if (!row['Specific Epiphet']) {
+      console.warn(`Skipping row ${index}: Specific Epiphet`);
       return null;
     }
 
@@ -19,6 +19,11 @@ async function processPlantRow(row: any, index: number) {
       console.log(`Skipping duplicate scientific name: ${scientificName}`);
       return null;
     }
+    processedScientifNames.add(scientificName);
+    // Find existing plant (if any)
+    let plant = await prisma.plantNomenclature.findUnique({
+      where: { plantScientificName: scientificName }
+    });
 
     // STEP 1: Find or create taxonomy manually
     const taxonomy = await prisma.plantTaxonomy.findFirst({
@@ -26,32 +31,36 @@ async function processPlantRow(row: any, index: number) {
         family: row['Plant Family'],
         class: row['Plant Class'],
         vascular: row['Plant Classification'] === 'Vascular' ? true :
-                  row['Plant Classification'] ? false : undefined
+                  null
       }
     }) ?? await prisma.plantTaxonomy.create({
       data: {
         family: row['Plant Family'],
         class: row['Plant Class'],
-        vascular: row['Plant Classification'] === 'Vascular' ? true :
-                  row['Plant Classification'] ? false : undefined
+        vascular: row['Plant Classification'] === 'Vascular' ? true : null
       }
     });
 
     // STEP 2: Create the plant
-    const plant = await prisma.plantNomenclature.create({
-      data: {
-        plantScientificName: scientificName,
-        plantCommonName: row['Common Name'] ? 
-          row['Common Name'].split(',').map((name: string) => name.trim()).filter(Boolean) : [],
-        plantPinyin: row['Pinyin (Plant Name)'] || null,
-        plantChineseName: row['Mandarin (Plant Name)'] || null,
-        taxonomy: {
-          connect: { id: taxonomy.id }
+    if (!plant) {
+      plant = await prisma.plantNomenclature.create({
+        data: {
+          plantScientificName: scientificName,
+          plantCommonName: row['Common Name'] ? 
+            row['Common Name'].split(',').map((name: string) => name.trim()).filter(Boolean) : [],
+          plantPinyin: row['Pinyin (Plant Name)'] || null,
+          plantChineseName: row['Mandarin (Plant Name)'] || null,
+          taxonomy: {
+            connect: { id: taxonomy.id }
+          }
         }
-      }
-    });
-
-    processedScientifNames.add(scientificName);
+      });
+      console.log(`Created plant: ${plant.plantScientificName}`);
+    } else {
+      console.log(`Plant already exists: ${scientificName}`);
+      // Optional: Update plantCommonName or other fields here if you want to merge new data
+    }
+   
     console.log(`Created plant: ${plant.plantScientificName}`);
     return plant;
 
@@ -62,6 +71,9 @@ async function processPlantRow(row: any, index: number) {
 }
 
 async function main() {
+  await prisma.$executeRawUnsafe(`
+  TRUNCATE TABLE plant_nomenclature, plant_taxonomy RESTART IDENTITY CASCADE;
+`);
   const results: any[] = [];
   
   // Read CSV file
