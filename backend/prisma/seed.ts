@@ -43,6 +43,11 @@ async function processPlantRow(row: any, index: number) {
 
     // STEP 2: Create the plant
     if (!plant) {
+      const linkList = [
+        row['MPNS Link']?.trim(),
+        row['FOC Link']?.trim(),
+        row['Kew POW Link']?.trim()
+      ].filter(Boolean);
       plant = await prisma.plantNomenclature.create({
         data: {
           plantScientificName: scientificName,
@@ -52,7 +57,8 @@ async function processPlantRow(row: any, index: number) {
           plantChineseName: row['Mandarin (Plant Name)'] || null,
           taxonomy: {
             connect: { id: taxonomy.id }
-          }
+          },
+          links: linkList
         }
       });
       console.log(`Created plant: ${plant.plantScientificName}`);
