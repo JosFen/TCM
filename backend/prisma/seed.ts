@@ -74,29 +74,29 @@ async function main() {
   await prisma.$executeRawUnsafe(`
   TRUNCATE TABLE plant_nomenclature, plant_taxonomy RESTART IDENTITY CASCADE;
 `);
-  // const results: any[] = [];
+  const results: any[] = [];
   
-  // // Read CSV file
-  // fs.createReadStream('./files/TCM_dataframe.csv')
-  //   .pipe(csv())
-  //   .on('data', (data: any) => results.push(data))
-  //   .on('end', async () => {
-  //     console.log(`CSV file successfully processed, ${results.length} records found`);
+  // Read CSV file
+  fs.createReadStream('./files/TCM_dataframe_v1.csv')
+    .pipe(csv())
+    .on('data', (data: any) => results.push(data))
+    .on('end', async () => {
+      console.log(`CSV file successfully processed, ${results.length} records found`);
       
-  //     // Process in batches of 50
-  //     const BATCH_SIZE = 50;
-  //     let successCount = 0;
+      // Process in batches of 50
+      const BATCH_SIZE = 50;
+      let successCount = 0;
       
-  //     for (let i = 0; i < results.length; i += BATCH_SIZE) {
-  //       const batch = results.slice(i, i + BATCH_SIZE);
-  //       const batchResults = await Promise.all(
-  //         batch.map((row, idx) => processPlantRow(row, i + idx))
-  //       );
-  //       successCount += batchResults.filter(r => r !== null).length;
-  //     }
+      for (let i = 0; i < results.length; i += BATCH_SIZE) {
+        const batch = results.slice(i, i + BATCH_SIZE);
+        const batchResults = await Promise.all(
+          batch.map((row, idx) => processPlantRow(row, i + idx))
+        );
+        successCount += batchResults.filter(r => r !== null).length;
+      }
 
-  //     console.log(`Seed complete. Successfully processed ${successCount} unique plants`);
-  //   });
+      console.log(`Seed complete. Successfully processed ${successCount} unique plants`);
+    });
 }
 
 main()

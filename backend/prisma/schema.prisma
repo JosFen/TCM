@@ -279,7 +279,7 @@ model HerbalDrugBackground {
   id                  Int      @id @default(autoincrement()) @map("id")
   herbalDrugPinyin    String   @map("pinyin")
   // plantPartUsed          PlantPartUsed[] @map("parts_used")
-  plantPartUsed       String?  @map("parts_used") // has remarks in (), just make it String type, later we could standardize 
+  plantPartUsed       String?  @map("plant_parts_used") // has remarks in (), just make it String type, later we could standardize 
   officialStatus      Boolean? @map("official_status")
   harvestingTime      Month[]  @map("harvesting_time")
   primaryProcessing   String?  @map("primary_processing")

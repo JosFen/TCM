@@ -2,9 +2,6 @@
 CREATE TYPE "Lifecycle" AS ENUM ('ANNUAL', 'BIENNIAL', 'PERENNIAL');
 
 -- CreateEnum
-CREATE TYPE "ReproductiveSystem" AS ENUM ('DIOECIOUS', 'MONOECIOUS', 'PARADIOECIOUS');
-
--- CreateEnum
 CREATE TYPE "Month" AS ENUM ('JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER');
 
 -- CreateEnum
@@ -14,31 +11,40 @@ CREATE TYPE "Season" AS ENUM ('SPRING', 'SUMMER', 'AUTUMN', 'WINTER');
 CREATE TYPE "Taste" AS ENUM ('ACRID', 'ASTRINGENT', 'BITTER', 'BLAND', 'PUNGENT', 'SALTY', 'SOUR', 'SWEET');
 
 -- CreateEnum
-CREATE TYPE "EnergyFlow" AS ENUM ('COLD', 'COOL', 'HOT', 'NEUTRAL', 'WARM');
+CREATE TYPE "EnergyFlow" AS ENUM ('SLIGHTLY_COLD', 'COLD', 'NEUTRAL', 'SLIGHTLY_WARM', 'WARM', 'HOT');
 
 -- CreateEnum
 CREATE TYPE "Meridian" AS ENUM ('BLADDER', 'GALLBLADDER', 'HEART', 'INTESTINE', 'KIDNEY', 'LARGE_INTESTINE', 'LIVER', 'LUNG', 'PERICARDIUM', 'SAN_JIAO', 'SMALL_INTESTINE', 'SPLEEN', 'STOMACH');
 
 -- CreateEnum
-CREATE TYPE "GlobalConservationStatus" AS ENUM ('CRITICALLY_ENDANGERED', 'DATA_DEFICIENT', 'ENDANGERED', 'LEAST_CONCERN', 'NEAR_THREATENED', 'NOT_EVALUATED', 'VULNERABLE');
+CREATE TYPE "GlobalConservationStatus" AS ENUM ('CRITICALLY_ENDANGERED', 'ENDANGERED', 'VULNERABLE', 'NEAR_THREATENED', 'LEAST_CONCERN', 'DATA_DEFICIENT', 'NOT_EVALUATED');
 
 -- CreateEnum
-CREATE TYPE "ProtectedStatus" AS ENUM ('CHINA_CAT_II', 'CHINA_SEPA_CAT_II', 'SEPA_CATEGORY_II', 'CITES_APPENDIX_I', 'CITES_APPENDIX_II', 'WTR_ANNEX_D');
+CREATE TYPE "InvasiveStatus" AS ENUM ('NON_INVASIVE', 'POSSIBLY_INVASIVE', 'INVASIVE');
 
 -- CreateEnum
-CREATE TYPE "InvasiveStatus" AS ENUM ('NON_INVASIVE', 'POTENTIALLY_INVASIVE', 'INVASIVE');
+CREATE TYPE "HarvestingPractice" AS ENUM ('CULTIVATED', 'WILD_HARVESTED');
 
--- CreateEnum
-CREATE TYPE "HarvestingPractice" AS ENUM ('CULTIVATED', 'FOSTERED', 'WILD_HARVESTED');
+-- CreateTable
+CREATE TABLE "users" (
+    "id" TEXT NOT NULL,
+    "username" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "users_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "plant_nomenclature" (
     "internal_id" SERIAL NOT NULL,
     "scientific_name" TEXT NOT NULL,
     "common_names" TEXT[],
-    "pinyin" TEXT NOT NULL,
-    "chinese_name" TEXT NOT NULL,
+    "pinyin" TEXT,
+    "chinese_name" TEXT,
     "taxonomy_id" INTEGER NOT NULL,
+    "links" TEXT[],
 
     CONSTRAINT "plant_nomenclature_pkey" PRIMARY KEY ("internal_id")
 );
@@ -69,7 +75,8 @@ CREATE TABLE "plant_morphology" (
     "is_terrestrial" BOOLEAN,
     "growth_habit" TEXT,
     "is_deciduous" BOOLEAN,
-    "reproductive_system" "ReproductiveSystem",
+    "is_deciduous_note" TEXT,
+    "reproductive_system" TEXT,
     "flowering_period" "Month"[],
     "fruiting_period" "Month"[],
 
@@ -83,7 +90,7 @@ CREATE TABLE "plant_ecology_distribution" (
     "plant_origins" TEXT,
     "global_range" TEXT,
     "china_range" TEXT,
-    "endemic" BOOLEAN,
+    "endemic" TEXT,
     "plant_id" INTEGER NOT NULL,
 
     CONSTRAINT "plant_ecology_distribution_pkey" PRIMARY KEY ("id")
@@ -94,7 +101,7 @@ CREATE TABLE "plant_conservation" (
     "id" SERIAL NOT NULL,
     "global_conservation_status" "GlobalConservationStatus",
     "china_conservation_status" TEXT,
-    "protected_status" "ProtectedStatus",
+    "protected_status" TEXT,
     "invasive_status" "InvasiveStatus",
     "invasive_range" TEXT,
     "plant_id" INTEGER NOT NULL,
@@ -122,7 +129,7 @@ CREATE TABLE "medicinal_properties" (
     "pharmacological_properties" TEXT[],
     "indications" TEXT[],
     "toxicity" TEXT,
-    "secondary_metabolites" TEXT[],
+    "secondary_metabolites" TEXT,
 
     CONSTRAINT "medicinal_properties_pkey" PRIMARY KEY ("id")
 );
@@ -131,7 +138,7 @@ CREATE TABLE "medicinal_properties" (
 CREATE TABLE "herbal_drug_background" (
     "id" SERIAL NOT NULL,
     "pinyin" TEXT NOT NULL,
-    "parts_used" TEXT,
+    "plant_parts_used" TEXT,
     "official_status" BOOLEAN,
     "harvesting_time" "Month"[],
     "primary_processing" TEXT,
@@ -149,10 +156,12 @@ CREATE TABLE "sourcing_background" (
     "herbal_drug_id" INTEGER NOT NULL,
     "cultivated" BOOLEAN,
     "cultivation_regions" TEXT,
-    "harvesting_practice" TEXT,
-    "practices" "HarvestingPractice"[],
+    "wild_harvesting_regions" TEXT,
+    "harvesting_practice" "HarvestingPractice"[],
+    "harvesting_practice_note" TEXT,
     "daodi" BOOLEAN,
     "daodi_regions" TEXT,
+    "production_regions" TEXT,
 
     CONSTRAINT "sourcing_background_pkey" PRIMARY KEY ("id")
 );
@@ -163,7 +172,7 @@ CREATE TABLE "ethnobotany" (
     "plant_id" INTEGER NOT NULL,
     "folk_medicinal_uses" TEXT,
     "other_cultural_uses" TEXT[],
-    "references" TEXT[],
+    "references" TEXT,
 
     CONSTRAINT "ethnobotany_pkey" PRIMARY KEY ("id")
 );
@@ -183,6 +192,9 @@ CREATE TABLE "_BotanicalGardenToPlantNomenclature" (
 
     CONSTRAINT "_BotanicalGardenToPlantNomenclature_AB_pkey" PRIMARY KEY ("A","B")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "users_username_key" ON "users"("username");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "plant_nomenclature_scientific_name_key" ON "plant_nomenclature"("scientific_name");

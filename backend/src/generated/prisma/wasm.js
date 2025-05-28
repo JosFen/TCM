@@ -134,7 +134,8 @@ exports.Prisma.PlantNomenclatureScalarFieldEnum = {
   plantCommonName: 'plantCommonName',
   plantPinyin: 'plantPinyin',
   plantChineseName: 'plantChineseName',
-  taxonomyId: 'taxonomyId'
+  taxonomyId: 'taxonomyId',
+  links: 'links'
 };
 
 exports.Prisma.PlantTaxonomyScalarFieldEnum = {
@@ -156,6 +157,7 @@ exports.Prisma.PlantMorphologyScalarFieldEnum = {
   isTerrestrial: 'isTerrestrial',
   growthHabit: 'growthHabit',
   isDeciduous: 'isDeciduous',
+  isDeciduousNote: 'isDeciduousNote',
   reproductiveSystem: 'reproductiveSystem',
   floweringPeriod: 'floweringPeriod',
   fruitingPeriod: 'fruitingPeriod'
@@ -220,8 +222,10 @@ exports.Prisma.SourcingBackgroundScalarFieldEnum = {
   cultivationRegions: 'cultivationRegions',
   wildHarvestingRegions: 'wildHarvestingRegions',
   harvestingPractice: 'harvestingPractice',
+  harvestingPracticeNote: 'harvestingPracticeNote',
   daodiStatus: 'daodiStatus',
-  daodiRegions: 'daodiRegions'
+  daodiRegions: 'daodiRegions',
+  productionRegions: 'productionRegions'
 };
 
 exports.Prisma.EthnobotanyScalarFieldEnum = {
@@ -246,12 +250,6 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-exports.ReproductiveSystem = exports.$Enums.ReproductiveSystem = {
-  DIOECIOUS: 'DIOECIOUS',
-  MONOECIOUS: 'MONOECIOUS',
-  PARADIOECIOUS: 'PARADIOECIOUS'
-};
-
 exports.Lifecycle = exports.$Enums.Lifecycle = {
   ANNUAL: 'ANNUAL',
   BIENNIAL: 'BIENNIAL',
@@ -275,26 +273,17 @@ exports.Month = exports.$Enums.Month = {
 
 exports.GlobalConservationStatus = exports.$Enums.GlobalConservationStatus = {
   CRITICALLY_ENDANGERED: 'CRITICALLY_ENDANGERED',
-  DATA_DEFICIENT: 'DATA_DEFICIENT',
   ENDANGERED: 'ENDANGERED',
-  LEAST_CONCERN: 'LEAST_CONCERN',
+  VULNERABLE: 'VULNERABLE',
   NEAR_THREATENED: 'NEAR_THREATENED',
-  NOT_EVALUATED: 'NOT_EVALUATED',
-  VULNERABLE: 'VULNERABLE'
-};
-
-exports.ProtectedStatus = exports.$Enums.ProtectedStatus = {
-  CHINA_CAT_II: 'CHINA_CAT_II',
-  CHINA_SEPA_CAT_II: 'CHINA_SEPA_CAT_II',
-  SEPA_CATEGORY_II: 'SEPA_CATEGORY_II',
-  CITES_APPENDIX_I: 'CITES_APPENDIX_I',
-  CITES_APPENDIX_II: 'CITES_APPENDIX_II',
-  WTR_ANNEX_D: 'WTR_ANNEX_D'
+  LEAST_CONCERN: 'LEAST_CONCERN',
+  DATA_DEFICIENT: 'DATA_DEFICIENT',
+  NOT_EVALUATED: 'NOT_EVALUATED'
 };
 
 exports.InvasiveStatus = exports.$Enums.InvasiveStatus = {
   NON_INVASIVE: 'NON_INVASIVE',
-  POTENTIALLY_INVASIVE: 'POTENTIALLY_INVASIVE',
+  POSSIBLY_INVASIVE: 'POSSIBLY_INVASIVE',
   INVASIVE: 'INVASIVE'
 };
 
@@ -310,11 +299,12 @@ exports.Taste = exports.$Enums.Taste = {
 };
 
 exports.EnergyFlow = exports.$Enums.EnergyFlow = {
+  SLIGHTLY_COLD: 'SLIGHTLY_COLD',
   COLD: 'COLD',
-  COOL: 'COOL',
-  HOT: 'HOT',
   NEUTRAL: 'NEUTRAL',
-  WARM: 'WARM'
+  SLIGHTLY_WARM: 'SLIGHTLY_WARM',
+  WARM: 'WARM',
+  HOT: 'HOT'
 };
 
 exports.Meridian = exports.$Enums.Meridian = {
@@ -335,7 +325,6 @@ exports.Meridian = exports.$Enums.Meridian = {
 
 exports.HarvestingPractice = exports.$Enums.HarvestingPractice = {
   CULTIVATED: 'CULTIVATED',
-  FOSTERED: 'FOSTERED',
   WILD_HARVESTED: 'WILD_HARVESTED'
 };
 

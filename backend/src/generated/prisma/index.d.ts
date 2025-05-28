@@ -87,15 +87,6 @@ export namespace $Enums {
 export type Lifecycle = (typeof Lifecycle)[keyof typeof Lifecycle]
 
 
-export const ReproductiveSystem: {
-  DIOECIOUS: 'DIOECIOUS',
-  MONOECIOUS: 'MONOECIOUS',
-  PARADIOECIOUS: 'PARADIOECIOUS'
-};
-
-export type ReproductiveSystem = (typeof ReproductiveSystem)[keyof typeof ReproductiveSystem]
-
-
 export const Month: {
   JANUARY: 'JANUARY',
   FEBRUARY: 'FEBRUARY',
@@ -139,11 +130,12 @@ export type Taste = (typeof Taste)[keyof typeof Taste]
 
 
 export const EnergyFlow: {
+  SLIGHTLY_COLD: 'SLIGHTLY_COLD',
   COLD: 'COLD',
-  COOL: 'COOL',
-  HOT: 'HOT',
   NEUTRAL: 'NEUTRAL',
-  WARM: 'WARM'
+  SLIGHTLY_WARM: 'SLIGHTLY_WARM',
+  WARM: 'WARM',
+  HOT: 'HOT'
 };
 
 export type EnergyFlow = (typeof EnergyFlow)[keyof typeof EnergyFlow]
@@ -170,32 +162,20 @@ export type Meridian = (typeof Meridian)[keyof typeof Meridian]
 
 export const GlobalConservationStatus: {
   CRITICALLY_ENDANGERED: 'CRITICALLY_ENDANGERED',
-  DATA_DEFICIENT: 'DATA_DEFICIENT',
   ENDANGERED: 'ENDANGERED',
-  LEAST_CONCERN: 'LEAST_CONCERN',
+  VULNERABLE: 'VULNERABLE',
   NEAR_THREATENED: 'NEAR_THREATENED',
-  NOT_EVALUATED: 'NOT_EVALUATED',
-  VULNERABLE: 'VULNERABLE'
+  LEAST_CONCERN: 'LEAST_CONCERN',
+  DATA_DEFICIENT: 'DATA_DEFICIENT',
+  NOT_EVALUATED: 'NOT_EVALUATED'
 };
 
 export type GlobalConservationStatus = (typeof GlobalConservationStatus)[keyof typeof GlobalConservationStatus]
 
 
-export const ProtectedStatus: {
-  CHINA_CAT_II: 'CHINA_CAT_II',
-  CHINA_SEPA_CAT_II: 'CHINA_SEPA_CAT_II',
-  SEPA_CATEGORY_II: 'SEPA_CATEGORY_II',
-  CITES_APPENDIX_I: 'CITES_APPENDIX_I',
-  CITES_APPENDIX_II: 'CITES_APPENDIX_II',
-  WTR_ANNEX_D: 'WTR_ANNEX_D'
-};
-
-export type ProtectedStatus = (typeof ProtectedStatus)[keyof typeof ProtectedStatus]
-
-
 export const InvasiveStatus: {
   NON_INVASIVE: 'NON_INVASIVE',
-  POTENTIALLY_INVASIVE: 'POTENTIALLY_INVASIVE',
+  POSSIBLY_INVASIVE: 'POSSIBLY_INVASIVE',
   INVASIVE: 'INVASIVE'
 };
 
@@ -204,7 +184,6 @@ export type InvasiveStatus = (typeof InvasiveStatus)[keyof typeof InvasiveStatus
 
 export const HarvestingPractice: {
   CULTIVATED: 'CULTIVATED',
-  FOSTERED: 'FOSTERED',
   WILD_HARVESTED: 'WILD_HARVESTED'
 };
 
@@ -215,10 +194,6 @@ export type HarvestingPractice = (typeof HarvestingPractice)[keyof typeof Harves
 export type Lifecycle = $Enums.Lifecycle
 
 export const Lifecycle: typeof $Enums.Lifecycle
-
-export type ReproductiveSystem = $Enums.ReproductiveSystem
-
-export const ReproductiveSystem: typeof $Enums.ReproductiveSystem
 
 export type Month = $Enums.Month
 
@@ -243,10 +218,6 @@ export const Meridian: typeof $Enums.Meridian
 export type GlobalConservationStatus = $Enums.GlobalConservationStatus
 
 export const GlobalConservationStatus: typeof $Enums.GlobalConservationStatus
-
-export type ProtectedStatus = $Enums.ProtectedStatus
-
-export const ProtectedStatus: typeof $Enums.ProtectedStatus
 
 export type InvasiveStatus = $Enums.InvasiveStatus
 
@@ -3273,6 +3244,7 @@ export namespace Prisma {
     plantPinyin: number
     plantChineseName: number
     taxonomyId: number
+    links: number
     _all: number
   }
 
@@ -3310,6 +3282,7 @@ export namespace Prisma {
     plantPinyin?: true
     plantChineseName?: true
     taxonomyId?: true
+    links?: true
     _all?: true
   }
 
@@ -3406,6 +3379,7 @@ export namespace Prisma {
     plantPinyin: string | null
     plantChineseName: string | null
     taxonomyId: number
+    links: string[]
     _count: PlantNomenclatureCountAggregateOutputType | null
     _avg: PlantNomenclatureAvgAggregateOutputType | null
     _sum: PlantNomenclatureSumAggregateOutputType | null
@@ -3434,6 +3408,7 @@ export namespace Prisma {
     plantPinyin?: boolean
     plantChineseName?: boolean
     taxonomyId?: boolean
+    links?: boolean
     taxonomy?: boolean | PlantTaxonomyDefaultArgs<ExtArgs>
     botanicalGardenList?: boolean | PlantNomenclature$botanicalGardenListArgs<ExtArgs>
     synonyms?: boolean | PlantNomenclature$synonymsArgs<ExtArgs>
@@ -3452,6 +3427,7 @@ export namespace Prisma {
     plantPinyin?: boolean
     plantChineseName?: boolean
     taxonomyId?: boolean
+    links?: boolean
     taxonomy?: boolean | PlantTaxonomyDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["plantNomenclature"]>
 
@@ -3462,6 +3438,7 @@ export namespace Prisma {
     plantPinyin?: boolean
     plantChineseName?: boolean
     taxonomyId?: boolean
+    links?: boolean
     taxonomy?: boolean | PlantTaxonomyDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["plantNomenclature"]>
 
@@ -3472,9 +3449,10 @@ export namespace Prisma {
     plantPinyin?: boolean
     plantChineseName?: boolean
     taxonomyId?: boolean
+    links?: boolean
   }
 
-  export type PlantNomenclatureOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"internalId" | "plantScientificName" | "plantCommonName" | "plantPinyin" | "plantChineseName" | "taxonomyId", ExtArgs["result"]["plantNomenclature"]>
+  export type PlantNomenclatureOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"internalId" | "plantScientificName" | "plantCommonName" | "plantPinyin" | "plantChineseName" | "taxonomyId" | "links", ExtArgs["result"]["plantNomenclature"]>
   export type PlantNomenclatureInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     taxonomy?: boolean | PlantTaxonomyDefaultArgs<ExtArgs>
     botanicalGardenList?: boolean | PlantNomenclature$botanicalGardenListArgs<ExtArgs>
@@ -3512,6 +3490,7 @@ export namespace Prisma {
       plantPinyin: string | null
       plantChineseName: string | null
       taxonomyId: number
+      links: string[]
     }, ExtArgs["result"]["plantNomenclature"]>
     composites: {}
   }
@@ -3949,6 +3928,7 @@ export namespace Prisma {
     readonly plantPinyin: FieldRef<"PlantNomenclature", 'String'>
     readonly plantChineseName: FieldRef<"PlantNomenclature", 'String'>
     readonly taxonomyId: FieldRef<"PlantNomenclature", 'Int'>
+    readonly links: FieldRef<"PlantNomenclature", 'String[]'>
   }
     
 
@@ -6702,7 +6682,8 @@ export namespace Prisma {
     isTerrestrial: boolean | null
     growthHabit: string | null
     isDeciduous: boolean | null
-    reproductiveSystem: $Enums.ReproductiveSystem | null
+    isDeciduousNote: string | null
+    reproductiveSystem: string | null
   }
 
   export type PlantMorphologyMaxAggregateOutputType = {
@@ -6710,7 +6691,8 @@ export namespace Prisma {
     isTerrestrial: boolean | null
     growthHabit: string | null
     isDeciduous: boolean | null
-    reproductiveSystem: $Enums.ReproductiveSystem | null
+    isDeciduousNote: string | null
+    reproductiveSystem: string | null
   }
 
   export type PlantMorphologyCountAggregateOutputType = {
@@ -6719,6 +6701,7 @@ export namespace Prisma {
     isTerrestrial: number
     growthHabit: number
     isDeciduous: number
+    isDeciduousNote: number
     reproductiveSystem: number
     floweringPeriod: number
     fruitingPeriod: number
@@ -6739,6 +6722,7 @@ export namespace Prisma {
     isTerrestrial?: true
     growthHabit?: true
     isDeciduous?: true
+    isDeciduousNote?: true
     reproductiveSystem?: true
   }
 
@@ -6747,6 +6731,7 @@ export namespace Prisma {
     isTerrestrial?: true
     growthHabit?: true
     isDeciduous?: true
+    isDeciduousNote?: true
     reproductiveSystem?: true
   }
 
@@ -6756,6 +6741,7 @@ export namespace Prisma {
     isTerrestrial?: true
     growthHabit?: true
     isDeciduous?: true
+    isDeciduousNote?: true
     reproductiveSystem?: true
     floweringPeriod?: true
     fruitingPeriod?: true
@@ -6854,7 +6840,8 @@ export namespace Prisma {
     isTerrestrial: boolean | null
     growthHabit: string | null
     isDeciduous: boolean | null
-    reproductiveSystem: $Enums.ReproductiveSystem | null
+    isDeciduousNote: string | null
+    reproductiveSystem: string | null
     floweringPeriod: $Enums.Month[]
     fruitingPeriod: $Enums.Month[]
     _count: PlantMorphologyCountAggregateOutputType | null
@@ -6884,6 +6871,7 @@ export namespace Prisma {
     isTerrestrial?: boolean
     growthHabit?: boolean
     isDeciduous?: boolean
+    isDeciduousNote?: boolean
     reproductiveSystem?: boolean
     floweringPeriod?: boolean
     fruitingPeriod?: boolean
@@ -6897,6 +6885,7 @@ export namespace Prisma {
     isTerrestrial?: boolean
     growthHabit?: boolean
     isDeciduous?: boolean
+    isDeciduousNote?: boolean
     reproductiveSystem?: boolean
     floweringPeriod?: boolean
     fruitingPeriod?: boolean
@@ -6908,6 +6897,7 @@ export namespace Prisma {
     isTerrestrial?: boolean
     growthHabit?: boolean
     isDeciduous?: boolean
+    isDeciduousNote?: boolean
     reproductiveSystem?: boolean
     floweringPeriod?: boolean
     fruitingPeriod?: boolean
@@ -6919,12 +6909,13 @@ export namespace Prisma {
     isTerrestrial?: boolean
     growthHabit?: boolean
     isDeciduous?: boolean
+    isDeciduousNote?: boolean
     reproductiveSystem?: boolean
     floweringPeriod?: boolean
     fruitingPeriod?: boolean
   }
 
-  export type PlantMorphologyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "lifecycle" | "isTerrestrial" | "growthHabit" | "isDeciduous" | "reproductiveSystem" | "floweringPeriod" | "fruitingPeriod", ExtArgs["result"]["plantMorphology"]>
+  export type PlantMorphologyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "lifecycle" | "isTerrestrial" | "growthHabit" | "isDeciduous" | "isDeciduousNote" | "reproductiveSystem" | "floweringPeriod" | "fruitingPeriod", ExtArgs["result"]["plantMorphology"]>
   export type PlantMorphologyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     plants?: boolean | PlantMorphology$plantsArgs<ExtArgs>
     _count?: boolean | PlantMorphologyCountOutputTypeDefaultArgs<ExtArgs>
@@ -6943,7 +6934,8 @@ export namespace Prisma {
       isTerrestrial: boolean | null
       growthHabit: string | null
       isDeciduous: boolean | null
-      reproductiveSystem: $Enums.ReproductiveSystem | null
+      isDeciduousNote: string | null
+      reproductiveSystem: string | null
       floweringPeriod: $Enums.Month[]
       fruitingPeriod: $Enums.Month[]
     }, ExtArgs["result"]["plantMorphology"]>
@@ -7375,7 +7367,8 @@ export namespace Prisma {
     readonly isTerrestrial: FieldRef<"PlantMorphology", 'Boolean'>
     readonly growthHabit: FieldRef<"PlantMorphology", 'String'>
     readonly isDeciduous: FieldRef<"PlantMorphology", 'Boolean'>
-    readonly reproductiveSystem: FieldRef<"PlantMorphology", 'ReproductiveSystem'>
+    readonly isDeciduousNote: FieldRef<"PlantMorphology", 'String'>
+    readonly reproductiveSystem: FieldRef<"PlantMorphology", 'String'>
     readonly floweringPeriod: FieldRef<"PlantMorphology", 'Month[]'>
     readonly fruitingPeriod: FieldRef<"PlantMorphology", 'Month[]'>
   }
@@ -7836,7 +7829,7 @@ export namespace Prisma {
     plantOrigin: string | null
     globalRange: string | null
     chinaRange: string | null
-    endemic: boolean | null
+    endemic: string | null
     plantId: number | null
   }
 
@@ -7846,7 +7839,7 @@ export namespace Prisma {
     plantOrigin: string | null
     globalRange: string | null
     chinaRange: string | null
-    endemic: boolean | null
+    endemic: string | null
     plantId: number | null
   }
 
@@ -7995,7 +7988,7 @@ export namespace Prisma {
     plantOrigin: string | null
     globalRange: string | null
     chinaRange: string | null
-    endemic: boolean | null
+    endemic: string | null
     plantId: number
     _count: PlantEcologyDistributionCountAggregateOutputType | null
     _avg: PlantEcologyDistributionAvgAggregateOutputType | null
@@ -8083,7 +8076,7 @@ export namespace Prisma {
       plantOrigin: string | null
       globalRange: string | null
       chinaRange: string | null
-      endemic: boolean | null
+      endemic: string | null
       plantId: number
     }, ExtArgs["result"]["plantEcologyDistribution"]>
     composites: {}
@@ -8514,7 +8507,7 @@ export namespace Prisma {
     readonly plantOrigin: FieldRef<"PlantEcologyDistribution", 'String'>
     readonly globalRange: FieldRef<"PlantEcologyDistribution", 'String'>
     readonly chinaRange: FieldRef<"PlantEcologyDistribution", 'String'>
-    readonly endemic: FieldRef<"PlantEcologyDistribution", 'Boolean'>
+    readonly endemic: FieldRef<"PlantEcologyDistribution", 'String'>
     readonly plantId: FieldRef<"PlantEcologyDistribution", 'Int'>
   }
     
@@ -8956,7 +8949,7 @@ export namespace Prisma {
     id: number | null
     globalConservationStatus: $Enums.GlobalConservationStatus | null
     chinaConservationStatus: string | null
-    protectedStatus: $Enums.ProtectedStatus | null
+    protectedStatus: string | null
     invasiveStatus: $Enums.InvasiveStatus | null
     invasiveRange: string | null
     plantId: number | null
@@ -8966,7 +8959,7 @@ export namespace Prisma {
     id: number | null
     globalConservationStatus: $Enums.GlobalConservationStatus | null
     chinaConservationStatus: string | null
-    protectedStatus: $Enums.ProtectedStatus | null
+    protectedStatus: string | null
     invasiveStatus: $Enums.InvasiveStatus | null
     invasiveRange: string | null
     plantId: number | null
@@ -9115,7 +9108,7 @@ export namespace Prisma {
     id: number
     globalConservationStatus: $Enums.GlobalConservationStatus | null
     chinaConservationStatus: string | null
-    protectedStatus: $Enums.ProtectedStatus | null
+    protectedStatus: string | null
     invasiveStatus: $Enums.InvasiveStatus | null
     invasiveRange: string | null
     plantId: number
@@ -9203,7 +9196,7 @@ export namespace Prisma {
       id: number
       globalConservationStatus: $Enums.GlobalConservationStatus | null
       chinaConservationStatus: string | null
-      protectedStatus: $Enums.ProtectedStatus | null
+      protectedStatus: string | null
       invasiveStatus: $Enums.InvasiveStatus | null
       invasiveRange: string | null
       plantId: number
@@ -9634,7 +9627,7 @@ export namespace Prisma {
     readonly id: FieldRef<"PlantConservation", 'Int'>
     readonly globalConservationStatus: FieldRef<"PlantConservation", 'GlobalConservationStatus'>
     readonly chinaConservationStatus: FieldRef<"PlantConservation", 'String'>
-    readonly protectedStatus: FieldRef<"PlantConservation", 'ProtectedStatus'>
+    readonly protectedStatus: FieldRef<"PlantConservation", 'String'>
     readonly invasiveStatus: FieldRef<"PlantConservation", 'InvasiveStatus'>
     readonly invasiveRange: FieldRef<"PlantConservation", 'String'>
     readonly plantId: FieldRef<"PlantConservation", 'Int'>
@@ -11143,6 +11136,7 @@ export namespace Prisma {
     herbalDrugPinyin: string | null
     actions: string | null
     toxicity: string | null
+    secondaryMetabolites: string | null
   }
 
   export type MedicinalPropertiesMaxAggregateOutputType = {
@@ -11151,6 +11145,7 @@ export namespace Prisma {
     herbalDrugPinyin: string | null
     actions: string | null
     toxicity: string | null
+    secondaryMetabolites: string | null
   }
 
   export type MedicinalPropertiesCountAggregateOutputType = {
@@ -11183,6 +11178,7 @@ export namespace Prisma {
     herbalDrugPinyin?: true
     actions?: true
     toxicity?: true
+    secondaryMetabolites?: true
   }
 
   export type MedicinalPropertiesMaxAggregateInputType = {
@@ -11191,6 +11187,7 @@ export namespace Prisma {
     herbalDrugPinyin?: true
     actions?: true
     toxicity?: true
+    secondaryMetabolites?: true
   }
 
   export type MedicinalPropertiesCountAggregateInputType = {
@@ -11305,7 +11302,7 @@ export namespace Prisma {
     pharmacologicalProperties: string[]
     indications: string[]
     toxicity: string | null
-    secondaryMetabolites: string[]
+    secondaryMetabolites: string | null
     _count: MedicinalPropertiesCountAggregateOutputType | null
     _avg: MedicinalPropertiesAvgAggregateOutputType | null
     _sum: MedicinalPropertiesSumAggregateOutputType | null
@@ -11409,7 +11406,7 @@ export namespace Prisma {
       pharmacologicalProperties: string[]
       indications: string[]
       toxicity: string | null
-      secondaryMetabolites: string[]
+      secondaryMetabolites: string | null
     }, ExtArgs["result"]["medicinalProperties"]>
     composites: {}
   }
@@ -11844,7 +11841,7 @@ export namespace Prisma {
     readonly pharmacologicalProperties: FieldRef<"MedicinalProperties", 'String[]'>
     readonly indications: FieldRef<"MedicinalProperties", 'String[]'>
     readonly toxicity: FieldRef<"MedicinalProperties", 'String'>
-    readonly secondaryMetabolites: FieldRef<"MedicinalProperties", 'String[]'>
+    readonly secondaryMetabolites: FieldRef<"MedicinalProperties", 'String'>
   }
     
 
@@ -13495,8 +13492,10 @@ export namespace Prisma {
     cultivationStatus: boolean | null
     cultivationRegions: string | null
     wildHarvestingRegions: string | null
+    harvestingPracticeNote: string | null
     daodiStatus: boolean | null
     daodiRegions: string | null
+    productionRegions: string | null
   }
 
   export type SourcingBackgroundMaxAggregateOutputType = {
@@ -13505,8 +13504,10 @@ export namespace Prisma {
     cultivationStatus: boolean | null
     cultivationRegions: string | null
     wildHarvestingRegions: string | null
+    harvestingPracticeNote: string | null
     daodiStatus: boolean | null
     daodiRegions: string | null
+    productionRegions: string | null
   }
 
   export type SourcingBackgroundCountAggregateOutputType = {
@@ -13516,8 +13517,10 @@ export namespace Prisma {
     cultivationRegions: number
     wildHarvestingRegions: number
     harvestingPractice: number
+    harvestingPracticeNote: number
     daodiStatus: number
     daodiRegions: number
+    productionRegions: number
     _all: number
   }
 
@@ -13538,8 +13541,10 @@ export namespace Prisma {
     cultivationStatus?: true
     cultivationRegions?: true
     wildHarvestingRegions?: true
+    harvestingPracticeNote?: true
     daodiStatus?: true
     daodiRegions?: true
+    productionRegions?: true
   }
 
   export type SourcingBackgroundMaxAggregateInputType = {
@@ -13548,8 +13553,10 @@ export namespace Prisma {
     cultivationStatus?: true
     cultivationRegions?: true
     wildHarvestingRegions?: true
+    harvestingPracticeNote?: true
     daodiStatus?: true
     daodiRegions?: true
+    productionRegions?: true
   }
 
   export type SourcingBackgroundCountAggregateInputType = {
@@ -13559,8 +13566,10 @@ export namespace Prisma {
     cultivationRegions?: true
     wildHarvestingRegions?: true
     harvestingPractice?: true
+    harvestingPracticeNote?: true
     daodiStatus?: true
     daodiRegions?: true
+    productionRegions?: true
     _all?: true
   }
 
@@ -13657,8 +13666,10 @@ export namespace Prisma {
     cultivationRegions: string | null
     wildHarvestingRegions: string | null
     harvestingPractice: $Enums.HarvestingPractice[]
+    harvestingPracticeNote: string | null
     daodiStatus: boolean | null
     daodiRegions: string | null
+    productionRegions: string | null
     _count: SourcingBackgroundCountAggregateOutputType | null
     _avg: SourcingBackgroundAvgAggregateOutputType | null
     _sum: SourcingBackgroundSumAggregateOutputType | null
@@ -13687,8 +13698,10 @@ export namespace Prisma {
     cultivationRegions?: boolean
     wildHarvestingRegions?: boolean
     harvestingPractice?: boolean
+    harvestingPracticeNote?: boolean
     daodiStatus?: boolean
     daodiRegions?: boolean
+    productionRegions?: boolean
     herbalDrug?: boolean | HerbalDrugBackgroundDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["sourcingBackground"]>
 
@@ -13699,8 +13712,10 @@ export namespace Prisma {
     cultivationRegions?: boolean
     wildHarvestingRegions?: boolean
     harvestingPractice?: boolean
+    harvestingPracticeNote?: boolean
     daodiStatus?: boolean
     daodiRegions?: boolean
+    productionRegions?: boolean
     herbalDrug?: boolean | HerbalDrugBackgroundDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["sourcingBackground"]>
 
@@ -13711,8 +13726,10 @@ export namespace Prisma {
     cultivationRegions?: boolean
     wildHarvestingRegions?: boolean
     harvestingPractice?: boolean
+    harvestingPracticeNote?: boolean
     daodiStatus?: boolean
     daodiRegions?: boolean
+    productionRegions?: boolean
     herbalDrug?: boolean | HerbalDrugBackgroundDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["sourcingBackground"]>
 
@@ -13723,11 +13740,13 @@ export namespace Prisma {
     cultivationRegions?: boolean
     wildHarvestingRegions?: boolean
     harvestingPractice?: boolean
+    harvestingPracticeNote?: boolean
     daodiStatus?: boolean
     daodiRegions?: boolean
+    productionRegions?: boolean
   }
 
-  export type SourcingBackgroundOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "herbalDrugId" | "cultivationStatus" | "cultivationRegions" | "wildHarvestingRegions" | "harvestingPractice" | "daodiStatus" | "daodiRegions", ExtArgs["result"]["sourcingBackground"]>
+  export type SourcingBackgroundOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "herbalDrugId" | "cultivationStatus" | "cultivationRegions" | "wildHarvestingRegions" | "harvestingPractice" | "harvestingPracticeNote" | "daodiStatus" | "daodiRegions" | "productionRegions", ExtArgs["result"]["sourcingBackground"]>
   export type SourcingBackgroundInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     herbalDrug?: boolean | HerbalDrugBackgroundDefaultArgs<ExtArgs>
   }
@@ -13750,8 +13769,10 @@ export namespace Prisma {
       cultivationRegions: string | null
       wildHarvestingRegions: string | null
       harvestingPractice: $Enums.HarvestingPractice[]
+      harvestingPracticeNote: string | null
       daodiStatus: boolean | null
       daodiRegions: string | null
+      productionRegions: string | null
     }, ExtArgs["result"]["sourcingBackground"]>
     composites: {}
   }
@@ -14182,8 +14203,10 @@ export namespace Prisma {
     readonly cultivationRegions: FieldRef<"SourcingBackground", 'String'>
     readonly wildHarvestingRegions: FieldRef<"SourcingBackground", 'String'>
     readonly harvestingPractice: FieldRef<"SourcingBackground", 'HarvestingPractice[]'>
+    readonly harvestingPracticeNote: FieldRef<"SourcingBackground", 'String'>
     readonly daodiStatus: FieldRef<"SourcingBackground", 'Boolean'>
     readonly daodiRegions: FieldRef<"SourcingBackground", 'String'>
+    readonly productionRegions: FieldRef<"SourcingBackground", 'String'>
   }
     
 
@@ -14624,12 +14647,14 @@ export namespace Prisma {
     id: number | null
     plantId: number | null
     folkMedicinalUses: string | null
+    references: string | null
   }
 
   export type EthnobotanyMaxAggregateOutputType = {
     id: number | null
     plantId: number | null
     folkMedicinalUses: string | null
+    references: string | null
   }
 
   export type EthnobotanyCountAggregateOutputType = {
@@ -14656,12 +14681,14 @@ export namespace Prisma {
     id?: true
     plantId?: true
     folkMedicinalUses?: true
+    references?: true
   }
 
   export type EthnobotanyMaxAggregateInputType = {
     id?: true
     plantId?: true
     folkMedicinalUses?: true
+    references?: true
   }
 
   export type EthnobotanyCountAggregateInputType = {
@@ -14764,7 +14791,7 @@ export namespace Prisma {
     plantId: number
     folkMedicinalUses: string | null
     otherCulturalUses: string[]
-    references: string[]
+    references: string | null
     _count: EthnobotanyCountAggregateOutputType | null
     _avg: EthnobotanyAvgAggregateOutputType | null
     _sum: EthnobotanySumAggregateOutputType | null
@@ -14842,7 +14869,7 @@ export namespace Prisma {
       plantId: number
       folkMedicinalUses: string | null
       otherCulturalUses: string[]
-      references: string[]
+      references: string | null
     }, ExtArgs["result"]["ethnobotany"]>
     composites: {}
   }
@@ -15271,7 +15298,7 @@ export namespace Prisma {
     readonly plantId: FieldRef<"Ethnobotany", 'Int'>
     readonly folkMedicinalUses: FieldRef<"Ethnobotany", 'String'>
     readonly otherCulturalUses: FieldRef<"Ethnobotany", 'String[]'>
-    readonly references: FieldRef<"Ethnobotany", 'String[]'>
+    readonly references: FieldRef<"Ethnobotany", 'String'>
   }
     
 
@@ -15717,7 +15744,8 @@ export namespace Prisma {
     plantCommonName: 'plantCommonName',
     plantPinyin: 'plantPinyin',
     plantChineseName: 'plantChineseName',
-    taxonomyId: 'taxonomyId'
+    taxonomyId: 'taxonomyId',
+    links: 'links'
   };
 
   export type PlantNomenclatureScalarFieldEnum = (typeof PlantNomenclatureScalarFieldEnum)[keyof typeof PlantNomenclatureScalarFieldEnum]
@@ -15748,6 +15776,7 @@ export namespace Prisma {
     isTerrestrial: 'isTerrestrial',
     growthHabit: 'growthHabit',
     isDeciduous: 'isDeciduous',
+    isDeciduousNote: 'isDeciduousNote',
     reproductiveSystem: 'reproductiveSystem',
     floweringPeriod: 'floweringPeriod',
     fruitingPeriod: 'fruitingPeriod'
@@ -15830,8 +15859,10 @@ export namespace Prisma {
     cultivationRegions: 'cultivationRegions',
     wildHarvestingRegions: 'wildHarvestingRegions',
     harvestingPractice: 'harvestingPractice',
+    harvestingPracticeNote: 'harvestingPracticeNote',
     daodiStatus: 'daodiStatus',
-    daodiRegions: 'daodiRegions'
+    daodiRegions: 'daodiRegions',
+    productionRegions: 'productionRegions'
   };
 
   export type SourcingBackgroundScalarFieldEnum = (typeof SourcingBackgroundScalarFieldEnum)[keyof typeof SourcingBackgroundScalarFieldEnum]
@@ -15941,20 +15972,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'ReproductiveSystem'
-   */
-  export type EnumReproductiveSystemFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReproductiveSystem'>
-    
-
-
-  /**
-   * Reference to a field of type 'ReproductiveSystem[]'
-   */
-  export type ListEnumReproductiveSystemFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReproductiveSystem[]'>
-    
-
-
-  /**
    * Reference to a field of type 'Month[]'
    */
   export type ListEnumMonthFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Month[]'>
@@ -15979,20 +15996,6 @@ export namespace Prisma {
    * Reference to a field of type 'GlobalConservationStatus[]'
    */
   export type ListEnumGlobalConservationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GlobalConservationStatus[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'ProtectedStatus'
-   */
-  export type EnumProtectedStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProtectedStatus'>
-    
-
-
-  /**
-   * Reference to a field of type 'ProtectedStatus[]'
-   */
-  export type ListEnumProtectedStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProtectedStatus[]'>
     
 
 
@@ -16145,6 +16148,7 @@ export namespace Prisma {
     plantPinyin?: StringNullableFilter<"PlantNomenclature"> | string | null
     plantChineseName?: StringNullableFilter<"PlantNomenclature"> | string | null
     taxonomyId?: IntFilter<"PlantNomenclature"> | number
+    links?: StringNullableListFilter<"PlantNomenclature">
     taxonomy?: XOR<PlantTaxonomyScalarRelationFilter, PlantTaxonomyWhereInput>
     botanicalGardenList?: BotanicalGardenListRelationFilter
     synonyms?: PlantSynonymListRelationFilter
@@ -16162,6 +16166,7 @@ export namespace Prisma {
     plantPinyin?: SortOrderInput | SortOrder
     plantChineseName?: SortOrderInput | SortOrder
     taxonomyId?: SortOrder
+    links?: SortOrder
     taxonomy?: PlantTaxonomyOrderByWithRelationInput
     botanicalGardenList?: BotanicalGardenOrderByRelationAggregateInput
     synonyms?: PlantSynonymOrderByRelationAggregateInput
@@ -16182,6 +16187,7 @@ export namespace Prisma {
     NOT?: PlantNomenclatureWhereInput | PlantNomenclatureWhereInput[]
     plantCommonName?: StringNullableListFilter<"PlantNomenclature">
     taxonomyId?: IntFilter<"PlantNomenclature"> | number
+    links?: StringNullableListFilter<"PlantNomenclature">
     taxonomy?: XOR<PlantTaxonomyScalarRelationFilter, PlantTaxonomyWhereInput>
     botanicalGardenList?: BotanicalGardenListRelationFilter
     synonyms?: PlantSynonymListRelationFilter
@@ -16199,6 +16205,7 @@ export namespace Prisma {
     plantPinyin?: SortOrderInput | SortOrder
     plantChineseName?: SortOrderInput | SortOrder
     taxonomyId?: SortOrder
+    links?: SortOrder
     _count?: PlantNomenclatureCountOrderByAggregateInput
     _avg?: PlantNomenclatureAvgOrderByAggregateInput
     _max?: PlantNomenclatureMaxOrderByAggregateInput
@@ -16216,6 +16223,7 @@ export namespace Prisma {
     plantPinyin?: StringNullableWithAggregatesFilter<"PlantNomenclature"> | string | null
     plantChineseName?: StringNullableWithAggregatesFilter<"PlantNomenclature"> | string | null
     taxonomyId?: IntWithAggregatesFilter<"PlantNomenclature"> | number
+    links?: StringNullableListFilter<"PlantNomenclature">
   }
 
   export type PlantTaxonomyWhereInput = {
@@ -16326,7 +16334,8 @@ export namespace Prisma {
     isTerrestrial?: BoolNullableFilter<"PlantMorphology"> | boolean | null
     growthHabit?: StringNullableFilter<"PlantMorphology"> | string | null
     isDeciduous?: BoolNullableFilter<"PlantMorphology"> | boolean | null
-    reproductiveSystem?: EnumReproductiveSystemNullableFilter<"PlantMorphology"> | $Enums.ReproductiveSystem | null
+    isDeciduousNote?: StringNullableFilter<"PlantMorphology"> | string | null
+    reproductiveSystem?: StringNullableFilter<"PlantMorphology"> | string | null
     floweringPeriod?: EnumMonthNullableListFilter<"PlantMorphology">
     fruitingPeriod?: EnumMonthNullableListFilter<"PlantMorphology">
     plants?: PlantNomenclatureListRelationFilter
@@ -16338,6 +16347,7 @@ export namespace Prisma {
     isTerrestrial?: SortOrderInput | SortOrder
     growthHabit?: SortOrderInput | SortOrder
     isDeciduous?: SortOrderInput | SortOrder
+    isDeciduousNote?: SortOrderInput | SortOrder
     reproductiveSystem?: SortOrderInput | SortOrder
     floweringPeriod?: SortOrder
     fruitingPeriod?: SortOrder
@@ -16353,7 +16363,8 @@ export namespace Prisma {
     isTerrestrial?: BoolNullableFilter<"PlantMorphology"> | boolean | null
     growthHabit?: StringNullableFilter<"PlantMorphology"> | string | null
     isDeciduous?: BoolNullableFilter<"PlantMorphology"> | boolean | null
-    reproductiveSystem?: EnumReproductiveSystemNullableFilter<"PlantMorphology"> | $Enums.ReproductiveSystem | null
+    isDeciduousNote?: StringNullableFilter<"PlantMorphology"> | string | null
+    reproductiveSystem?: StringNullableFilter<"PlantMorphology"> | string | null
     floweringPeriod?: EnumMonthNullableListFilter<"PlantMorphology">
     fruitingPeriod?: EnumMonthNullableListFilter<"PlantMorphology">
     plants?: PlantNomenclatureListRelationFilter
@@ -16365,6 +16376,7 @@ export namespace Prisma {
     isTerrestrial?: SortOrderInput | SortOrder
     growthHabit?: SortOrderInput | SortOrder
     isDeciduous?: SortOrderInput | SortOrder
+    isDeciduousNote?: SortOrderInput | SortOrder
     reproductiveSystem?: SortOrderInput | SortOrder
     floweringPeriod?: SortOrder
     fruitingPeriod?: SortOrder
@@ -16384,7 +16396,8 @@ export namespace Prisma {
     isTerrestrial?: BoolNullableWithAggregatesFilter<"PlantMorphology"> | boolean | null
     growthHabit?: StringNullableWithAggregatesFilter<"PlantMorphology"> | string | null
     isDeciduous?: BoolNullableWithAggregatesFilter<"PlantMorphology"> | boolean | null
-    reproductiveSystem?: EnumReproductiveSystemNullableWithAggregatesFilter<"PlantMorphology"> | $Enums.ReproductiveSystem | null
+    isDeciduousNote?: StringNullableWithAggregatesFilter<"PlantMorphology"> | string | null
+    reproductiveSystem?: StringNullableWithAggregatesFilter<"PlantMorphology"> | string | null
     floweringPeriod?: EnumMonthNullableListFilter<"PlantMorphology">
     fruitingPeriod?: EnumMonthNullableListFilter<"PlantMorphology">
   }
@@ -16398,7 +16411,7 @@ export namespace Prisma {
     plantOrigin?: StringNullableFilter<"PlantEcologyDistribution"> | string | null
     globalRange?: StringNullableFilter<"PlantEcologyDistribution"> | string | null
     chinaRange?: StringNullableFilter<"PlantEcologyDistribution"> | string | null
-    endemic?: BoolNullableFilter<"PlantEcologyDistribution"> | boolean | null
+    endemic?: StringNullableFilter<"PlantEcologyDistribution"> | string | null
     plantId?: IntFilter<"PlantEcologyDistribution"> | number
     plant?: XOR<PlantNomenclatureScalarRelationFilter, PlantNomenclatureWhereInput>
   }
@@ -16424,7 +16437,7 @@ export namespace Prisma {
     plantOrigin?: StringNullableFilter<"PlantEcologyDistribution"> | string | null
     globalRange?: StringNullableFilter<"PlantEcologyDistribution"> | string | null
     chinaRange?: StringNullableFilter<"PlantEcologyDistribution"> | string | null
-    endemic?: BoolNullableFilter<"PlantEcologyDistribution"> | boolean | null
+    endemic?: StringNullableFilter<"PlantEcologyDistribution"> | string | null
     plant?: XOR<PlantNomenclatureScalarRelationFilter, PlantNomenclatureWhereInput>
   }, "id" | "plantId">
 
@@ -16452,7 +16465,7 @@ export namespace Prisma {
     plantOrigin?: StringNullableWithAggregatesFilter<"PlantEcologyDistribution"> | string | null
     globalRange?: StringNullableWithAggregatesFilter<"PlantEcologyDistribution"> | string | null
     chinaRange?: StringNullableWithAggregatesFilter<"PlantEcologyDistribution"> | string | null
-    endemic?: BoolNullableWithAggregatesFilter<"PlantEcologyDistribution"> | boolean | null
+    endemic?: StringNullableWithAggregatesFilter<"PlantEcologyDistribution"> | string | null
     plantId?: IntWithAggregatesFilter<"PlantEcologyDistribution"> | number
   }
 
@@ -16463,7 +16476,7 @@ export namespace Prisma {
     id?: IntFilter<"PlantConservation"> | number
     globalConservationStatus?: EnumGlobalConservationStatusNullableFilter<"PlantConservation"> | $Enums.GlobalConservationStatus | null
     chinaConservationStatus?: StringNullableFilter<"PlantConservation"> | string | null
-    protectedStatus?: EnumProtectedStatusNullableFilter<"PlantConservation"> | $Enums.ProtectedStatus | null
+    protectedStatus?: StringNullableFilter<"PlantConservation"> | string | null
     invasiveStatus?: EnumInvasiveStatusNullableFilter<"PlantConservation"> | $Enums.InvasiveStatus | null
     invasiveRange?: StringNullableFilter<"PlantConservation"> | string | null
     plantId?: IntFilter<"PlantConservation"> | number
@@ -16489,7 +16502,7 @@ export namespace Prisma {
     NOT?: PlantConservationWhereInput | PlantConservationWhereInput[]
     globalConservationStatus?: EnumGlobalConservationStatusNullableFilter<"PlantConservation"> | $Enums.GlobalConservationStatus | null
     chinaConservationStatus?: StringNullableFilter<"PlantConservation"> | string | null
-    protectedStatus?: EnumProtectedStatusNullableFilter<"PlantConservation"> | $Enums.ProtectedStatus | null
+    protectedStatus?: StringNullableFilter<"PlantConservation"> | string | null
     invasiveStatus?: EnumInvasiveStatusNullableFilter<"PlantConservation"> | $Enums.InvasiveStatus | null
     invasiveRange?: StringNullableFilter<"PlantConservation"> | string | null
     plant?: XOR<PlantNomenclatureScalarRelationFilter, PlantNomenclatureWhereInput>
@@ -16517,7 +16530,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"PlantConservation"> | number
     globalConservationStatus?: EnumGlobalConservationStatusNullableWithAggregatesFilter<"PlantConservation"> | $Enums.GlobalConservationStatus | null
     chinaConservationStatus?: StringNullableWithAggregatesFilter<"PlantConservation"> | string | null
-    protectedStatus?: EnumProtectedStatusNullableWithAggregatesFilter<"PlantConservation"> | $Enums.ProtectedStatus | null
+    protectedStatus?: StringNullableWithAggregatesFilter<"PlantConservation"> | string | null
     invasiveStatus?: EnumInvasiveStatusNullableWithAggregatesFilter<"PlantConservation"> | $Enums.InvasiveStatus | null
     invasiveRange?: StringNullableWithAggregatesFilter<"PlantConservation"> | string | null
     plantId?: IntWithAggregatesFilter<"PlantConservation"> | number
@@ -16579,7 +16592,7 @@ export namespace Prisma {
     pharmacologicalProperties?: StringNullableListFilter<"MedicinalProperties">
     indications?: StringNullableListFilter<"MedicinalProperties">
     toxicity?: StringNullableFilter<"MedicinalProperties"> | string | null
-    secondaryMetabolites?: StringNullableListFilter<"MedicinalProperties">
+    secondaryMetabolites?: StringNullableFilter<"MedicinalProperties"> | string | null
     herbalDrugs?: HerbalDrugBackgroundListRelationFilter
   }
 
@@ -16594,7 +16607,7 @@ export namespace Prisma {
     pharmacologicalProperties?: SortOrder
     indications?: SortOrder
     toxicity?: SortOrderInput | SortOrder
-    secondaryMetabolites?: SortOrder
+    secondaryMetabolites?: SortOrderInput | SortOrder
     herbalDrugs?: HerbalDrugBackgroundOrderByRelationAggregateInput
   }
 
@@ -16612,7 +16625,7 @@ export namespace Prisma {
     pharmacologicalProperties?: StringNullableListFilter<"MedicinalProperties">
     indications?: StringNullableListFilter<"MedicinalProperties">
     toxicity?: StringNullableFilter<"MedicinalProperties"> | string | null
-    secondaryMetabolites?: StringNullableListFilter<"MedicinalProperties">
+    secondaryMetabolites?: StringNullableFilter<"MedicinalProperties"> | string | null
     herbalDrugs?: HerbalDrugBackgroundListRelationFilter
   }, "id" | "pharmaceuticalName" | "herbalDrugPinyin">
 
@@ -16627,7 +16640,7 @@ export namespace Prisma {
     pharmacologicalProperties?: SortOrder
     indications?: SortOrder
     toxicity?: SortOrderInput | SortOrder
-    secondaryMetabolites?: SortOrder
+    secondaryMetabolites?: SortOrderInput | SortOrder
     _count?: MedicinalPropertiesCountOrderByAggregateInput
     _avg?: MedicinalPropertiesAvgOrderByAggregateInput
     _max?: MedicinalPropertiesMaxOrderByAggregateInput
@@ -16649,7 +16662,7 @@ export namespace Prisma {
     pharmacologicalProperties?: StringNullableListFilter<"MedicinalProperties">
     indications?: StringNullableListFilter<"MedicinalProperties">
     toxicity?: StringNullableWithAggregatesFilter<"MedicinalProperties"> | string | null
-    secondaryMetabolites?: StringNullableListFilter<"MedicinalProperties">
+    secondaryMetabolites?: StringNullableWithAggregatesFilter<"MedicinalProperties"> | string | null
   }
 
   export type HerbalDrugBackgroundWhereInput = {
@@ -16751,8 +16764,10 @@ export namespace Prisma {
     cultivationRegions?: StringNullableFilter<"SourcingBackground"> | string | null
     wildHarvestingRegions?: StringNullableFilter<"SourcingBackground"> | string | null
     harvestingPractice?: EnumHarvestingPracticeNullableListFilter<"SourcingBackground">
+    harvestingPracticeNote?: StringNullableFilter<"SourcingBackground"> | string | null
     daodiStatus?: BoolNullableFilter<"SourcingBackground"> | boolean | null
     daodiRegions?: StringNullableFilter<"SourcingBackground"> | string | null
+    productionRegions?: StringNullableFilter<"SourcingBackground"> | string | null
     herbalDrug?: XOR<HerbalDrugBackgroundScalarRelationFilter, HerbalDrugBackgroundWhereInput>
   }
 
@@ -16763,8 +16778,10 @@ export namespace Prisma {
     cultivationRegions?: SortOrderInput | SortOrder
     wildHarvestingRegions?: SortOrderInput | SortOrder
     harvestingPractice?: SortOrder
+    harvestingPracticeNote?: SortOrderInput | SortOrder
     daodiStatus?: SortOrderInput | SortOrder
     daodiRegions?: SortOrderInput | SortOrder
+    productionRegions?: SortOrderInput | SortOrder
     herbalDrug?: HerbalDrugBackgroundOrderByWithRelationInput
   }
 
@@ -16778,8 +16795,10 @@ export namespace Prisma {
     cultivationRegions?: StringNullableFilter<"SourcingBackground"> | string | null
     wildHarvestingRegions?: StringNullableFilter<"SourcingBackground"> | string | null
     harvestingPractice?: EnumHarvestingPracticeNullableListFilter<"SourcingBackground">
+    harvestingPracticeNote?: StringNullableFilter<"SourcingBackground"> | string | null
     daodiStatus?: BoolNullableFilter<"SourcingBackground"> | boolean | null
     daodiRegions?: StringNullableFilter<"SourcingBackground"> | string | null
+    productionRegions?: StringNullableFilter<"SourcingBackground"> | string | null
     herbalDrug?: XOR<HerbalDrugBackgroundScalarRelationFilter, HerbalDrugBackgroundWhereInput>
   }, "id" | "herbalDrugId">
 
@@ -16790,8 +16809,10 @@ export namespace Prisma {
     cultivationRegions?: SortOrderInput | SortOrder
     wildHarvestingRegions?: SortOrderInput | SortOrder
     harvestingPractice?: SortOrder
+    harvestingPracticeNote?: SortOrderInput | SortOrder
     daodiStatus?: SortOrderInput | SortOrder
     daodiRegions?: SortOrderInput | SortOrder
+    productionRegions?: SortOrderInput | SortOrder
     _count?: SourcingBackgroundCountOrderByAggregateInput
     _avg?: SourcingBackgroundAvgOrderByAggregateInput
     _max?: SourcingBackgroundMaxOrderByAggregateInput
@@ -16809,8 +16830,10 @@ export namespace Prisma {
     cultivationRegions?: StringNullableWithAggregatesFilter<"SourcingBackground"> | string | null
     wildHarvestingRegions?: StringNullableWithAggregatesFilter<"SourcingBackground"> | string | null
     harvestingPractice?: EnumHarvestingPracticeNullableListFilter<"SourcingBackground">
+    harvestingPracticeNote?: StringNullableWithAggregatesFilter<"SourcingBackground"> | string | null
     daodiStatus?: BoolNullableWithAggregatesFilter<"SourcingBackground"> | boolean | null
     daodiRegions?: StringNullableWithAggregatesFilter<"SourcingBackground"> | string | null
+    productionRegions?: StringNullableWithAggregatesFilter<"SourcingBackground"> | string | null
   }
 
   export type EthnobotanyWhereInput = {
@@ -16821,7 +16844,7 @@ export namespace Prisma {
     plantId?: IntFilter<"Ethnobotany"> | number
     folkMedicinalUses?: StringNullableFilter<"Ethnobotany"> | string | null
     otherCulturalUses?: StringNullableListFilter<"Ethnobotany">
-    references?: StringNullableListFilter<"Ethnobotany">
+    references?: StringNullableFilter<"Ethnobotany"> | string | null
     plant?: XOR<PlantNomenclatureScalarRelationFilter, PlantNomenclatureWhereInput>
   }
 
@@ -16830,7 +16853,7 @@ export namespace Prisma {
     plantId?: SortOrder
     folkMedicinalUses?: SortOrderInput | SortOrder
     otherCulturalUses?: SortOrder
-    references?: SortOrder
+    references?: SortOrderInput | SortOrder
     plant?: PlantNomenclatureOrderByWithRelationInput
   }
 
@@ -16842,7 +16865,7 @@ export namespace Prisma {
     NOT?: EthnobotanyWhereInput | EthnobotanyWhereInput[]
     folkMedicinalUses?: StringNullableFilter<"Ethnobotany"> | string | null
     otherCulturalUses?: StringNullableListFilter<"Ethnobotany">
-    references?: StringNullableListFilter<"Ethnobotany">
+    references?: StringNullableFilter<"Ethnobotany"> | string | null
     plant?: XOR<PlantNomenclatureScalarRelationFilter, PlantNomenclatureWhereInput>
   }, "id" | "plantId">
 
@@ -16851,7 +16874,7 @@ export namespace Prisma {
     plantId?: SortOrder
     folkMedicinalUses?: SortOrderInput | SortOrder
     otherCulturalUses?: SortOrder
-    references?: SortOrder
+    references?: SortOrderInput | SortOrder
     _count?: EthnobotanyCountOrderByAggregateInput
     _avg?: EthnobotanyAvgOrderByAggregateInput
     _max?: EthnobotanyMaxOrderByAggregateInput
@@ -16867,7 +16890,7 @@ export namespace Prisma {
     plantId?: IntWithAggregatesFilter<"Ethnobotany"> | number
     folkMedicinalUses?: StringNullableWithAggregatesFilter<"Ethnobotany"> | string | null
     otherCulturalUses?: StringNullableListFilter<"Ethnobotany">
-    references?: StringNullableListFilter<"Ethnobotany">
+    references?: StringNullableWithAggregatesFilter<"Ethnobotany"> | string | null
   }
 
   export type UserCreateInput = {
@@ -16931,6 +16954,7 @@ export namespace Prisma {
     plantCommonName?: PlantNomenclatureCreateplantCommonNameInput | string[]
     plantPinyin?: string | null
     plantChineseName?: string | null
+    links?: PlantNomenclatureCreatelinksInput | string[]
     taxonomy: PlantTaxonomyCreateNestedOneWithoutPlantsInput
     botanicalGardenList?: BotanicalGardenCreateNestedManyWithoutPlantsInput
     synonyms?: PlantSynonymCreateNestedManyWithoutPlantInput
@@ -16948,6 +16972,7 @@ export namespace Prisma {
     plantPinyin?: string | null
     plantChineseName?: string | null
     taxonomyId: number
+    links?: PlantNomenclatureCreatelinksInput | string[]
     botanicalGardenList?: BotanicalGardenUncheckedCreateNestedManyWithoutPlantsInput
     synonyms?: PlantSynonymUncheckedCreateNestedManyWithoutPlantInput
     morphologies?: PlantMorphologyUncheckedCreateNestedManyWithoutPlantsInput
@@ -16962,6 +16987,7 @@ export namespace Prisma {
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
     plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
     plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
+    links?: PlantNomenclatureUpdatelinksInput | string[]
     taxonomy?: PlantTaxonomyUpdateOneRequiredWithoutPlantsNestedInput
     botanicalGardenList?: BotanicalGardenUpdateManyWithoutPlantsNestedInput
     synonyms?: PlantSynonymUpdateManyWithoutPlantNestedInput
@@ -16979,6 +17005,7 @@ export namespace Prisma {
     plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
     plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
     taxonomyId?: IntFieldUpdateOperationsInput | number
+    links?: PlantNomenclatureUpdatelinksInput | string[]
     botanicalGardenList?: BotanicalGardenUncheckedUpdateManyWithoutPlantsNestedInput
     synonyms?: PlantSynonymUncheckedUpdateManyWithoutPlantNestedInput
     morphologies?: PlantMorphologyUncheckedUpdateManyWithoutPlantsNestedInput
@@ -16995,6 +17022,7 @@ export namespace Prisma {
     plantPinyin?: string | null
     plantChineseName?: string | null
     taxonomyId: number
+    links?: PlantNomenclatureCreatelinksInput | string[]
   }
 
   export type PlantNomenclatureUpdateManyMutationInput = {
@@ -17002,6 +17030,7 @@ export namespace Prisma {
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
     plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
     plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
+    links?: PlantNomenclatureUpdatelinksInput | string[]
   }
 
   export type PlantNomenclatureUncheckedUpdateManyInput = {
@@ -17011,6 +17040,7 @@ export namespace Prisma {
     plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
     plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
     taxonomyId?: IntFieldUpdateOperationsInput | number
+    links?: PlantNomenclatureUpdatelinksInput | string[]
   }
 
   export type PlantTaxonomyCreateInput = {
@@ -17106,7 +17136,8 @@ export namespace Prisma {
     isTerrestrial?: boolean | null
     growthHabit?: string | null
     isDeciduous?: boolean | null
-    reproductiveSystem?: $Enums.ReproductiveSystem | null
+    isDeciduousNote?: string | null
+    reproductiveSystem?: string | null
     floweringPeriod?: PlantMorphologyCreatefloweringPeriodInput | $Enums.Month[]
     fruitingPeriod?: PlantMorphologyCreatefruitingPeriodInput | $Enums.Month[]
     plants?: PlantNomenclatureCreateNestedManyWithoutMorphologiesInput
@@ -17118,7 +17149,8 @@ export namespace Prisma {
     isTerrestrial?: boolean | null
     growthHabit?: string | null
     isDeciduous?: boolean | null
-    reproductiveSystem?: $Enums.ReproductiveSystem | null
+    isDeciduousNote?: string | null
+    reproductiveSystem?: string | null
     floweringPeriod?: PlantMorphologyCreatefloweringPeriodInput | $Enums.Month[]
     fruitingPeriod?: PlantMorphologyCreatefruitingPeriodInput | $Enums.Month[]
     plants?: PlantNomenclatureUncheckedCreateNestedManyWithoutMorphologiesInput
@@ -17129,7 +17161,8 @@ export namespace Prisma {
     isTerrestrial?: NullableBoolFieldUpdateOperationsInput | boolean | null
     growthHabit?: NullableStringFieldUpdateOperationsInput | string | null
     isDeciduous?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    reproductiveSystem?: NullableEnumReproductiveSystemFieldUpdateOperationsInput | $Enums.ReproductiveSystem | null
+    isDeciduousNote?: NullableStringFieldUpdateOperationsInput | string | null
+    reproductiveSystem?: NullableStringFieldUpdateOperationsInput | string | null
     floweringPeriod?: PlantMorphologyUpdatefloweringPeriodInput | $Enums.Month[]
     fruitingPeriod?: PlantMorphologyUpdatefruitingPeriodInput | $Enums.Month[]
     plants?: PlantNomenclatureUpdateManyWithoutMorphologiesNestedInput
@@ -17141,7 +17174,8 @@ export namespace Prisma {
     isTerrestrial?: NullableBoolFieldUpdateOperationsInput | boolean | null
     growthHabit?: NullableStringFieldUpdateOperationsInput | string | null
     isDeciduous?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    reproductiveSystem?: NullableEnumReproductiveSystemFieldUpdateOperationsInput | $Enums.ReproductiveSystem | null
+    isDeciduousNote?: NullableStringFieldUpdateOperationsInput | string | null
+    reproductiveSystem?: NullableStringFieldUpdateOperationsInput | string | null
     floweringPeriod?: PlantMorphologyUpdatefloweringPeriodInput | $Enums.Month[]
     fruitingPeriod?: PlantMorphologyUpdatefruitingPeriodInput | $Enums.Month[]
     plants?: PlantNomenclatureUncheckedUpdateManyWithoutMorphologiesNestedInput
@@ -17153,7 +17187,8 @@ export namespace Prisma {
     isTerrestrial?: boolean | null
     growthHabit?: string | null
     isDeciduous?: boolean | null
-    reproductiveSystem?: $Enums.ReproductiveSystem | null
+    isDeciduousNote?: string | null
+    reproductiveSystem?: string | null
     floweringPeriod?: PlantMorphologyCreatefloweringPeriodInput | $Enums.Month[]
     fruitingPeriod?: PlantMorphologyCreatefruitingPeriodInput | $Enums.Month[]
   }
@@ -17163,7 +17198,8 @@ export namespace Prisma {
     isTerrestrial?: NullableBoolFieldUpdateOperationsInput | boolean | null
     growthHabit?: NullableStringFieldUpdateOperationsInput | string | null
     isDeciduous?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    reproductiveSystem?: NullableEnumReproductiveSystemFieldUpdateOperationsInput | $Enums.ReproductiveSystem | null
+    isDeciduousNote?: NullableStringFieldUpdateOperationsInput | string | null
+    reproductiveSystem?: NullableStringFieldUpdateOperationsInput | string | null
     floweringPeriod?: PlantMorphologyUpdatefloweringPeriodInput | $Enums.Month[]
     fruitingPeriod?: PlantMorphologyUpdatefruitingPeriodInput | $Enums.Month[]
   }
@@ -17174,7 +17210,8 @@ export namespace Prisma {
     isTerrestrial?: NullableBoolFieldUpdateOperationsInput | boolean | null
     growthHabit?: NullableStringFieldUpdateOperationsInput | string | null
     isDeciduous?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    reproductiveSystem?: NullableEnumReproductiveSystemFieldUpdateOperationsInput | $Enums.ReproductiveSystem | null
+    isDeciduousNote?: NullableStringFieldUpdateOperationsInput | string | null
+    reproductiveSystem?: NullableStringFieldUpdateOperationsInput | string | null
     floweringPeriod?: PlantMorphologyUpdatefloweringPeriodInput | $Enums.Month[]
     fruitingPeriod?: PlantMorphologyUpdatefruitingPeriodInput | $Enums.Month[]
   }
@@ -17184,7 +17221,7 @@ export namespace Prisma {
     plantOrigin?: string | null
     globalRange?: string | null
     chinaRange?: string | null
-    endemic?: boolean | null
+    endemic?: string | null
     plant: PlantNomenclatureCreateNestedOneWithoutEcologyDistributionsInput
   }
 
@@ -17194,7 +17231,7 @@ export namespace Prisma {
     plantOrigin?: string | null
     globalRange?: string | null
     chinaRange?: string | null
-    endemic?: boolean | null
+    endemic?: string | null
     plantId: number
   }
 
@@ -17203,7 +17240,7 @@ export namespace Prisma {
     plantOrigin?: NullableStringFieldUpdateOperationsInput | string | null
     globalRange?: NullableStringFieldUpdateOperationsInput | string | null
     chinaRange?: NullableStringFieldUpdateOperationsInput | string | null
-    endemic?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    endemic?: NullableStringFieldUpdateOperationsInput | string | null
     plant?: PlantNomenclatureUpdateOneRequiredWithoutEcologyDistributionsNestedInput
   }
 
@@ -17213,7 +17250,7 @@ export namespace Prisma {
     plantOrigin?: NullableStringFieldUpdateOperationsInput | string | null
     globalRange?: NullableStringFieldUpdateOperationsInput | string | null
     chinaRange?: NullableStringFieldUpdateOperationsInput | string | null
-    endemic?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    endemic?: NullableStringFieldUpdateOperationsInput | string | null
     plantId?: IntFieldUpdateOperationsInput | number
   }
 
@@ -17223,7 +17260,7 @@ export namespace Prisma {
     plantOrigin?: string | null
     globalRange?: string | null
     chinaRange?: string | null
-    endemic?: boolean | null
+    endemic?: string | null
     plantId: number
   }
 
@@ -17232,7 +17269,7 @@ export namespace Prisma {
     plantOrigin?: NullableStringFieldUpdateOperationsInput | string | null
     globalRange?: NullableStringFieldUpdateOperationsInput | string | null
     chinaRange?: NullableStringFieldUpdateOperationsInput | string | null
-    endemic?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    endemic?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PlantEcologyDistributionUncheckedUpdateManyInput = {
@@ -17241,14 +17278,14 @@ export namespace Prisma {
     plantOrigin?: NullableStringFieldUpdateOperationsInput | string | null
     globalRange?: NullableStringFieldUpdateOperationsInput | string | null
     chinaRange?: NullableStringFieldUpdateOperationsInput | string | null
-    endemic?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    endemic?: NullableStringFieldUpdateOperationsInput | string | null
     plantId?: IntFieldUpdateOperationsInput | number
   }
 
   export type PlantConservationCreateInput = {
     globalConservationStatus?: $Enums.GlobalConservationStatus | null
     chinaConservationStatus?: string | null
-    protectedStatus?: $Enums.ProtectedStatus | null
+    protectedStatus?: string | null
     invasiveStatus?: $Enums.InvasiveStatus | null
     invasiveRange?: string | null
     plant: PlantNomenclatureCreateNestedOneWithoutConservationInput
@@ -17258,7 +17295,7 @@ export namespace Prisma {
     id?: number
     globalConservationStatus?: $Enums.GlobalConservationStatus | null
     chinaConservationStatus?: string | null
-    protectedStatus?: $Enums.ProtectedStatus | null
+    protectedStatus?: string | null
     invasiveStatus?: $Enums.InvasiveStatus | null
     invasiveRange?: string | null
     plantId: number
@@ -17267,7 +17304,7 @@ export namespace Prisma {
   export type PlantConservationUpdateInput = {
     globalConservationStatus?: NullableEnumGlobalConservationStatusFieldUpdateOperationsInput | $Enums.GlobalConservationStatus | null
     chinaConservationStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    protectedStatus?: NullableEnumProtectedStatusFieldUpdateOperationsInput | $Enums.ProtectedStatus | null
+    protectedStatus?: NullableStringFieldUpdateOperationsInput | string | null
     invasiveStatus?: NullableEnumInvasiveStatusFieldUpdateOperationsInput | $Enums.InvasiveStatus | null
     invasiveRange?: NullableStringFieldUpdateOperationsInput | string | null
     plant?: PlantNomenclatureUpdateOneRequiredWithoutConservationNestedInput
@@ -17277,7 +17314,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     globalConservationStatus?: NullableEnumGlobalConservationStatusFieldUpdateOperationsInput | $Enums.GlobalConservationStatus | null
     chinaConservationStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    protectedStatus?: NullableEnumProtectedStatusFieldUpdateOperationsInput | $Enums.ProtectedStatus | null
+    protectedStatus?: NullableStringFieldUpdateOperationsInput | string | null
     invasiveStatus?: NullableEnumInvasiveStatusFieldUpdateOperationsInput | $Enums.InvasiveStatus | null
     invasiveRange?: NullableStringFieldUpdateOperationsInput | string | null
     plantId?: IntFieldUpdateOperationsInput | number
@@ -17287,7 +17324,7 @@ export namespace Prisma {
     id?: number
     globalConservationStatus?: $Enums.GlobalConservationStatus | null
     chinaConservationStatus?: string | null
-    protectedStatus?: $Enums.ProtectedStatus | null
+    protectedStatus?: string | null
     invasiveStatus?: $Enums.InvasiveStatus | null
     invasiveRange?: string | null
     plantId: number
@@ -17296,7 +17333,7 @@ export namespace Prisma {
   export type PlantConservationUpdateManyMutationInput = {
     globalConservationStatus?: NullableEnumGlobalConservationStatusFieldUpdateOperationsInput | $Enums.GlobalConservationStatus | null
     chinaConservationStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    protectedStatus?: NullableEnumProtectedStatusFieldUpdateOperationsInput | $Enums.ProtectedStatus | null
+    protectedStatus?: NullableStringFieldUpdateOperationsInput | string | null
     invasiveStatus?: NullableEnumInvasiveStatusFieldUpdateOperationsInput | $Enums.InvasiveStatus | null
     invasiveRange?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -17305,7 +17342,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     globalConservationStatus?: NullableEnumGlobalConservationStatusFieldUpdateOperationsInput | $Enums.GlobalConservationStatus | null
     chinaConservationStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    protectedStatus?: NullableEnumProtectedStatusFieldUpdateOperationsInput | $Enums.ProtectedStatus | null
+    protectedStatus?: NullableStringFieldUpdateOperationsInput | string | null
     invasiveStatus?: NullableEnumInvasiveStatusFieldUpdateOperationsInput | $Enums.InvasiveStatus | null
     invasiveRange?: NullableStringFieldUpdateOperationsInput | string | null
     plantId?: IntFieldUpdateOperationsInput | number
@@ -17357,7 +17394,7 @@ export namespace Prisma {
     pharmacologicalProperties?: MedicinalPropertiesCreatepharmacologicalPropertiesInput | string[]
     indications?: MedicinalPropertiesCreateindicationsInput | string[]
     toxicity?: string | null
-    secondaryMetabolites?: MedicinalPropertiesCreatesecondaryMetabolitesInput | string[]
+    secondaryMetabolites?: string | null
     herbalDrugs?: HerbalDrugBackgroundCreateNestedManyWithoutMerdicinalPropertyInput
   }
 
@@ -17372,7 +17409,7 @@ export namespace Prisma {
     pharmacologicalProperties?: MedicinalPropertiesCreatepharmacologicalPropertiesInput | string[]
     indications?: MedicinalPropertiesCreateindicationsInput | string[]
     toxicity?: string | null
-    secondaryMetabolites?: MedicinalPropertiesCreatesecondaryMetabolitesInput | string[]
+    secondaryMetabolites?: string | null
     herbalDrugs?: HerbalDrugBackgroundUncheckedCreateNestedManyWithoutMerdicinalPropertyInput
   }
 
@@ -17386,7 +17423,7 @@ export namespace Prisma {
     pharmacologicalProperties?: MedicinalPropertiesUpdatepharmacologicalPropertiesInput | string[]
     indications?: MedicinalPropertiesUpdateindicationsInput | string[]
     toxicity?: NullableStringFieldUpdateOperationsInput | string | null
-    secondaryMetabolites?: MedicinalPropertiesUpdatesecondaryMetabolitesInput | string[]
+    secondaryMetabolites?: NullableStringFieldUpdateOperationsInput | string | null
     herbalDrugs?: HerbalDrugBackgroundUpdateManyWithoutMerdicinalPropertyNestedInput
   }
 
@@ -17401,7 +17438,7 @@ export namespace Prisma {
     pharmacologicalProperties?: MedicinalPropertiesUpdatepharmacologicalPropertiesInput | string[]
     indications?: MedicinalPropertiesUpdateindicationsInput | string[]
     toxicity?: NullableStringFieldUpdateOperationsInput | string | null
-    secondaryMetabolites?: MedicinalPropertiesUpdatesecondaryMetabolitesInput | string[]
+    secondaryMetabolites?: NullableStringFieldUpdateOperationsInput | string | null
     herbalDrugs?: HerbalDrugBackgroundUncheckedUpdateManyWithoutMerdicinalPropertyNestedInput
   }
 
@@ -17416,7 +17453,7 @@ export namespace Prisma {
     pharmacologicalProperties?: MedicinalPropertiesCreatepharmacologicalPropertiesInput | string[]
     indications?: MedicinalPropertiesCreateindicationsInput | string[]
     toxicity?: string | null
-    secondaryMetabolites?: MedicinalPropertiesCreatesecondaryMetabolitesInput | string[]
+    secondaryMetabolites?: string | null
   }
 
   export type MedicinalPropertiesUpdateManyMutationInput = {
@@ -17429,7 +17466,7 @@ export namespace Prisma {
     pharmacologicalProperties?: MedicinalPropertiesUpdatepharmacologicalPropertiesInput | string[]
     indications?: MedicinalPropertiesUpdateindicationsInput | string[]
     toxicity?: NullableStringFieldUpdateOperationsInput | string | null
-    secondaryMetabolites?: MedicinalPropertiesUpdatesecondaryMetabolitesInput | string[]
+    secondaryMetabolites?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type MedicinalPropertiesUncheckedUpdateManyInput = {
@@ -17443,7 +17480,7 @@ export namespace Prisma {
     pharmacologicalProperties?: MedicinalPropertiesUpdatepharmacologicalPropertiesInput | string[]
     indications?: MedicinalPropertiesUpdateindicationsInput | string[]
     toxicity?: NullableStringFieldUpdateOperationsInput | string | null
-    secondaryMetabolites?: MedicinalPropertiesUpdatesecondaryMetabolitesInput | string[]
+    secondaryMetabolites?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type HerbalDrugBackgroundCreateInput = {
@@ -17541,8 +17578,10 @@ export namespace Prisma {
     cultivationRegions?: string | null
     wildHarvestingRegions?: string | null
     harvestingPractice?: SourcingBackgroundCreateharvestingPracticeInput | $Enums.HarvestingPractice[]
+    harvestingPracticeNote?: string | null
     daodiStatus?: boolean | null
     daodiRegions?: string | null
+    productionRegions?: string | null
     herbalDrug: HerbalDrugBackgroundCreateNestedOneWithoutSourcingBackgroundsInput
   }
 
@@ -17553,8 +17592,10 @@ export namespace Prisma {
     cultivationRegions?: string | null
     wildHarvestingRegions?: string | null
     harvestingPractice?: SourcingBackgroundCreateharvestingPracticeInput | $Enums.HarvestingPractice[]
+    harvestingPracticeNote?: string | null
     daodiStatus?: boolean | null
     daodiRegions?: string | null
+    productionRegions?: string | null
   }
 
   export type SourcingBackgroundUpdateInput = {
@@ -17562,8 +17603,10 @@ export namespace Prisma {
     cultivationRegions?: NullableStringFieldUpdateOperationsInput | string | null
     wildHarvestingRegions?: NullableStringFieldUpdateOperationsInput | string | null
     harvestingPractice?: SourcingBackgroundUpdateharvestingPracticeInput | $Enums.HarvestingPractice[]
+    harvestingPracticeNote?: NullableStringFieldUpdateOperationsInput | string | null
     daodiStatus?: NullableBoolFieldUpdateOperationsInput | boolean | null
     daodiRegions?: NullableStringFieldUpdateOperationsInput | string | null
+    productionRegions?: NullableStringFieldUpdateOperationsInput | string | null
     herbalDrug?: HerbalDrugBackgroundUpdateOneRequiredWithoutSourcingBackgroundsNestedInput
   }
 
@@ -17574,8 +17617,10 @@ export namespace Prisma {
     cultivationRegions?: NullableStringFieldUpdateOperationsInput | string | null
     wildHarvestingRegions?: NullableStringFieldUpdateOperationsInput | string | null
     harvestingPractice?: SourcingBackgroundUpdateharvestingPracticeInput | $Enums.HarvestingPractice[]
+    harvestingPracticeNote?: NullableStringFieldUpdateOperationsInput | string | null
     daodiStatus?: NullableBoolFieldUpdateOperationsInput | boolean | null
     daodiRegions?: NullableStringFieldUpdateOperationsInput | string | null
+    productionRegions?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SourcingBackgroundCreateManyInput = {
@@ -17585,8 +17630,10 @@ export namespace Prisma {
     cultivationRegions?: string | null
     wildHarvestingRegions?: string | null
     harvestingPractice?: SourcingBackgroundCreateharvestingPracticeInput | $Enums.HarvestingPractice[]
+    harvestingPracticeNote?: string | null
     daodiStatus?: boolean | null
     daodiRegions?: string | null
+    productionRegions?: string | null
   }
 
   export type SourcingBackgroundUpdateManyMutationInput = {
@@ -17594,8 +17641,10 @@ export namespace Prisma {
     cultivationRegions?: NullableStringFieldUpdateOperationsInput | string | null
     wildHarvestingRegions?: NullableStringFieldUpdateOperationsInput | string | null
     harvestingPractice?: SourcingBackgroundUpdateharvestingPracticeInput | $Enums.HarvestingPractice[]
+    harvestingPracticeNote?: NullableStringFieldUpdateOperationsInput | string | null
     daodiStatus?: NullableBoolFieldUpdateOperationsInput | boolean | null
     daodiRegions?: NullableStringFieldUpdateOperationsInput | string | null
+    productionRegions?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SourcingBackgroundUncheckedUpdateManyInput = {
@@ -17605,14 +17654,16 @@ export namespace Prisma {
     cultivationRegions?: NullableStringFieldUpdateOperationsInput | string | null
     wildHarvestingRegions?: NullableStringFieldUpdateOperationsInput | string | null
     harvestingPractice?: SourcingBackgroundUpdateharvestingPracticeInput | $Enums.HarvestingPractice[]
+    harvestingPracticeNote?: NullableStringFieldUpdateOperationsInput | string | null
     daodiStatus?: NullableBoolFieldUpdateOperationsInput | boolean | null
     daodiRegions?: NullableStringFieldUpdateOperationsInput | string | null
+    productionRegions?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type EthnobotanyCreateInput = {
     folkMedicinalUses?: string | null
     otherCulturalUses?: EthnobotanyCreateotherCulturalUsesInput | string[]
-    references?: EthnobotanyCreatereferencesInput | string[]
+    references?: string | null
     plant: PlantNomenclatureCreateNestedOneWithoutEthnobotaniesInput
   }
 
@@ -17621,13 +17672,13 @@ export namespace Prisma {
     plantId: number
     folkMedicinalUses?: string | null
     otherCulturalUses?: EthnobotanyCreateotherCulturalUsesInput | string[]
-    references?: EthnobotanyCreatereferencesInput | string[]
+    references?: string | null
   }
 
   export type EthnobotanyUpdateInput = {
     folkMedicinalUses?: NullableStringFieldUpdateOperationsInput | string | null
     otherCulturalUses?: EthnobotanyUpdateotherCulturalUsesInput | string[]
-    references?: EthnobotanyUpdatereferencesInput | string[]
+    references?: NullableStringFieldUpdateOperationsInput | string | null
     plant?: PlantNomenclatureUpdateOneRequiredWithoutEthnobotaniesNestedInput
   }
 
@@ -17636,7 +17687,7 @@ export namespace Prisma {
     plantId?: IntFieldUpdateOperationsInput | number
     folkMedicinalUses?: NullableStringFieldUpdateOperationsInput | string | null
     otherCulturalUses?: EthnobotanyUpdateotherCulturalUsesInput | string[]
-    references?: EthnobotanyUpdatereferencesInput | string[]
+    references?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type EthnobotanyCreateManyInput = {
@@ -17644,13 +17695,13 @@ export namespace Prisma {
     plantId: number
     folkMedicinalUses?: string | null
     otherCulturalUses?: EthnobotanyCreateotherCulturalUsesInput | string[]
-    references?: EthnobotanyCreatereferencesInput | string[]
+    references?: string | null
   }
 
   export type EthnobotanyUpdateManyMutationInput = {
     folkMedicinalUses?: NullableStringFieldUpdateOperationsInput | string | null
     otherCulturalUses?: EthnobotanyUpdateotherCulturalUsesInput | string[]
-    references?: EthnobotanyUpdatereferencesInput | string[]
+    references?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type EthnobotanyUncheckedUpdateManyInput = {
@@ -17658,7 +17709,7 @@ export namespace Prisma {
     plantId?: IntFieldUpdateOperationsInput | number
     folkMedicinalUses?: NullableStringFieldUpdateOperationsInput | string | null
     otherCulturalUses?: EthnobotanyUpdateotherCulturalUsesInput | string[]
-    references?: EthnobotanyUpdatereferencesInput | string[]
+    references?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -17849,6 +17900,7 @@ export namespace Prisma {
     plantPinyin?: SortOrder
     plantChineseName?: SortOrder
     taxonomyId?: SortOrder
+    links?: SortOrder
   }
 
   export type PlantNomenclatureAvgOrderByAggregateInput = {
@@ -18004,13 +18056,6 @@ export namespace Prisma {
     isEmpty?: boolean
   }
 
-  export type EnumReproductiveSystemNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.ReproductiveSystem | EnumReproductiveSystemFieldRefInput<$PrismaModel> | null
-    in?: $Enums.ReproductiveSystem[] | ListEnumReproductiveSystemFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.ReproductiveSystem[] | ListEnumReproductiveSystemFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumReproductiveSystemNullableFilter<$PrismaModel> | $Enums.ReproductiveSystem | null
-  }
-
   export type EnumMonthNullableListFilter<$PrismaModel = never> = {
     equals?: $Enums.Month[] | ListEnumMonthFieldRefInput<$PrismaModel> | null
     has?: $Enums.Month | EnumMonthFieldRefInput<$PrismaModel> | null
@@ -18025,6 +18070,7 @@ export namespace Prisma {
     isTerrestrial?: SortOrder
     growthHabit?: SortOrder
     isDeciduous?: SortOrder
+    isDeciduousNote?: SortOrder
     reproductiveSystem?: SortOrder
     floweringPeriod?: SortOrder
     fruitingPeriod?: SortOrder
@@ -18039,6 +18085,7 @@ export namespace Prisma {
     isTerrestrial?: SortOrder
     growthHabit?: SortOrder
     isDeciduous?: SortOrder
+    isDeciduousNote?: SortOrder
     reproductiveSystem?: SortOrder
   }
 
@@ -18047,21 +18094,12 @@ export namespace Prisma {
     isTerrestrial?: SortOrder
     growthHabit?: SortOrder
     isDeciduous?: SortOrder
+    isDeciduousNote?: SortOrder
     reproductiveSystem?: SortOrder
   }
 
   export type PlantMorphologySumOrderByAggregateInput = {
     id?: SortOrder
-  }
-
-  export type EnumReproductiveSystemNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ReproductiveSystem | EnumReproductiveSystemFieldRefInput<$PrismaModel> | null
-    in?: $Enums.ReproductiveSystem[] | ListEnumReproductiveSystemFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.ReproductiveSystem[] | ListEnumReproductiveSystemFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumReproductiveSystemNullableWithAggregatesFilter<$PrismaModel> | $Enums.ReproductiveSystem | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedEnumReproductiveSystemNullableFilter<$PrismaModel>
-    _max?: NestedEnumReproductiveSystemNullableFilter<$PrismaModel>
   }
 
   export type PlantEcologyDistributionCountOrderByAggregateInput = {
@@ -18109,13 +18147,6 @@ export namespace Prisma {
     in?: $Enums.GlobalConservationStatus[] | ListEnumGlobalConservationStatusFieldRefInput<$PrismaModel> | null
     notIn?: $Enums.GlobalConservationStatus[] | ListEnumGlobalConservationStatusFieldRefInput<$PrismaModel> | null
     not?: NestedEnumGlobalConservationStatusNullableFilter<$PrismaModel> | $Enums.GlobalConservationStatus | null
-  }
-
-  export type EnumProtectedStatusNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.ProtectedStatus | EnumProtectedStatusFieldRefInput<$PrismaModel> | null
-    in?: $Enums.ProtectedStatus[] | ListEnumProtectedStatusFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.ProtectedStatus[] | ListEnumProtectedStatusFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumProtectedStatusNullableFilter<$PrismaModel> | $Enums.ProtectedStatus | null
   }
 
   export type EnumInvasiveStatusNullableFilter<$PrismaModel = never> = {
@@ -18173,16 +18204,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedEnumGlobalConservationStatusNullableFilter<$PrismaModel>
     _max?: NestedEnumGlobalConservationStatusNullableFilter<$PrismaModel>
-  }
-
-  export type EnumProtectedStatusNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ProtectedStatus | EnumProtectedStatusFieldRefInput<$PrismaModel> | null
-    in?: $Enums.ProtectedStatus[] | ListEnumProtectedStatusFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.ProtectedStatus[] | ListEnumProtectedStatusFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumProtectedStatusNullableWithAggregatesFilter<$PrismaModel> | $Enums.ProtectedStatus | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedEnumProtectedStatusNullableFilter<$PrismaModel>
-    _max?: NestedEnumProtectedStatusNullableFilter<$PrismaModel>
   }
 
   export type EnumInvasiveStatusNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -18266,6 +18287,7 @@ export namespace Prisma {
     herbalDrugPinyin?: SortOrder
     actions?: SortOrder
     toxicity?: SortOrder
+    secondaryMetabolites?: SortOrder
   }
 
   export type MedicinalPropertiesMinOrderByAggregateInput = {
@@ -18274,6 +18296,7 @@ export namespace Prisma {
     herbalDrugPinyin?: SortOrder
     actions?: SortOrder
     toxicity?: SortOrder
+    secondaryMetabolites?: SortOrder
   }
 
   export type MedicinalPropertiesSumOrderByAggregateInput = {
@@ -18364,8 +18387,10 @@ export namespace Prisma {
     cultivationRegions?: SortOrder
     wildHarvestingRegions?: SortOrder
     harvestingPractice?: SortOrder
+    harvestingPracticeNote?: SortOrder
     daodiStatus?: SortOrder
     daodiRegions?: SortOrder
+    productionRegions?: SortOrder
   }
 
   export type SourcingBackgroundAvgOrderByAggregateInput = {
@@ -18379,8 +18404,10 @@ export namespace Prisma {
     cultivationStatus?: SortOrder
     cultivationRegions?: SortOrder
     wildHarvestingRegions?: SortOrder
+    harvestingPracticeNote?: SortOrder
     daodiStatus?: SortOrder
     daodiRegions?: SortOrder
+    productionRegions?: SortOrder
   }
 
   export type SourcingBackgroundMinOrderByAggregateInput = {
@@ -18389,8 +18416,10 @@ export namespace Prisma {
     cultivationStatus?: SortOrder
     cultivationRegions?: SortOrder
     wildHarvestingRegions?: SortOrder
+    harvestingPracticeNote?: SortOrder
     daodiStatus?: SortOrder
     daodiRegions?: SortOrder
+    productionRegions?: SortOrder
   }
 
   export type SourcingBackgroundSumOrderByAggregateInput = {
@@ -18415,12 +18444,14 @@ export namespace Prisma {
     id?: SortOrder
     plantId?: SortOrder
     folkMedicinalUses?: SortOrder
+    references?: SortOrder
   }
 
   export type EthnobotanyMinOrderByAggregateInput = {
     id?: SortOrder
     plantId?: SortOrder
     folkMedicinalUses?: SortOrder
+    references?: SortOrder
   }
 
   export type EthnobotanySumOrderByAggregateInput = {
@@ -18437,6 +18468,10 @@ export namespace Prisma {
   }
 
   export type PlantNomenclatureCreateplantCommonNameInput = {
+    set: string[]
+  }
+
+  export type PlantNomenclatureCreatelinksInput = {
     set: string[]
   }
 
@@ -18541,6 +18576,11 @@ export namespace Prisma {
 
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
+  }
+
+  export type PlantNomenclatureUpdatelinksInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type PlantTaxonomyUpdateOneRequiredWithoutPlantsNestedInput = {
@@ -18816,10 +18856,6 @@ export namespace Prisma {
     push?: $Enums.Lifecycle | $Enums.Lifecycle[]
   }
 
-  export type NullableEnumReproductiveSystemFieldUpdateOperationsInput = {
-    set?: $Enums.ReproductiveSystem | null
-  }
-
   export type PlantMorphologyUpdatefloweringPeriodInput = {
     set?: $Enums.Month[]
     push?: $Enums.Month | $Enums.Month[]
@@ -18878,10 +18914,6 @@ export namespace Prisma {
 
   export type NullableEnumGlobalConservationStatusFieldUpdateOperationsInput = {
     set?: $Enums.GlobalConservationStatus | null
-  }
-
-  export type NullableEnumProtectedStatusFieldUpdateOperationsInput = {
-    set?: $Enums.ProtectedStatus | null
   }
 
   export type NullableEnumInvasiveStatusFieldUpdateOperationsInput = {
@@ -18954,10 +18986,6 @@ export namespace Prisma {
     set: string[]
   }
 
-  export type MedicinalPropertiesCreatesecondaryMetabolitesInput = {
-    set: string[]
-  }
-
   export type HerbalDrugBackgroundCreateNestedManyWithoutMerdicinalPropertyInput = {
     create?: XOR<HerbalDrugBackgroundCreateWithoutMerdicinalPropertyInput, HerbalDrugBackgroundUncheckedCreateWithoutMerdicinalPropertyInput> | HerbalDrugBackgroundCreateWithoutMerdicinalPropertyInput[] | HerbalDrugBackgroundUncheckedCreateWithoutMerdicinalPropertyInput[]
     connectOrCreate?: HerbalDrugBackgroundCreateOrConnectWithoutMerdicinalPropertyInput | HerbalDrugBackgroundCreateOrConnectWithoutMerdicinalPropertyInput[]
@@ -18993,11 +19021,6 @@ export namespace Prisma {
   }
 
   export type MedicinalPropertiesUpdateindicationsInput = {
-    set?: string[]
-    push?: string | string[]
-  }
-
-  export type MedicinalPropertiesUpdatesecondaryMetabolitesInput = {
     set?: string[]
     push?: string | string[]
   }
@@ -19126,10 +19149,6 @@ export namespace Prisma {
     set: string[]
   }
 
-  export type EthnobotanyCreatereferencesInput = {
-    set: string[]
-  }
-
   export type PlantNomenclatureCreateNestedOneWithoutEthnobotaniesInput = {
     create?: XOR<PlantNomenclatureCreateWithoutEthnobotaniesInput, PlantNomenclatureUncheckedCreateWithoutEthnobotaniesInput>
     connectOrCreate?: PlantNomenclatureCreateOrConnectWithoutEthnobotaniesInput
@@ -19137,11 +19156,6 @@ export namespace Prisma {
   }
 
   export type EthnobotanyUpdateotherCulturalUsesInput = {
-    set?: string[]
-    push?: string | string[]
-  }
-
-  export type EthnobotanyUpdatereferencesInput = {
     set?: string[]
     push?: string | string[]
   }
@@ -19303,35 +19317,11 @@ export namespace Prisma {
     _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
-  export type NestedEnumReproductiveSystemNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.ReproductiveSystem | EnumReproductiveSystemFieldRefInput<$PrismaModel> | null
-    in?: $Enums.ReproductiveSystem[] | ListEnumReproductiveSystemFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.ReproductiveSystem[] | ListEnumReproductiveSystemFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumReproductiveSystemNullableFilter<$PrismaModel> | $Enums.ReproductiveSystem | null
-  }
-
-  export type NestedEnumReproductiveSystemNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ReproductiveSystem | EnumReproductiveSystemFieldRefInput<$PrismaModel> | null
-    in?: $Enums.ReproductiveSystem[] | ListEnumReproductiveSystemFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.ReproductiveSystem[] | ListEnumReproductiveSystemFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumReproductiveSystemNullableWithAggregatesFilter<$PrismaModel> | $Enums.ReproductiveSystem | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedEnumReproductiveSystemNullableFilter<$PrismaModel>
-    _max?: NestedEnumReproductiveSystemNullableFilter<$PrismaModel>
-  }
-
   export type NestedEnumGlobalConservationStatusNullableFilter<$PrismaModel = never> = {
     equals?: $Enums.GlobalConservationStatus | EnumGlobalConservationStatusFieldRefInput<$PrismaModel> | null
     in?: $Enums.GlobalConservationStatus[] | ListEnumGlobalConservationStatusFieldRefInput<$PrismaModel> | null
     notIn?: $Enums.GlobalConservationStatus[] | ListEnumGlobalConservationStatusFieldRefInput<$PrismaModel> | null
     not?: NestedEnumGlobalConservationStatusNullableFilter<$PrismaModel> | $Enums.GlobalConservationStatus | null
-  }
-
-  export type NestedEnumProtectedStatusNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.ProtectedStatus | EnumProtectedStatusFieldRefInput<$PrismaModel> | null
-    in?: $Enums.ProtectedStatus[] | ListEnumProtectedStatusFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.ProtectedStatus[] | ListEnumProtectedStatusFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumProtectedStatusNullableFilter<$PrismaModel> | $Enums.ProtectedStatus | null
   }
 
   export type NestedEnumInvasiveStatusNullableFilter<$PrismaModel = never> = {
@@ -19349,16 +19339,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedEnumGlobalConservationStatusNullableFilter<$PrismaModel>
     _max?: NestedEnumGlobalConservationStatusNullableFilter<$PrismaModel>
-  }
-
-  export type NestedEnumProtectedStatusNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.ProtectedStatus | EnumProtectedStatusFieldRefInput<$PrismaModel> | null
-    in?: $Enums.ProtectedStatus[] | ListEnumProtectedStatusFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.ProtectedStatus[] | ListEnumProtectedStatusFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumProtectedStatusNullableWithAggregatesFilter<$PrismaModel> | $Enums.ProtectedStatus | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedEnumProtectedStatusNullableFilter<$PrismaModel>
-    _max?: NestedEnumProtectedStatusNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumInvasiveStatusNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -19427,7 +19407,8 @@ export namespace Prisma {
     isTerrestrial?: boolean | null
     growthHabit?: string | null
     isDeciduous?: boolean | null
-    reproductiveSystem?: $Enums.ReproductiveSystem | null
+    isDeciduousNote?: string | null
+    reproductiveSystem?: string | null
     floweringPeriod?: PlantMorphologyCreatefloweringPeriodInput | $Enums.Month[]
     fruitingPeriod?: PlantMorphologyCreatefruitingPeriodInput | $Enums.Month[]
   }
@@ -19438,7 +19419,8 @@ export namespace Prisma {
     isTerrestrial?: boolean | null
     growthHabit?: string | null
     isDeciduous?: boolean | null
-    reproductiveSystem?: $Enums.ReproductiveSystem | null
+    isDeciduousNote?: string | null
+    reproductiveSystem?: string | null
     floweringPeriod?: PlantMorphologyCreatefloweringPeriodInput | $Enums.Month[]
     fruitingPeriod?: PlantMorphologyCreatefruitingPeriodInput | $Enums.Month[]
   }
@@ -19453,7 +19435,7 @@ export namespace Prisma {
     plantOrigin?: string | null
     globalRange?: string | null
     chinaRange?: string | null
-    endemic?: boolean | null
+    endemic?: string | null
   }
 
   export type PlantEcologyDistributionUncheckedCreateWithoutPlantInput = {
@@ -19462,7 +19444,7 @@ export namespace Prisma {
     plantOrigin?: string | null
     globalRange?: string | null
     chinaRange?: string | null
-    endemic?: boolean | null
+    endemic?: string | null
   }
 
   export type PlantEcologyDistributionCreateOrConnectWithoutPlantInput = {
@@ -19473,7 +19455,7 @@ export namespace Prisma {
   export type PlantConservationCreateWithoutPlantInput = {
     globalConservationStatus?: $Enums.GlobalConservationStatus | null
     chinaConservationStatus?: string | null
-    protectedStatus?: $Enums.ProtectedStatus | null
+    protectedStatus?: string | null
     invasiveStatus?: $Enums.InvasiveStatus | null
     invasiveRange?: string | null
   }
@@ -19482,7 +19464,7 @@ export namespace Prisma {
     id?: number
     globalConservationStatus?: $Enums.GlobalConservationStatus | null
     chinaConservationStatus?: string | null
-    protectedStatus?: $Enums.ProtectedStatus | null
+    protectedStatus?: string | null
     invasiveStatus?: $Enums.InvasiveStatus | null
     invasiveRange?: string | null
   }
@@ -19530,14 +19512,14 @@ export namespace Prisma {
   export type EthnobotanyCreateWithoutPlantInput = {
     folkMedicinalUses?: string | null
     otherCulturalUses?: EthnobotanyCreateotherCulturalUsesInput | string[]
-    references?: EthnobotanyCreatereferencesInput | string[]
+    references?: string | null
   }
 
   export type EthnobotanyUncheckedCreateWithoutPlantInput = {
     id?: number
     folkMedicinalUses?: string | null
     otherCulturalUses?: EthnobotanyCreateotherCulturalUsesInput | string[]
-    references?: EthnobotanyCreatereferencesInput | string[]
+    references?: string | null
   }
 
   export type EthnobotanyCreateOrConnectWithoutPlantInput = {
@@ -19643,7 +19625,8 @@ export namespace Prisma {
     isTerrestrial?: BoolNullableFilter<"PlantMorphology"> | boolean | null
     growthHabit?: StringNullableFilter<"PlantMorphology"> | string | null
     isDeciduous?: BoolNullableFilter<"PlantMorphology"> | boolean | null
-    reproductiveSystem?: EnumReproductiveSystemNullableFilter<"PlantMorphology"> | $Enums.ReproductiveSystem | null
+    isDeciduousNote?: StringNullableFilter<"PlantMorphology"> | string | null
+    reproductiveSystem?: StringNullableFilter<"PlantMorphology"> | string | null
     floweringPeriod?: EnumMonthNullableListFilter<"PlantMorphology">
     fruitingPeriod?: EnumMonthNullableListFilter<"PlantMorphology">
   }
@@ -19664,7 +19647,7 @@ export namespace Prisma {
     plantOrigin?: NullableStringFieldUpdateOperationsInput | string | null
     globalRange?: NullableStringFieldUpdateOperationsInput | string | null
     chinaRange?: NullableStringFieldUpdateOperationsInput | string | null
-    endemic?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    endemic?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PlantEcologyDistributionUncheckedUpdateWithoutPlantInput = {
@@ -19673,7 +19656,7 @@ export namespace Prisma {
     plantOrigin?: NullableStringFieldUpdateOperationsInput | string | null
     globalRange?: NullableStringFieldUpdateOperationsInput | string | null
     chinaRange?: NullableStringFieldUpdateOperationsInput | string | null
-    endemic?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    endemic?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PlantConservationUpsertWithoutPlantInput = {
@@ -19690,7 +19673,7 @@ export namespace Prisma {
   export type PlantConservationUpdateWithoutPlantInput = {
     globalConservationStatus?: NullableEnumGlobalConservationStatusFieldUpdateOperationsInput | $Enums.GlobalConservationStatus | null
     chinaConservationStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    protectedStatus?: NullableEnumProtectedStatusFieldUpdateOperationsInput | $Enums.ProtectedStatus | null
+    protectedStatus?: NullableStringFieldUpdateOperationsInput | string | null
     invasiveStatus?: NullableEnumInvasiveStatusFieldUpdateOperationsInput | $Enums.InvasiveStatus | null
     invasiveRange?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -19699,7 +19682,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     globalConservationStatus?: NullableEnumGlobalConservationStatusFieldUpdateOperationsInput | $Enums.GlobalConservationStatus | null
     chinaConservationStatus?: NullableStringFieldUpdateOperationsInput | string | null
-    protectedStatus?: NullableEnumProtectedStatusFieldUpdateOperationsInput | $Enums.ProtectedStatus | null
+    protectedStatus?: NullableStringFieldUpdateOperationsInput | string | null
     invasiveStatus?: NullableEnumInvasiveStatusFieldUpdateOperationsInput | $Enums.InvasiveStatus | null
     invasiveRange?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -19750,14 +19733,14 @@ export namespace Prisma {
   export type EthnobotanyUpdateWithoutPlantInput = {
     folkMedicinalUses?: NullableStringFieldUpdateOperationsInput | string | null
     otherCulturalUses?: EthnobotanyUpdateotherCulturalUsesInput | string[]
-    references?: EthnobotanyUpdatereferencesInput | string[]
+    references?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type EthnobotanyUncheckedUpdateWithoutPlantInput = {
     id?: IntFieldUpdateOperationsInput | number
     folkMedicinalUses?: NullableStringFieldUpdateOperationsInput | string | null
     otherCulturalUses?: EthnobotanyUpdateotherCulturalUsesInput | string[]
-    references?: EthnobotanyUpdatereferencesInput | string[]
+    references?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PlantNomenclatureCreateWithoutTaxonomyInput = {
@@ -19765,6 +19748,7 @@ export namespace Prisma {
     plantCommonName?: PlantNomenclatureCreateplantCommonNameInput | string[]
     plantPinyin?: string | null
     plantChineseName?: string | null
+    links?: PlantNomenclatureCreatelinksInput | string[]
     botanicalGardenList?: BotanicalGardenCreateNestedManyWithoutPlantsInput
     synonyms?: PlantSynonymCreateNestedManyWithoutPlantInput
     morphologies?: PlantMorphologyCreateNestedManyWithoutPlantsInput
@@ -19780,6 +19764,7 @@ export namespace Prisma {
     plantCommonName?: PlantNomenclatureCreateplantCommonNameInput | string[]
     plantPinyin?: string | null
     plantChineseName?: string | null
+    links?: PlantNomenclatureCreatelinksInput | string[]
     botanicalGardenList?: BotanicalGardenUncheckedCreateNestedManyWithoutPlantsInput
     synonyms?: PlantSynonymUncheckedCreateNestedManyWithoutPlantInput
     morphologies?: PlantMorphologyUncheckedCreateNestedManyWithoutPlantsInput
@@ -19825,6 +19810,7 @@ export namespace Prisma {
     plantPinyin?: StringNullableFilter<"PlantNomenclature"> | string | null
     plantChineseName?: StringNullableFilter<"PlantNomenclature"> | string | null
     taxonomyId?: IntFilter<"PlantNomenclature"> | number
+    links?: StringNullableListFilter<"PlantNomenclature">
   }
 
   export type PlantNomenclatureCreateWithoutSynonymsInput = {
@@ -19832,6 +19818,7 @@ export namespace Prisma {
     plantCommonName?: PlantNomenclatureCreateplantCommonNameInput | string[]
     plantPinyin?: string | null
     plantChineseName?: string | null
+    links?: PlantNomenclatureCreatelinksInput | string[]
     taxonomy: PlantTaxonomyCreateNestedOneWithoutPlantsInput
     botanicalGardenList?: BotanicalGardenCreateNestedManyWithoutPlantsInput
     morphologies?: PlantMorphologyCreateNestedManyWithoutPlantsInput
@@ -19848,6 +19835,7 @@ export namespace Prisma {
     plantPinyin?: string | null
     plantChineseName?: string | null
     taxonomyId: number
+    links?: PlantNomenclatureCreatelinksInput | string[]
     botanicalGardenList?: BotanicalGardenUncheckedCreateNestedManyWithoutPlantsInput
     morphologies?: PlantMorphologyUncheckedCreateNestedManyWithoutPlantsInput
     ecologyDistributions?: PlantEcologyDistributionUncheckedCreateNestedOneWithoutPlantInput
@@ -19877,6 +19865,7 @@ export namespace Prisma {
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
     plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
     plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
+    links?: PlantNomenclatureUpdatelinksInput | string[]
     taxonomy?: PlantTaxonomyUpdateOneRequiredWithoutPlantsNestedInput
     botanicalGardenList?: BotanicalGardenUpdateManyWithoutPlantsNestedInput
     morphologies?: PlantMorphologyUpdateManyWithoutPlantsNestedInput
@@ -19893,6 +19882,7 @@ export namespace Prisma {
     plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
     plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
     taxonomyId?: IntFieldUpdateOperationsInput | number
+    links?: PlantNomenclatureUpdatelinksInput | string[]
     botanicalGardenList?: BotanicalGardenUncheckedUpdateManyWithoutPlantsNestedInput
     morphologies?: PlantMorphologyUncheckedUpdateManyWithoutPlantsNestedInput
     ecologyDistributions?: PlantEcologyDistributionUncheckedUpdateOneWithoutPlantNestedInput
@@ -19906,6 +19896,7 @@ export namespace Prisma {
     plantCommonName?: PlantNomenclatureCreateplantCommonNameInput | string[]
     plantPinyin?: string | null
     plantChineseName?: string | null
+    links?: PlantNomenclatureCreatelinksInput | string[]
     taxonomy: PlantTaxonomyCreateNestedOneWithoutPlantsInput
     botanicalGardenList?: BotanicalGardenCreateNestedManyWithoutPlantsInput
     synonyms?: PlantSynonymCreateNestedManyWithoutPlantInput
@@ -19922,6 +19913,7 @@ export namespace Prisma {
     plantPinyin?: string | null
     plantChineseName?: string | null
     taxonomyId: number
+    links?: PlantNomenclatureCreatelinksInput | string[]
     botanicalGardenList?: BotanicalGardenUncheckedCreateNestedManyWithoutPlantsInput
     synonyms?: PlantSynonymUncheckedCreateNestedManyWithoutPlantInput
     ecologyDistributions?: PlantEcologyDistributionUncheckedCreateNestedOneWithoutPlantInput
@@ -19956,6 +19948,7 @@ export namespace Prisma {
     plantCommonName?: PlantNomenclatureCreateplantCommonNameInput | string[]
     plantPinyin?: string | null
     plantChineseName?: string | null
+    links?: PlantNomenclatureCreatelinksInput | string[]
     taxonomy: PlantTaxonomyCreateNestedOneWithoutPlantsInput
     botanicalGardenList?: BotanicalGardenCreateNestedManyWithoutPlantsInput
     synonyms?: PlantSynonymCreateNestedManyWithoutPlantInput
@@ -19972,6 +19965,7 @@ export namespace Prisma {
     plantPinyin?: string | null
     plantChineseName?: string | null
     taxonomyId: number
+    links?: PlantNomenclatureCreatelinksInput | string[]
     botanicalGardenList?: BotanicalGardenUncheckedCreateNestedManyWithoutPlantsInput
     synonyms?: PlantSynonymUncheckedCreateNestedManyWithoutPlantInput
     morphologies?: PlantMorphologyUncheckedCreateNestedManyWithoutPlantsInput
@@ -20001,6 +19995,7 @@ export namespace Prisma {
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
     plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
     plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
+    links?: PlantNomenclatureUpdatelinksInput | string[]
     taxonomy?: PlantTaxonomyUpdateOneRequiredWithoutPlantsNestedInput
     botanicalGardenList?: BotanicalGardenUpdateManyWithoutPlantsNestedInput
     synonyms?: PlantSynonymUpdateManyWithoutPlantNestedInput
@@ -20017,6 +20012,7 @@ export namespace Prisma {
     plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
     plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
     taxonomyId?: IntFieldUpdateOperationsInput | number
+    links?: PlantNomenclatureUpdatelinksInput | string[]
     botanicalGardenList?: BotanicalGardenUncheckedUpdateManyWithoutPlantsNestedInput
     synonyms?: PlantSynonymUncheckedUpdateManyWithoutPlantNestedInput
     morphologies?: PlantMorphologyUncheckedUpdateManyWithoutPlantsNestedInput
@@ -20030,6 +20026,7 @@ export namespace Prisma {
     plantCommonName?: PlantNomenclatureCreateplantCommonNameInput | string[]
     plantPinyin?: string | null
     plantChineseName?: string | null
+    links?: PlantNomenclatureCreatelinksInput | string[]
     taxonomy: PlantTaxonomyCreateNestedOneWithoutPlantsInput
     botanicalGardenList?: BotanicalGardenCreateNestedManyWithoutPlantsInput
     synonyms?: PlantSynonymCreateNestedManyWithoutPlantInput
@@ -20046,6 +20043,7 @@ export namespace Prisma {
     plantPinyin?: string | null
     plantChineseName?: string | null
     taxonomyId: number
+    links?: PlantNomenclatureCreatelinksInput | string[]
     botanicalGardenList?: BotanicalGardenUncheckedCreateNestedManyWithoutPlantsInput
     synonyms?: PlantSynonymUncheckedCreateNestedManyWithoutPlantInput
     morphologies?: PlantMorphologyUncheckedCreateNestedManyWithoutPlantsInput
@@ -20075,6 +20073,7 @@ export namespace Prisma {
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
     plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
     plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
+    links?: PlantNomenclatureUpdatelinksInput | string[]
     taxonomy?: PlantTaxonomyUpdateOneRequiredWithoutPlantsNestedInput
     botanicalGardenList?: BotanicalGardenUpdateManyWithoutPlantsNestedInput
     synonyms?: PlantSynonymUpdateManyWithoutPlantNestedInput
@@ -20091,6 +20090,7 @@ export namespace Prisma {
     plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
     plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
     taxonomyId?: IntFieldUpdateOperationsInput | number
+    links?: PlantNomenclatureUpdatelinksInput | string[]
     botanicalGardenList?: BotanicalGardenUncheckedUpdateManyWithoutPlantsNestedInput
     synonyms?: PlantSynonymUncheckedUpdateManyWithoutPlantNestedInput
     morphologies?: PlantMorphologyUncheckedUpdateManyWithoutPlantsNestedInput
@@ -20104,6 +20104,7 @@ export namespace Prisma {
     plantCommonName?: PlantNomenclatureCreateplantCommonNameInput | string[]
     plantPinyin?: string | null
     plantChineseName?: string | null
+    links?: PlantNomenclatureCreatelinksInput | string[]
     taxonomy: PlantTaxonomyCreateNestedOneWithoutPlantsInput
     synonyms?: PlantSynonymCreateNestedManyWithoutPlantInput
     morphologies?: PlantMorphologyCreateNestedManyWithoutPlantsInput
@@ -20120,6 +20121,7 @@ export namespace Prisma {
     plantPinyin?: string | null
     plantChineseName?: string | null
     taxonomyId: number
+    links?: PlantNomenclatureCreatelinksInput | string[]
     synonyms?: PlantSynonymUncheckedCreateNestedManyWithoutPlantInput
     morphologies?: PlantMorphologyUncheckedCreateNestedManyWithoutPlantsInput
     ecologyDistributions?: PlantEcologyDistributionUncheckedCreateNestedOneWithoutPlantInput
@@ -20205,6 +20207,7 @@ export namespace Prisma {
     plantCommonName?: PlantNomenclatureCreateplantCommonNameInput | string[]
     plantPinyin?: string | null
     plantChineseName?: string | null
+    links?: PlantNomenclatureCreatelinksInput | string[]
     taxonomy: PlantTaxonomyCreateNestedOneWithoutPlantsInput
     botanicalGardenList?: BotanicalGardenCreateNestedManyWithoutPlantsInput
     synonyms?: PlantSynonymCreateNestedManyWithoutPlantInput
@@ -20221,6 +20224,7 @@ export namespace Prisma {
     plantPinyin?: string | null
     plantChineseName?: string | null
     taxonomyId: number
+    links?: PlantNomenclatureCreatelinksInput | string[]
     botanicalGardenList?: BotanicalGardenUncheckedCreateNestedManyWithoutPlantsInput
     synonyms?: PlantSynonymUncheckedCreateNestedManyWithoutPlantInput
     morphologies?: PlantMorphologyUncheckedCreateNestedManyWithoutPlantsInput
@@ -20244,7 +20248,7 @@ export namespace Prisma {
     pharmacologicalProperties?: MedicinalPropertiesCreatepharmacologicalPropertiesInput | string[]
     indications?: MedicinalPropertiesCreateindicationsInput | string[]
     toxicity?: string | null
-    secondaryMetabolites?: MedicinalPropertiesCreatesecondaryMetabolitesInput | string[]
+    secondaryMetabolites?: string | null
   }
 
   export type MedicinalPropertiesUncheckedCreateWithoutHerbalDrugsInput = {
@@ -20258,7 +20262,7 @@ export namespace Prisma {
     pharmacologicalProperties?: MedicinalPropertiesCreatepharmacologicalPropertiesInput | string[]
     indications?: MedicinalPropertiesCreateindicationsInput | string[]
     toxicity?: string | null
-    secondaryMetabolites?: MedicinalPropertiesCreatesecondaryMetabolitesInput | string[]
+    secondaryMetabolites?: string | null
   }
 
   export type MedicinalPropertiesCreateOrConnectWithoutHerbalDrugsInput = {
@@ -20271,8 +20275,10 @@ export namespace Prisma {
     cultivationRegions?: string | null
     wildHarvestingRegions?: string | null
     harvestingPractice?: SourcingBackgroundCreateharvestingPracticeInput | $Enums.HarvestingPractice[]
+    harvestingPracticeNote?: string | null
     daodiStatus?: boolean | null
     daodiRegions?: string | null
+    productionRegions?: string | null
   }
 
   export type SourcingBackgroundUncheckedCreateWithoutHerbalDrugInput = {
@@ -20281,8 +20287,10 @@ export namespace Prisma {
     cultivationRegions?: string | null
     wildHarvestingRegions?: string | null
     harvestingPractice?: SourcingBackgroundCreateharvestingPracticeInput | $Enums.HarvestingPractice[]
+    harvestingPracticeNote?: string | null
     daodiStatus?: boolean | null
     daodiRegions?: string | null
+    productionRegions?: string | null
   }
 
   export type SourcingBackgroundCreateOrConnectWithoutHerbalDrugInput = {
@@ -20306,6 +20314,7 @@ export namespace Prisma {
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
     plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
     plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
+    links?: PlantNomenclatureUpdatelinksInput | string[]
     taxonomy?: PlantTaxonomyUpdateOneRequiredWithoutPlantsNestedInput
     botanicalGardenList?: BotanicalGardenUpdateManyWithoutPlantsNestedInput
     synonyms?: PlantSynonymUpdateManyWithoutPlantNestedInput
@@ -20322,6 +20331,7 @@ export namespace Prisma {
     plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
     plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
     taxonomyId?: IntFieldUpdateOperationsInput | number
+    links?: PlantNomenclatureUpdatelinksInput | string[]
     botanicalGardenList?: BotanicalGardenUncheckedUpdateManyWithoutPlantsNestedInput
     synonyms?: PlantSynonymUncheckedUpdateManyWithoutPlantNestedInput
     morphologies?: PlantMorphologyUncheckedUpdateManyWithoutPlantsNestedInput
@@ -20351,7 +20361,7 @@ export namespace Prisma {
     pharmacologicalProperties?: MedicinalPropertiesUpdatepharmacologicalPropertiesInput | string[]
     indications?: MedicinalPropertiesUpdateindicationsInput | string[]
     toxicity?: NullableStringFieldUpdateOperationsInput | string | null
-    secondaryMetabolites?: MedicinalPropertiesUpdatesecondaryMetabolitesInput | string[]
+    secondaryMetabolites?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type MedicinalPropertiesUncheckedUpdateWithoutHerbalDrugsInput = {
@@ -20365,7 +20375,7 @@ export namespace Prisma {
     pharmacologicalProperties?: MedicinalPropertiesUpdatepharmacologicalPropertiesInput | string[]
     indications?: MedicinalPropertiesUpdateindicationsInput | string[]
     toxicity?: NullableStringFieldUpdateOperationsInput | string | null
-    secondaryMetabolites?: MedicinalPropertiesUpdatesecondaryMetabolitesInput | string[]
+    secondaryMetabolites?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SourcingBackgroundUpsertWithoutHerbalDrugInput = {
@@ -20384,8 +20394,10 @@ export namespace Prisma {
     cultivationRegions?: NullableStringFieldUpdateOperationsInput | string | null
     wildHarvestingRegions?: NullableStringFieldUpdateOperationsInput | string | null
     harvestingPractice?: SourcingBackgroundUpdateharvestingPracticeInput | $Enums.HarvestingPractice[]
+    harvestingPracticeNote?: NullableStringFieldUpdateOperationsInput | string | null
     daodiStatus?: NullableBoolFieldUpdateOperationsInput | boolean | null
     daodiRegions?: NullableStringFieldUpdateOperationsInput | string | null
+    productionRegions?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SourcingBackgroundUncheckedUpdateWithoutHerbalDrugInput = {
@@ -20394,8 +20406,10 @@ export namespace Prisma {
     cultivationRegions?: NullableStringFieldUpdateOperationsInput | string | null
     wildHarvestingRegions?: NullableStringFieldUpdateOperationsInput | string | null
     harvestingPractice?: SourcingBackgroundUpdateharvestingPracticeInput | $Enums.HarvestingPractice[]
+    harvestingPracticeNote?: NullableStringFieldUpdateOperationsInput | string | null
     daodiStatus?: NullableBoolFieldUpdateOperationsInput | boolean | null
     daodiRegions?: NullableStringFieldUpdateOperationsInput | string | null
+    productionRegions?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type HerbalDrugBackgroundCreateWithoutSourcingBackgroundsInput = {
@@ -20469,6 +20483,7 @@ export namespace Prisma {
     plantCommonName?: PlantNomenclatureCreateplantCommonNameInput | string[]
     plantPinyin?: string | null
     plantChineseName?: string | null
+    links?: PlantNomenclatureCreatelinksInput | string[]
     taxonomy: PlantTaxonomyCreateNestedOneWithoutPlantsInput
     botanicalGardenList?: BotanicalGardenCreateNestedManyWithoutPlantsInput
     synonyms?: PlantSynonymCreateNestedManyWithoutPlantInput
@@ -20485,6 +20500,7 @@ export namespace Prisma {
     plantPinyin?: string | null
     plantChineseName?: string | null
     taxonomyId: number
+    links?: PlantNomenclatureCreatelinksInput | string[]
     botanicalGardenList?: BotanicalGardenUncheckedCreateNestedManyWithoutPlantsInput
     synonyms?: PlantSynonymUncheckedCreateNestedManyWithoutPlantInput
     morphologies?: PlantMorphologyUncheckedCreateNestedManyWithoutPlantsInput
@@ -20514,6 +20530,7 @@ export namespace Prisma {
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
     plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
     plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
+    links?: PlantNomenclatureUpdatelinksInput | string[]
     taxonomy?: PlantTaxonomyUpdateOneRequiredWithoutPlantsNestedInput
     botanicalGardenList?: BotanicalGardenUpdateManyWithoutPlantsNestedInput
     synonyms?: PlantSynonymUpdateManyWithoutPlantNestedInput
@@ -20530,6 +20547,7 @@ export namespace Prisma {
     plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
     plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
     taxonomyId?: IntFieldUpdateOperationsInput | number
+    links?: PlantNomenclatureUpdatelinksInput | string[]
     botanicalGardenList?: BotanicalGardenUncheckedUpdateManyWithoutPlantsNestedInput
     synonyms?: PlantSynonymUncheckedUpdateManyWithoutPlantNestedInput
     morphologies?: PlantMorphologyUncheckedUpdateManyWithoutPlantsNestedInput
@@ -20588,7 +20606,8 @@ export namespace Prisma {
     isTerrestrial?: NullableBoolFieldUpdateOperationsInput | boolean | null
     growthHabit?: NullableStringFieldUpdateOperationsInput | string | null
     isDeciduous?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    reproductiveSystem?: NullableEnumReproductiveSystemFieldUpdateOperationsInput | $Enums.ReproductiveSystem | null
+    isDeciduousNote?: NullableStringFieldUpdateOperationsInput | string | null
+    reproductiveSystem?: NullableStringFieldUpdateOperationsInput | string | null
     floweringPeriod?: PlantMorphologyUpdatefloweringPeriodInput | $Enums.Month[]
     fruitingPeriod?: PlantMorphologyUpdatefruitingPeriodInput | $Enums.Month[]
   }
@@ -20599,7 +20618,8 @@ export namespace Prisma {
     isTerrestrial?: NullableBoolFieldUpdateOperationsInput | boolean | null
     growthHabit?: NullableStringFieldUpdateOperationsInput | string | null
     isDeciduous?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    reproductiveSystem?: NullableEnumReproductiveSystemFieldUpdateOperationsInput | $Enums.ReproductiveSystem | null
+    isDeciduousNote?: NullableStringFieldUpdateOperationsInput | string | null
+    reproductiveSystem?: NullableStringFieldUpdateOperationsInput | string | null
     floweringPeriod?: PlantMorphologyUpdatefloweringPeriodInput | $Enums.Month[]
     fruitingPeriod?: PlantMorphologyUpdatefruitingPeriodInput | $Enums.Month[]
   }
@@ -20610,7 +20630,8 @@ export namespace Prisma {
     isTerrestrial?: NullableBoolFieldUpdateOperationsInput | boolean | null
     growthHabit?: NullableStringFieldUpdateOperationsInput | string | null
     isDeciduous?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    reproductiveSystem?: NullableEnumReproductiveSystemFieldUpdateOperationsInput | $Enums.ReproductiveSystem | null
+    isDeciduousNote?: NullableStringFieldUpdateOperationsInput | string | null
+    reproductiveSystem?: NullableStringFieldUpdateOperationsInput | string | null
     floweringPeriod?: PlantMorphologyUpdatefloweringPeriodInput | $Enums.Month[]
     fruitingPeriod?: PlantMorphologyUpdatefruitingPeriodInput | $Enums.Month[]
   }
@@ -20658,6 +20679,7 @@ export namespace Prisma {
     plantCommonName?: PlantNomenclatureCreateplantCommonNameInput | string[]
     plantPinyin?: string | null
     plantChineseName?: string | null
+    links?: PlantNomenclatureCreatelinksInput | string[]
   }
 
   export type PlantNomenclatureUpdateWithoutTaxonomyInput = {
@@ -20665,6 +20687,7 @@ export namespace Prisma {
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
     plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
     plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
+    links?: PlantNomenclatureUpdatelinksInput | string[]
     botanicalGardenList?: BotanicalGardenUpdateManyWithoutPlantsNestedInput
     synonyms?: PlantSynonymUpdateManyWithoutPlantNestedInput
     morphologies?: PlantMorphologyUpdateManyWithoutPlantsNestedInput
@@ -20680,6 +20703,7 @@ export namespace Prisma {
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
     plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
     plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
+    links?: PlantNomenclatureUpdatelinksInput | string[]
     botanicalGardenList?: BotanicalGardenUncheckedUpdateManyWithoutPlantsNestedInput
     synonyms?: PlantSynonymUncheckedUpdateManyWithoutPlantNestedInput
     morphologies?: PlantMorphologyUncheckedUpdateManyWithoutPlantsNestedInput
@@ -20695,6 +20719,7 @@ export namespace Prisma {
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
     plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
     plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
+    links?: PlantNomenclatureUpdatelinksInput | string[]
   }
 
   export type PlantNomenclatureUpdateWithoutMorphologiesInput = {
@@ -20702,6 +20727,7 @@ export namespace Prisma {
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
     plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
     plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
+    links?: PlantNomenclatureUpdatelinksInput | string[]
     taxonomy?: PlantTaxonomyUpdateOneRequiredWithoutPlantsNestedInput
     botanicalGardenList?: BotanicalGardenUpdateManyWithoutPlantsNestedInput
     synonyms?: PlantSynonymUpdateManyWithoutPlantNestedInput
@@ -20718,6 +20744,7 @@ export namespace Prisma {
     plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
     plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
     taxonomyId?: IntFieldUpdateOperationsInput | number
+    links?: PlantNomenclatureUpdatelinksInput | string[]
     botanicalGardenList?: BotanicalGardenUncheckedUpdateManyWithoutPlantsNestedInput
     synonyms?: PlantSynonymUncheckedUpdateManyWithoutPlantNestedInput
     ecologyDistributions?: PlantEcologyDistributionUncheckedUpdateOneWithoutPlantNestedInput
@@ -20733,6 +20760,7 @@ export namespace Prisma {
     plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
     plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
     taxonomyId?: IntFieldUpdateOperationsInput | number
+    links?: PlantNomenclatureUpdatelinksInput | string[]
   }
 
   export type PlantNomenclatureUpdateWithoutBotanicalGardenListInput = {
@@ -20740,6 +20768,7 @@ export namespace Prisma {
     plantCommonName?: PlantNomenclatureUpdateplantCommonNameInput | string[]
     plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
     plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
+    links?: PlantNomenclatureUpdatelinksInput | string[]
     taxonomy?: PlantTaxonomyUpdateOneRequiredWithoutPlantsNestedInput
     synonyms?: PlantSynonymUpdateManyWithoutPlantNestedInput
     morphologies?: PlantMorphologyUpdateManyWithoutPlantsNestedInput
@@ -20756,6 +20785,7 @@ export namespace Prisma {
     plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
     plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
     taxonomyId?: IntFieldUpdateOperationsInput | number
+    links?: PlantNomenclatureUpdatelinksInput | string[]
     synonyms?: PlantSynonymUncheckedUpdateManyWithoutPlantNestedInput
     morphologies?: PlantMorphologyUncheckedUpdateManyWithoutPlantsNestedInput
     ecologyDistributions?: PlantEcologyDistributionUncheckedUpdateOneWithoutPlantNestedInput
@@ -20771,6 +20801,7 @@ export namespace Prisma {
     plantPinyin?: NullableStringFieldUpdateOperationsInput | string | null
     plantChineseName?: NullableStringFieldUpdateOperationsInput | string | null
     taxonomyId?: IntFieldUpdateOperationsInput | number
+    links?: PlantNomenclatureUpdatelinksInput | string[]
   }
 
   export type HerbalDrugBackgroundCreateManyMerdicinalPropertyInput = {
