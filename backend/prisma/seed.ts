@@ -25,19 +25,19 @@ async function processPlantRow(row: any, index: number) {
       where: { plantScientificName: scientificName }
     });
 
-    // STEP 1: Find or create taxonomy manually
+    // STEP 1: Find or create taxonomy for the plant
     const taxonomy = await prisma.plantTaxonomy.findFirst({
       where: {
         family: row['Plant Family'],
         class: row['Plant Class'],
-        vascular: row['Plant Classification'] === 'Vascular' ? true :
+        vascular: row['Plant Classification'].toLowerCase()=== 'vascular' ? true :
                   null
       }
     }) ?? await prisma.plantTaxonomy.create({
       data: {
         family: row['Plant Family'],
         class: row['Plant Class'],
-        vascular: row['Plant Classification'] === 'Vascular' ? true : null
+        vascular: row['Plant Classification'].toLowerCase() === 'vascular' ? true : null
       }
     });
 
