@@ -132,7 +132,7 @@ enum GlobalConservationStatus {
 
 enum InvasiveStatus {
   NON_INVASIVE
-  POSSIBLY_INVASIVE //?
+  POSSIBLY_INVASIVE
   // POTENTIALLY_INVASIVE
   INVASIVE
 }
@@ -160,8 +160,8 @@ model PlantNomenclature {
   internalId          Int           @id @default(autoincrement()) @map("internal_id")
   plantScientificName String        @unique @map("scientific_name")
   plantCommonName     String[]      @map("common_names")
-  plantPinyin         String?       @unique @map("pinyin") // verified as UNIQUE -- NULL possible
-  plantChineseName    String?       @unique @map("chinese_name") // verified as UNIQUE -- NULL possible
+  plantPinyin         String?       @map("pinyin") // verified as UNIQUE -- NULL possible: removed unique
+  plantChineseName    String?       @map("chinese_name") // verified as UNIQUE -- NULL possible: removed unique
   taxonomyId          Int           @map("taxonomy_id")
   taxonomy            PlantTaxonomy @relation(fields: [taxonomyId], references: [id])
   links               String[]      @map("links")
@@ -195,6 +195,7 @@ model PlantSynonym {
 
   plant PlantNomenclature @relation(fields: [plantId], references: [internalId])
 
+  @@index([plantId])
   @@map("plant_synonym")
 }
 
@@ -209,6 +210,9 @@ model PlantMorphology {
   reproductiveSystem String?     @map("reproductive_system") // standardize some rows and keep the edge case values
   floweringPeriod    Month[]     @map("flowering_period")
   fruitingPeriod     Month[]     @map("fruiting_period")
+
+  floweringPeriodNote String? @map("flowering_period_note") // record the original data first
+  fruitingPeriodNote  String? @map("fruiting_period_note") // record the original data first
 
   plants PlantNomenclature[] // implicit many-to-many
 
@@ -258,7 +262,7 @@ model MedicinalProperties {
   id                        Int          @id @default(autoincrement()) @map("id")
   // use col N in dataframe for pharmaceuticalName, some do not have values (DO NOT IMPORT THOSE ROWS): 
   pharmaceuticalName        String?      @unique @map("pharmaceutical_name")
-  herbalDrugPinyin          String       @unique @map("pinyin") // every Medicinal Material has pinyin in dataframe
+  herbalDrugPinyin          String?      @map("pinyin") // every Medicinal Material has pinyin in dataframe
   taste                     Taste[]      @map("taste")
   energyFlow                EnergyFlow[] @map("energy_flow") // refer to dataframe; 
   meridians                 Meridian[]   @map("meridians") // stored in a sorted String list

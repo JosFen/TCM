@@ -160,7 +160,9 @@ exports.Prisma.PlantMorphologyScalarFieldEnum = {
   isDeciduousNote: 'isDeciduousNote',
   reproductiveSystem: 'reproductiveSystem',
   floweringPeriod: 'floweringPeriod',
-  fruitingPeriod: 'fruitingPeriod'
+  fruitingPeriod: 'fruitingPeriod',
+  floweringPeriodNote: 'floweringPeriodNote',
+  fruitingPeriodNote: 'fruitingPeriodNote'
 };
 
 exports.Prisma.PlantEcologyDistributionScalarFieldEnum = {

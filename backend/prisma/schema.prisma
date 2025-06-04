@@ -132,7 +132,7 @@ enum GlobalConservationStatus {
 
 enum InvasiveStatus {
   NON_INVASIVE
-  POSSIBLY_INVASIVE //?
+  POSSIBLY_INVASIVE 
   // POTENTIALLY_INVASIVE
   INVASIVE
 }
@@ -160,8 +160,8 @@ model PlantNomenclature {
   internalId          Int           @id @default(autoincrement()) @map("internal_id")
   plantScientificName String        @unique @map("scientific_name")
   plantCommonName     String[]      @map("common_names")
-  plantPinyin         String?       @unique @map("pinyin") // verified as UNIQUE -- NULL possible
-  plantChineseName    String?       @unique @map("chinese_name") // verified as UNIQUE -- NULL possible
+  plantPinyin         String?       @map("pinyin") // verified as UNIQUE -- NULL possible: removed unique
+  plantChineseName    String?       @map("chinese_name") // verified as UNIQUE -- NULL possible: removed unique
   taxonomyId          Int           @map("taxonomy_id")
   taxonomy            PlantTaxonomy @relation(fields: [taxonomyId], references: [id])
   links               String[]      @map("links")
@@ -196,6 +196,7 @@ model PlantSynonym {
   plant PlantNomenclature @relation(fields: [plantId], references: [internalId])
 
   @@map("plant_synonym")
+  @@index([plantId])
 }
 
 model PlantMorphology {
@@ -209,6 +210,9 @@ model PlantMorphology {
   reproductiveSystem String?     @map("reproductive_system") // standardize some rows and keep the edge case values
   floweringPeriod    Month[]     @map("flowering_period")
   fruitingPeriod     Month[]     @map("fruiting_period")
+
+  floweringPeriodNote    String?     @map("flowering_period_note")  // record the original data first
+  fruitingPeriodNote     String?     @map("fruiting_period_note")  // record the original data first
 
   plants PlantNomenclature[] // implicit many-to-many
 
@@ -258,7 +262,7 @@ model MedicinalProperties {
   id                        Int          @id @default(autoincrement()) @map("id")
   // use col N in dataframe for pharmaceuticalName, some do not have values (DO NOT IMPORT THOSE ROWS): 
   pharmaceuticalName        String?      @unique @map("pharmaceutical_name")
-  herbalDrugPinyin          String       @unique @map("pinyin") // every Medicinal Material has pinyin in dataframe
+  herbalDrugPinyin          String?      @map("pinyin") // every Medicinal Material has pinyin in dataframe
   taste                     Taste[]      @map("taste")
   energyFlow                EnergyFlow[] @map("energy_flow") // refer to dataframe; 
   meridians                 Meridian[]   @map("meridians") // stored in a sorted String list
@@ -282,6 +286,7 @@ model HerbalDrugBackground {
   plantPartUsed       String?  @map("plant_parts_used") // has remarks in (), just make it String type, later we could standardize 
   officialStatus      Boolean? @map("official_status")
   harvestingTime      Month[]  @map("harvesting_time")
+  harvestingTimeNote  String?  @map("harvesting_time_note") // record the original data first
   primaryProcessing   String?  @map("primary_processing")
   secondaryProcessing String?  @map("secondary_processing")
   herbalDruglImage    String?  @map("herbal_drug_image")
@@ -304,7 +309,7 @@ model SourcingBackground {
   cultivationRegions     String?              @map("cultivation_regions") // use String due to remarks, prefix/partial search
   wildHarvestingRegions  String?              @map("wild_harvesting_regions") //  due to remarks, or use Json type
   harvestingPractice     HarvestingPractice[] @map("harvesting_practice") // make a note for this field to explain "Fostered"
-  harvestingPracticeNote String?              @map("harvesting_practice_note")
+  harvestingPracticeNote String?              @map("harvesting_practice_note") // record the original data first
   daodiStatus            Boolean?             @map("daodi")
   daodiRegions           String?              @map("daodi_regions") // use String due to remarks, prefix/partial search, standardize later
   productionRegions      String?              @map("production_regions") // new col from datafram

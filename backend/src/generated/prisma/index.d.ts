@@ -6684,6 +6684,8 @@ export namespace Prisma {
     isDeciduous: boolean | null
     isDeciduousNote: string | null
     reproductiveSystem: string | null
+    floweringPeriodNote: string | null
+    fruitingPeriodNote: string | null
   }
 
   export type PlantMorphologyMaxAggregateOutputType = {
@@ -6693,6 +6695,8 @@ export namespace Prisma {
     isDeciduous: boolean | null
     isDeciduousNote: string | null
     reproductiveSystem: string | null
+    floweringPeriodNote: string | null
+    fruitingPeriodNote: string | null
   }
 
   export type PlantMorphologyCountAggregateOutputType = {
@@ -6705,6 +6709,8 @@ export namespace Prisma {
     reproductiveSystem: number
     floweringPeriod: number
     fruitingPeriod: number
+    floweringPeriodNote: number
+    fruitingPeriodNote: number
     _all: number
   }
 
@@ -6724,6 +6730,8 @@ export namespace Prisma {
     isDeciduous?: true
     isDeciduousNote?: true
     reproductiveSystem?: true
+    floweringPeriodNote?: true
+    fruitingPeriodNote?: true
   }
 
   export type PlantMorphologyMaxAggregateInputType = {
@@ -6733,6 +6741,8 @@ export namespace Prisma {
     isDeciduous?: true
     isDeciduousNote?: true
     reproductiveSystem?: true
+    floweringPeriodNote?: true
+    fruitingPeriodNote?: true
   }
 
   export type PlantMorphologyCountAggregateInputType = {
@@ -6745,6 +6755,8 @@ export namespace Prisma {
     reproductiveSystem?: true
     floweringPeriod?: true
     fruitingPeriod?: true
+    floweringPeriodNote?: true
+    fruitingPeriodNote?: true
     _all?: true
   }
 
@@ -6844,6 +6856,8 @@ export namespace Prisma {
     reproductiveSystem: string | null
     floweringPeriod: $Enums.Month[]
     fruitingPeriod: $Enums.Month[]
+    floweringPeriodNote: string | null
+    fruitingPeriodNote: string | null
     _count: PlantMorphologyCountAggregateOutputType | null
     _avg: PlantMorphologyAvgAggregateOutputType | null
     _sum: PlantMorphologySumAggregateOutputType | null
@@ -6875,6 +6889,8 @@ export namespace Prisma {
     reproductiveSystem?: boolean
     floweringPeriod?: boolean
     fruitingPeriod?: boolean
+    floweringPeriodNote?: boolean
+    fruitingPeriodNote?: boolean
     plants?: boolean | PlantMorphology$plantsArgs<ExtArgs>
     _count?: boolean | PlantMorphologyCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["plantMorphology"]>
@@ -6889,6 +6905,8 @@ export namespace Prisma {
     reproductiveSystem?: boolean
     floweringPeriod?: boolean
     fruitingPeriod?: boolean
+    floweringPeriodNote?: boolean
+    fruitingPeriodNote?: boolean
   }, ExtArgs["result"]["plantMorphology"]>
 
   export type PlantMorphologySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6901,6 +6919,8 @@ export namespace Prisma {
     reproductiveSystem?: boolean
     floweringPeriod?: boolean
     fruitingPeriod?: boolean
+    floweringPeriodNote?: boolean
+    fruitingPeriodNote?: boolean
   }, ExtArgs["result"]["plantMorphology"]>
 
   export type PlantMorphologySelectScalar = {
@@ -6913,9 +6933,11 @@ export namespace Prisma {
     reproductiveSystem?: boolean
     floweringPeriod?: boolean
     fruitingPeriod?: boolean
+    floweringPeriodNote?: boolean
+    fruitingPeriodNote?: boolean
   }
 
-  export type PlantMorphologyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "lifecycle" | "isTerrestrial" | "growthHabit" | "isDeciduous" | "isDeciduousNote" | "reproductiveSystem" | "floweringPeriod" | "fruitingPeriod", ExtArgs["result"]["plantMorphology"]>
+  export type PlantMorphologyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "lifecycle" | "isTerrestrial" | "growthHabit" | "isDeciduous" | "isDeciduousNote" | "reproductiveSystem" | "floweringPeriod" | "fruitingPeriod" | "floweringPeriodNote" | "fruitingPeriodNote", ExtArgs["result"]["plantMorphology"]>
   export type PlantMorphologyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     plants?: boolean | PlantMorphology$plantsArgs<ExtArgs>
     _count?: boolean | PlantMorphologyCountOutputTypeDefaultArgs<ExtArgs>
@@ -6938,6 +6960,8 @@ export namespace Prisma {
       reproductiveSystem: string | null
       floweringPeriod: $Enums.Month[]
       fruitingPeriod: $Enums.Month[]
+      floweringPeriodNote: string | null
+      fruitingPeriodNote: string | null
     }, ExtArgs["result"]["plantMorphology"]>
     composites: {}
   }
@@ -7371,6 +7395,8 @@ export namespace Prisma {
     readonly reproductiveSystem: FieldRef<"PlantMorphology", 'String'>
     readonly floweringPeriod: FieldRef<"PlantMorphology", 'Month[]'>
     readonly fruitingPeriod: FieldRef<"PlantMorphology", 'Month[]'>
+    readonly floweringPeriodNote: FieldRef<"PlantMorphology", 'String'>
+    readonly fruitingPeriodNote: FieldRef<"PlantMorphology", 'String'>
   }
     
 
@@ -11294,7 +11320,7 @@ export namespace Prisma {
   export type MedicinalPropertiesGroupByOutputType = {
     id: number
     pharmaceuticalName: string | null
-    herbalDrugPinyin: string
+    herbalDrugPinyin: string | null
     taste: $Enums.Taste[]
     energyFlow: $Enums.EnergyFlow[]
     meridians: $Enums.Meridian[]
@@ -11398,7 +11424,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       pharmaceuticalName: string | null
-      herbalDrugPinyin: string
+      herbalDrugPinyin: string | null
       taste: $Enums.Taste[]
       energyFlow: $Enums.EnergyFlow[]
       meridians: $Enums.Meridian[]
@@ -12060,7 +12086,7 @@ export namespace Prisma {
     /**
      * The data needed to create a MedicinalProperties.
      */
-    data: XOR<MedicinalPropertiesCreateInput, MedicinalPropertiesUncheckedCreateInput>
+    data?: XOR<MedicinalPropertiesCreateInput, MedicinalPropertiesUncheckedCreateInput>
   }
 
   /**
@@ -15779,7 +15805,9 @@ export namespace Prisma {
     isDeciduousNote: 'isDeciduousNote',
     reproductiveSystem: 'reproductiveSystem',
     floweringPeriod: 'floweringPeriod',
-    fruitingPeriod: 'fruitingPeriod'
+    fruitingPeriod: 'fruitingPeriod',
+    floweringPeriodNote: 'floweringPeriodNote',
+    fruitingPeriodNote: 'fruitingPeriodNote'
   };
 
   export type PlantMorphologyScalarFieldEnum = (typeof PlantMorphologyScalarFieldEnum)[keyof typeof PlantMorphologyScalarFieldEnum]
@@ -16180,12 +16208,12 @@ export namespace Prisma {
   export type PlantNomenclatureWhereUniqueInput = Prisma.AtLeast<{
     internalId?: number
     plantScientificName?: string
-    plantPinyin?: string
-    plantChineseName?: string
     AND?: PlantNomenclatureWhereInput | PlantNomenclatureWhereInput[]
     OR?: PlantNomenclatureWhereInput[]
     NOT?: PlantNomenclatureWhereInput | PlantNomenclatureWhereInput[]
     plantCommonName?: StringNullableListFilter<"PlantNomenclature">
+    plantPinyin?: StringNullableFilter<"PlantNomenclature"> | string | null
+    plantChineseName?: StringNullableFilter<"PlantNomenclature"> | string | null
     taxonomyId?: IntFilter<"PlantNomenclature"> | number
     links?: StringNullableListFilter<"PlantNomenclature">
     taxonomy?: XOR<PlantTaxonomyScalarRelationFilter, PlantTaxonomyWhereInput>
@@ -16196,7 +16224,7 @@ export namespace Prisma {
     conservation?: XOR<PlantConservationNullableScalarRelationFilter, PlantConservationWhereInput> | null
     herbalDrugs?: HerbalDrugBackgroundListRelationFilter
     ethnobotanies?: XOR<EthnobotanyNullableScalarRelationFilter, EthnobotanyWhereInput> | null
-  }, "internalId" | "plantScientificName" | "plantPinyin" | "plantChineseName">
+  }, "internalId" | "plantScientificName">
 
   export type PlantNomenclatureOrderByWithAggregationInput = {
     internalId?: SortOrder
@@ -16338,6 +16366,8 @@ export namespace Prisma {
     reproductiveSystem?: StringNullableFilter<"PlantMorphology"> | string | null
     floweringPeriod?: EnumMonthNullableListFilter<"PlantMorphology">
     fruitingPeriod?: EnumMonthNullableListFilter<"PlantMorphology">
+    floweringPeriodNote?: StringNullableFilter<"PlantMorphology"> | string | null
+    fruitingPeriodNote?: StringNullableFilter<"PlantMorphology"> | string | null
     plants?: PlantNomenclatureListRelationFilter
   }
 
@@ -16351,6 +16381,8 @@ export namespace Prisma {
     reproductiveSystem?: SortOrderInput | SortOrder
     floweringPeriod?: SortOrder
     fruitingPeriod?: SortOrder
+    floweringPeriodNote?: SortOrderInput | SortOrder
+    fruitingPeriodNote?: SortOrderInput | SortOrder
     plants?: PlantNomenclatureOrderByRelationAggregateInput
   }
 
@@ -16367,6 +16399,8 @@ export namespace Prisma {
     reproductiveSystem?: StringNullableFilter<"PlantMorphology"> | string | null
     floweringPeriod?: EnumMonthNullableListFilter<"PlantMorphology">
     fruitingPeriod?: EnumMonthNullableListFilter<"PlantMorphology">
+    floweringPeriodNote?: StringNullableFilter<"PlantMorphology"> | string | null
+    fruitingPeriodNote?: StringNullableFilter<"PlantMorphology"> | string | null
     plants?: PlantNomenclatureListRelationFilter
   }, "id">
 
@@ -16380,6 +16414,8 @@ export namespace Prisma {
     reproductiveSystem?: SortOrderInput | SortOrder
     floweringPeriod?: SortOrder
     fruitingPeriod?: SortOrder
+    floweringPeriodNote?: SortOrderInput | SortOrder
+    fruitingPeriodNote?: SortOrderInput | SortOrder
     _count?: PlantMorphologyCountOrderByAggregateInput
     _avg?: PlantMorphologyAvgOrderByAggregateInput
     _max?: PlantMorphologyMaxOrderByAggregateInput
@@ -16400,6 +16436,8 @@ export namespace Prisma {
     reproductiveSystem?: StringNullableWithAggregatesFilter<"PlantMorphology"> | string | null
     floweringPeriod?: EnumMonthNullableListFilter<"PlantMorphology">
     fruitingPeriod?: EnumMonthNullableListFilter<"PlantMorphology">
+    floweringPeriodNote?: StringNullableWithAggregatesFilter<"PlantMorphology"> | string | null
+    fruitingPeriodNote?: StringNullableWithAggregatesFilter<"PlantMorphology"> | string | null
   }
 
   export type PlantEcologyDistributionWhereInput = {
@@ -16584,7 +16622,7 @@ export namespace Prisma {
     NOT?: MedicinalPropertiesWhereInput | MedicinalPropertiesWhereInput[]
     id?: IntFilter<"MedicinalProperties"> | number
     pharmaceuticalName?: StringNullableFilter<"MedicinalProperties"> | string | null
-    herbalDrugPinyin?: StringFilter<"MedicinalProperties"> | string
+    herbalDrugPinyin?: StringNullableFilter<"MedicinalProperties"> | string | null
     taste?: EnumTasteNullableListFilter<"MedicinalProperties">
     energyFlow?: EnumEnergyFlowNullableListFilter<"MedicinalProperties">
     meridians?: EnumMeridianNullableListFilter<"MedicinalProperties">
@@ -16599,7 +16637,7 @@ export namespace Prisma {
   export type MedicinalPropertiesOrderByWithRelationInput = {
     id?: SortOrder
     pharmaceuticalName?: SortOrderInput | SortOrder
-    herbalDrugPinyin?: SortOrder
+    herbalDrugPinyin?: SortOrderInput | SortOrder
     taste?: SortOrder
     energyFlow?: SortOrder
     meridians?: SortOrder
@@ -16614,10 +16652,10 @@ export namespace Prisma {
   export type MedicinalPropertiesWhereUniqueInput = Prisma.AtLeast<{
     id?: number
     pharmaceuticalName?: string
-    herbalDrugPinyin?: string
     AND?: MedicinalPropertiesWhereInput | MedicinalPropertiesWhereInput[]
     OR?: MedicinalPropertiesWhereInput[]
     NOT?: MedicinalPropertiesWhereInput | MedicinalPropertiesWhereInput[]
+    herbalDrugPinyin?: StringNullableFilter<"MedicinalProperties"> | string | null
     taste?: EnumTasteNullableListFilter<"MedicinalProperties">
     energyFlow?: EnumEnergyFlowNullableListFilter<"MedicinalProperties">
     meridians?: EnumMeridianNullableListFilter<"MedicinalProperties">
@@ -16627,12 +16665,12 @@ export namespace Prisma {
     toxicity?: StringNullableFilter<"MedicinalProperties"> | string | null
     secondaryMetabolites?: StringNullableFilter<"MedicinalProperties"> | string | null
     herbalDrugs?: HerbalDrugBackgroundListRelationFilter
-  }, "id" | "pharmaceuticalName" | "herbalDrugPinyin">
+  }, "id" | "pharmaceuticalName">
 
   export type MedicinalPropertiesOrderByWithAggregationInput = {
     id?: SortOrder
     pharmaceuticalName?: SortOrderInput | SortOrder
-    herbalDrugPinyin?: SortOrder
+    herbalDrugPinyin?: SortOrderInput | SortOrder
     taste?: SortOrder
     energyFlow?: SortOrder
     meridians?: SortOrder
@@ -16654,7 +16692,7 @@ export namespace Prisma {
     NOT?: MedicinalPropertiesScalarWhereWithAggregatesInput | MedicinalPropertiesScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"MedicinalProperties"> | number
     pharmaceuticalName?: StringNullableWithAggregatesFilter<"MedicinalProperties"> | string | null
-    herbalDrugPinyin?: StringWithAggregatesFilter<"MedicinalProperties"> | string
+    herbalDrugPinyin?: StringNullableWithAggregatesFilter<"MedicinalProperties"> | string | null
     taste?: EnumTasteNullableListFilter<"MedicinalProperties">
     energyFlow?: EnumEnergyFlowNullableListFilter<"MedicinalProperties">
     meridians?: EnumMeridianNullableListFilter<"MedicinalProperties">
@@ -17140,6 +17178,8 @@ export namespace Prisma {
     reproductiveSystem?: string | null
     floweringPeriod?: PlantMorphologyCreatefloweringPeriodInput | $Enums.Month[]
     fruitingPeriod?: PlantMorphologyCreatefruitingPeriodInput | $Enums.Month[]
+    floweringPeriodNote?: string | null
+    fruitingPeriodNote?: string | null
     plants?: PlantNomenclatureCreateNestedManyWithoutMorphologiesInput
   }
 
@@ -17153,6 +17193,8 @@ export namespace Prisma {
     reproductiveSystem?: string | null
     floweringPeriod?: PlantMorphologyCreatefloweringPeriodInput | $Enums.Month[]
     fruitingPeriod?: PlantMorphologyCreatefruitingPeriodInput | $Enums.Month[]
+    floweringPeriodNote?: string | null
+    fruitingPeriodNote?: string | null
     plants?: PlantNomenclatureUncheckedCreateNestedManyWithoutMorphologiesInput
   }
 
@@ -17165,6 +17207,8 @@ export namespace Prisma {
     reproductiveSystem?: NullableStringFieldUpdateOperationsInput | string | null
     floweringPeriod?: PlantMorphologyUpdatefloweringPeriodInput | $Enums.Month[]
     fruitingPeriod?: PlantMorphologyUpdatefruitingPeriodInput | $Enums.Month[]
+    floweringPeriodNote?: NullableStringFieldUpdateOperationsInput | string | null
+    fruitingPeriodNote?: NullableStringFieldUpdateOperationsInput | string | null
     plants?: PlantNomenclatureUpdateManyWithoutMorphologiesNestedInput
   }
 
@@ -17178,6 +17222,8 @@ export namespace Prisma {
     reproductiveSystem?: NullableStringFieldUpdateOperationsInput | string | null
     floweringPeriod?: PlantMorphologyUpdatefloweringPeriodInput | $Enums.Month[]
     fruitingPeriod?: PlantMorphologyUpdatefruitingPeriodInput | $Enums.Month[]
+    floweringPeriodNote?: NullableStringFieldUpdateOperationsInput | string | null
+    fruitingPeriodNote?: NullableStringFieldUpdateOperationsInput | string | null
     plants?: PlantNomenclatureUncheckedUpdateManyWithoutMorphologiesNestedInput
   }
 
@@ -17191,6 +17237,8 @@ export namespace Prisma {
     reproductiveSystem?: string | null
     floweringPeriod?: PlantMorphologyCreatefloweringPeriodInput | $Enums.Month[]
     fruitingPeriod?: PlantMorphologyCreatefruitingPeriodInput | $Enums.Month[]
+    floweringPeriodNote?: string | null
+    fruitingPeriodNote?: string | null
   }
 
   export type PlantMorphologyUpdateManyMutationInput = {
@@ -17202,6 +17250,8 @@ export namespace Prisma {
     reproductiveSystem?: NullableStringFieldUpdateOperationsInput | string | null
     floweringPeriod?: PlantMorphologyUpdatefloweringPeriodInput | $Enums.Month[]
     fruitingPeriod?: PlantMorphologyUpdatefruitingPeriodInput | $Enums.Month[]
+    floweringPeriodNote?: NullableStringFieldUpdateOperationsInput | string | null
+    fruitingPeriodNote?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PlantMorphologyUncheckedUpdateManyInput = {
@@ -17214,6 +17264,8 @@ export namespace Prisma {
     reproductiveSystem?: NullableStringFieldUpdateOperationsInput | string | null
     floweringPeriod?: PlantMorphologyUpdatefloweringPeriodInput | $Enums.Month[]
     fruitingPeriod?: PlantMorphologyUpdatefruitingPeriodInput | $Enums.Month[]
+    floweringPeriodNote?: NullableStringFieldUpdateOperationsInput | string | null
+    fruitingPeriodNote?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PlantEcologyDistributionCreateInput = {
@@ -17386,7 +17438,7 @@ export namespace Prisma {
 
   export type MedicinalPropertiesCreateInput = {
     pharmaceuticalName?: string | null
-    herbalDrugPinyin: string
+    herbalDrugPinyin?: string | null
     taste?: MedicinalPropertiesCreatetasteInput | $Enums.Taste[]
     energyFlow?: MedicinalPropertiesCreateenergyFlowInput | $Enums.EnergyFlow[]
     meridians?: MedicinalPropertiesCreatemeridiansInput | $Enums.Meridian[]
@@ -17401,7 +17453,7 @@ export namespace Prisma {
   export type MedicinalPropertiesUncheckedCreateInput = {
     id?: number
     pharmaceuticalName?: string | null
-    herbalDrugPinyin: string
+    herbalDrugPinyin?: string | null
     taste?: MedicinalPropertiesCreatetasteInput | $Enums.Taste[]
     energyFlow?: MedicinalPropertiesCreateenergyFlowInput | $Enums.EnergyFlow[]
     meridians?: MedicinalPropertiesCreatemeridiansInput | $Enums.Meridian[]
@@ -17415,7 +17467,7 @@ export namespace Prisma {
 
   export type MedicinalPropertiesUpdateInput = {
     pharmaceuticalName?: NullableStringFieldUpdateOperationsInput | string | null
-    herbalDrugPinyin?: StringFieldUpdateOperationsInput | string
+    herbalDrugPinyin?: NullableStringFieldUpdateOperationsInput | string | null
     taste?: MedicinalPropertiesUpdatetasteInput | $Enums.Taste[]
     energyFlow?: MedicinalPropertiesUpdateenergyFlowInput | $Enums.EnergyFlow[]
     meridians?: MedicinalPropertiesUpdatemeridiansInput | $Enums.Meridian[]
@@ -17430,7 +17482,7 @@ export namespace Prisma {
   export type MedicinalPropertiesUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     pharmaceuticalName?: NullableStringFieldUpdateOperationsInput | string | null
-    herbalDrugPinyin?: StringFieldUpdateOperationsInput | string
+    herbalDrugPinyin?: NullableStringFieldUpdateOperationsInput | string | null
     taste?: MedicinalPropertiesUpdatetasteInput | $Enums.Taste[]
     energyFlow?: MedicinalPropertiesUpdateenergyFlowInput | $Enums.EnergyFlow[]
     meridians?: MedicinalPropertiesUpdatemeridiansInput | $Enums.Meridian[]
@@ -17445,7 +17497,7 @@ export namespace Prisma {
   export type MedicinalPropertiesCreateManyInput = {
     id?: number
     pharmaceuticalName?: string | null
-    herbalDrugPinyin: string
+    herbalDrugPinyin?: string | null
     taste?: MedicinalPropertiesCreatetasteInput | $Enums.Taste[]
     energyFlow?: MedicinalPropertiesCreateenergyFlowInput | $Enums.EnergyFlow[]
     meridians?: MedicinalPropertiesCreatemeridiansInput | $Enums.Meridian[]
@@ -17458,7 +17510,7 @@ export namespace Prisma {
 
   export type MedicinalPropertiesUpdateManyMutationInput = {
     pharmaceuticalName?: NullableStringFieldUpdateOperationsInput | string | null
-    herbalDrugPinyin?: StringFieldUpdateOperationsInput | string
+    herbalDrugPinyin?: NullableStringFieldUpdateOperationsInput | string | null
     taste?: MedicinalPropertiesUpdatetasteInput | $Enums.Taste[]
     energyFlow?: MedicinalPropertiesUpdateenergyFlowInput | $Enums.EnergyFlow[]
     meridians?: MedicinalPropertiesUpdatemeridiansInput | $Enums.Meridian[]
@@ -17472,7 +17524,7 @@ export namespace Prisma {
   export type MedicinalPropertiesUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     pharmaceuticalName?: NullableStringFieldUpdateOperationsInput | string | null
-    herbalDrugPinyin?: StringFieldUpdateOperationsInput | string
+    herbalDrugPinyin?: NullableStringFieldUpdateOperationsInput | string | null
     taste?: MedicinalPropertiesUpdatetasteInput | $Enums.Taste[]
     energyFlow?: MedicinalPropertiesUpdateenergyFlowInput | $Enums.EnergyFlow[]
     meridians?: MedicinalPropertiesUpdatemeridiansInput | $Enums.Meridian[]
@@ -18074,6 +18126,8 @@ export namespace Prisma {
     reproductiveSystem?: SortOrder
     floweringPeriod?: SortOrder
     fruitingPeriod?: SortOrder
+    floweringPeriodNote?: SortOrder
+    fruitingPeriodNote?: SortOrder
   }
 
   export type PlantMorphologyAvgOrderByAggregateInput = {
@@ -18087,6 +18141,8 @@ export namespace Prisma {
     isDeciduous?: SortOrder
     isDeciduousNote?: SortOrder
     reproductiveSystem?: SortOrder
+    floweringPeriodNote?: SortOrder
+    fruitingPeriodNote?: SortOrder
   }
 
   export type PlantMorphologyMinOrderByAggregateInput = {
@@ -18096,6 +18152,8 @@ export namespace Prisma {
     isDeciduous?: SortOrder
     isDeciduousNote?: SortOrder
     reproductiveSystem?: SortOrder
+    floweringPeriodNote?: SortOrder
+    fruitingPeriodNote?: SortOrder
   }
 
   export type PlantMorphologySumOrderByAggregateInput = {
@@ -19411,6 +19469,8 @@ export namespace Prisma {
     reproductiveSystem?: string | null
     floweringPeriod?: PlantMorphologyCreatefloweringPeriodInput | $Enums.Month[]
     fruitingPeriod?: PlantMorphologyCreatefruitingPeriodInput | $Enums.Month[]
+    floweringPeriodNote?: string | null
+    fruitingPeriodNote?: string | null
   }
 
   export type PlantMorphologyUncheckedCreateWithoutPlantsInput = {
@@ -19423,6 +19483,8 @@ export namespace Prisma {
     reproductiveSystem?: string | null
     floweringPeriod?: PlantMorphologyCreatefloweringPeriodInput | $Enums.Month[]
     fruitingPeriod?: PlantMorphologyCreatefruitingPeriodInput | $Enums.Month[]
+    floweringPeriodNote?: string | null
+    fruitingPeriodNote?: string | null
   }
 
   export type PlantMorphologyCreateOrConnectWithoutPlantsInput = {
@@ -19629,6 +19691,8 @@ export namespace Prisma {
     reproductiveSystem?: StringNullableFilter<"PlantMorphology"> | string | null
     floweringPeriod?: EnumMonthNullableListFilter<"PlantMorphology">
     fruitingPeriod?: EnumMonthNullableListFilter<"PlantMorphology">
+    floweringPeriodNote?: StringNullableFilter<"PlantMorphology"> | string | null
+    fruitingPeriodNote?: StringNullableFilter<"PlantMorphology"> | string | null
   }
 
   export type PlantEcologyDistributionUpsertWithoutPlantInput = {
@@ -20240,7 +20304,7 @@ export namespace Prisma {
 
   export type MedicinalPropertiesCreateWithoutHerbalDrugsInput = {
     pharmaceuticalName?: string | null
-    herbalDrugPinyin: string
+    herbalDrugPinyin?: string | null
     taste?: MedicinalPropertiesCreatetasteInput | $Enums.Taste[]
     energyFlow?: MedicinalPropertiesCreateenergyFlowInput | $Enums.EnergyFlow[]
     meridians?: MedicinalPropertiesCreatemeridiansInput | $Enums.Meridian[]
@@ -20254,7 +20318,7 @@ export namespace Prisma {
   export type MedicinalPropertiesUncheckedCreateWithoutHerbalDrugsInput = {
     id?: number
     pharmaceuticalName?: string | null
-    herbalDrugPinyin: string
+    herbalDrugPinyin?: string | null
     taste?: MedicinalPropertiesCreatetasteInput | $Enums.Taste[]
     energyFlow?: MedicinalPropertiesCreateenergyFlowInput | $Enums.EnergyFlow[]
     meridians?: MedicinalPropertiesCreatemeridiansInput | $Enums.Meridian[]
@@ -20353,7 +20417,7 @@ export namespace Prisma {
 
   export type MedicinalPropertiesUpdateWithoutHerbalDrugsInput = {
     pharmaceuticalName?: NullableStringFieldUpdateOperationsInput | string | null
-    herbalDrugPinyin?: StringFieldUpdateOperationsInput | string
+    herbalDrugPinyin?: NullableStringFieldUpdateOperationsInput | string | null
     taste?: MedicinalPropertiesUpdatetasteInput | $Enums.Taste[]
     energyFlow?: MedicinalPropertiesUpdateenergyFlowInput | $Enums.EnergyFlow[]
     meridians?: MedicinalPropertiesUpdatemeridiansInput | $Enums.Meridian[]
@@ -20367,7 +20431,7 @@ export namespace Prisma {
   export type MedicinalPropertiesUncheckedUpdateWithoutHerbalDrugsInput = {
     id?: IntFieldUpdateOperationsInput | number
     pharmaceuticalName?: NullableStringFieldUpdateOperationsInput | string | null
-    herbalDrugPinyin?: StringFieldUpdateOperationsInput | string
+    herbalDrugPinyin?: NullableStringFieldUpdateOperationsInput | string | null
     taste?: MedicinalPropertiesUpdatetasteInput | $Enums.Taste[]
     energyFlow?: MedicinalPropertiesUpdateenergyFlowInput | $Enums.EnergyFlow[]
     meridians?: MedicinalPropertiesUpdatemeridiansInput | $Enums.Meridian[]
@@ -20610,6 +20674,8 @@ export namespace Prisma {
     reproductiveSystem?: NullableStringFieldUpdateOperationsInput | string | null
     floweringPeriod?: PlantMorphologyUpdatefloweringPeriodInput | $Enums.Month[]
     fruitingPeriod?: PlantMorphologyUpdatefruitingPeriodInput | $Enums.Month[]
+    floweringPeriodNote?: NullableStringFieldUpdateOperationsInput | string | null
+    fruitingPeriodNote?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PlantMorphologyUncheckedUpdateWithoutPlantsInput = {
@@ -20622,6 +20688,8 @@ export namespace Prisma {
     reproductiveSystem?: NullableStringFieldUpdateOperationsInput | string | null
     floweringPeriod?: PlantMorphologyUpdatefloweringPeriodInput | $Enums.Month[]
     fruitingPeriod?: PlantMorphologyUpdatefruitingPeriodInput | $Enums.Month[]
+    floweringPeriodNote?: NullableStringFieldUpdateOperationsInput | string | null
+    fruitingPeriodNote?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PlantMorphologyUncheckedUpdateManyWithoutPlantsInput = {
@@ -20634,6 +20702,8 @@ export namespace Prisma {
     reproductiveSystem?: NullableStringFieldUpdateOperationsInput | string | null
     floweringPeriod?: PlantMorphologyUpdatefloweringPeriodInput | $Enums.Month[]
     fruitingPeriod?: PlantMorphologyUpdatefruitingPeriodInput | $Enums.Month[]
+    floweringPeriodNote?: NullableStringFieldUpdateOperationsInput | string | null
+    fruitingPeriodNote?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type HerbalDrugBackgroundUpdateWithoutPlantInput = {
