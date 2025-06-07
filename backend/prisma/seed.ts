@@ -219,9 +219,9 @@ async function processMedicinalProperties(row: any, index: number) {
   return medicinalProperty;
 }
 
-async function processHerbalDrugBackground(row: any, index: number, plant: any, medicinalProperty: any) {
-  if (!plant || !medicinalProperty) {
-    console.warn(`Skipping row ${index}: Plant or Medicinal Property not found`);
+async function processHerbalDrugBackground(row: any, index: number) {
+  if (!row['Specific Epiphet'] || !row['Pharmaceutical Name']) {
+    console.warn(`Skipping row ${index}: Specific Epiphet or Pharmaceutical Name is missing`);
     return null;
   }
   try {
@@ -257,7 +257,72 @@ async function processHerbalDrugBackground(row: any, index: number, plant: any, 
         herbalDruglImage: null,
       }
     });
-    console.log(`Created herbal drug background: ${plant.plantScientificName} - ${medicinalProperty.pharmaceuticalName}`);
+    console.log(`Created herbal drug background: ${herbalDrugBackground.plantScientificName} - ${herbalDrugBackground.pharmaceuticalName}`);
+
+    // create sourcing_background:
+    await prisma.sourcingBackground.create({
+      data: {
+        herbalDrug: {
+          connect: {
+            id: herbalDrugBackground.id
+          }
+        },
+        cultivationStatus: (row['Plant under Cultivation?']?.trim().toLowerCase() === 'yes' ? true : false) || null,
+        cultivationRegions: row['Cultivation Regions']?.trim() || null,
+        wildHarvestingRegions: row['Wild-Harvesting Regions']?.trim() || null,
+        harvestingPractice: row['Harvesting Practice']?.split(',').map((p: string) => p.trim().toUpperCase().replace('-', '_')).filter(Boolean) || [],
+        harvestingPracticeNote: row['Harvesting Practice']?.trim() || null,
+        daodiStatus: (row['Daodi Status']?.trim().toLowerCase() === 'yes' ? true : false) || null,
+        daodiRegions: row['Daodi Regions']?.trim() || null,
+        productionRegions: row['Production Regions']?.trim() || null,
+      }
+    });
+
+    // import/update harvestingPracticeNote for some edge cases:
+    const updates = [
+      {
+        where: {
+          herbalDrug: {
+            plantScientificName: {
+              in: ["Scrophularia ningpoensis Hemsl.", "Scutellaria baicalensis Georgi"]
+            }
+          }
+        },
+        data: {
+          harvestingPracticeNote: "Cultivated (wild-harvested?)"
+        }
+      },
+      {
+        where: {
+          herbalDrug: {
+            plantScientificName: {
+              in: ["Gardenia jasminoides J. Ellis"]
+            }
+          }
+        },
+        data: {
+          harvestingPracticeNote: "Cultivated, wildharvested (?)"
+        }
+      },
+      {
+        where: {
+          herbalDrug: {
+            plantScientificName: {
+              in: ["Dendrobium nobile Lindl."]
+            }
+          }
+        },
+        data: {
+          harvestingPracticeNote: "Fostered', wild-harvested"
+        }
+      }
+    ];
+
+    for (const update of updates) {
+      await prisma.sourcingBackground.updateMany(update);
+    }
+
+
     return herbalDrugBackground;
   } catch (error) {
     console.error(`Error processing herbal drug background for row ${index}:`, error);
@@ -267,8 +332,14 @@ async function processHerbalDrugBackground(row: any, index: number, plant: any, 
 
 async function main() {
   await prisma.$executeRawUnsafe(`
-  TRUNCATE TABLE plant_nomenclature, plant_taxonomy, plant_synonym, plant_ecology_distribution, plant_conservation, ethnobotany, plant_morphology, medicinal_properties, herbal_drug_background RESTART IDENTITY CASCADE;
+  TRUNCATE TABLE 
+  plant_nomenclature, plant_taxonomy, plant_synonym, 
+  plant_ecology_distribution, plant_conservation, ethnobotany, 
+  plant_morphology, medicinal_properties, herbal_drug_background, 
+  sourcing_background 
+  RESTART IDENTITY CASCADE;
 `);
+
   const results: any[] = [];
 
   // Read CSV file
@@ -284,29 +355,30 @@ async function main() {
 
       for (let i = 0; i < results.length; i += BATCH_SIZE) {
         const batch = results.slice(i, i + BATCH_SIZE);
-        
+
         // First process all plants
         const plants = await Promise.all(
           batch.map((row, idx) => processPlantRow(row, i + idx))
         );
-        
+
         // Then process all medicinal properties
         const medicinalProperties = await Promise.all(
           batch.map((row, idx) => processMedicinalProperties(row, i + idx))
         );
-        
+
         // Finally process herbal drug backgrounds with the created plants and properties
         const herbalDrugBackgrounds = await Promise.all(
-          batch.map((row, idx) => 
+          batch.map((row, idx) =>
             processHerbalDrugBackground(
-              row, 
-              i + idx, 
-              plants[idx], 
-              medicinalProperties[idx]
+              row,
+              i + idx
+              // , 
+              // plants[idx], 
+              // medicinalProperties[idx]
             )
           )
         );
-        
+
         successCount += herbalDrugBackgrounds.filter(r => r !== null).length;
       }
 
