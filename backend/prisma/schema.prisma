@@ -132,7 +132,7 @@ enum GlobalConservationStatus {
 
 enum InvasiveStatus {
   NON_INVASIVE
-  POSSIBLY_INVASIVE 
+  POSSIBLY_INVASIVE
   // POTENTIALLY_INVASIVE
   INVASIVE
 }
@@ -195,8 +195,8 @@ model PlantSynonym {
 
   plant PlantNomenclature @relation(fields: [plantId], references: [internalId])
 
-  @@map("plant_synonym")
   @@index([plantId])
+  @@map("plant_synonym")
 }
 
 model PlantMorphology {
@@ -211,8 +211,8 @@ model PlantMorphology {
   floweringPeriod    Month[]     @map("flowering_period")
   fruitingPeriod     Month[]     @map("fruiting_period")
 
-  floweringPeriodNote    String?     @map("flowering_period_note")  // record the original data first
-  fruitingPeriodNote     String?     @map("fruiting_period_note")  // record the original data first
+  floweringPeriodNote String? @map("flowering_period_note") // record the original data first
+  fruitingPeriodNote  String? @map("fruiting_period_note") // record the original data first
 
   plants PlantNomenclature[] // implicit many-to-many
 
@@ -284,21 +284,21 @@ model HerbalDrugBackground {
   herbalDrugPinyin    String   @map("pinyin")
   // plantPartUsed          PlantPartUsed[] @map("parts_used")
   plantPartUsed       String?  @map("plant_parts_used") // has remarks in (), just make it String type, later we could standardize 
-  officialStatus      Boolean? @map("official_status")
+  officialStatus      Boolean? @map("official_status")  //? row: Pharmacopoeia or Substitute Species?
   harvestingTime      Month[]  @map("harvesting_time")
   harvestingTimeNote  String?  @map("harvesting_time_note") // record the original data first
   primaryProcessing   String?  @map("primary_processing")
   secondaryProcessing String?  @map("secondary_processing")
   herbalDruglImage    String?  @map("herbal_drug_image")
 
-  plantId              Int                 @map("plant_id")
-  plant                PlantNomenclature   @relation(fields: [plantId], references: [internalId])
-  merdicinalPropertyId Int                 @map("medicinal_property_id")
-  merdicinalProperty   MedicinalProperties @relation(fields: [merdicinalPropertyId], references: [id])
+  plantScientificName String              @map("plant_scientific_name")
+  plant               PlantNomenclature   @relation(fields: [plantScientificName], references: [plantScientificName])
+  pharmaceuticalName  String              @map("pharmaceutical_name")
+  medicinalProperty   MedicinalProperties @relation(fields: [pharmaceuticalName], references: [pharmaceuticalName])
 
   sourcingBackgrounds SourcingBackground?
 
-  @@unique([plantId, merdicinalPropertyId])
+  @@unique([plantScientificName, pharmaceuticalName])
   @@map("herbal_drug_background")
 }
 

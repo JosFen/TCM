@@ -7,6 +7,7 @@ const prisma = new PrismaClient();
 // Track already processed scientific names
 const processedScientifNames = new Set<string>();
 const processedMedicialProperties = new Set<string>();
+const processedHerbalDrugBackground = new Set<string>();
 
 async function processPlantRow(row: any, index: number) {
   try {
@@ -17,7 +18,7 @@ async function processPlantRow(row: any, index: number) {
 
     const scientificName = row['Specific Epiphet'].trim();
     if (processedScientifNames.has(scientificName)) {
-      console.log(`Skipping duplicate scientific name: ${scientificName}`);
+      // console.log(`Skipping duplicate scientific name: ${scientificName}`);
       return null;
     }
     processedScientifNames.add(scientificName);
@@ -32,7 +33,7 @@ async function processPlantRow(row: any, index: number) {
         family: row['Plant Family'].trim(),
         class: row['Plant Class'].trim(),
         vascular: row['Plant Classification'].toLowerCase().trim() === 'vascular' ? true :
-                  null
+          null
       }
     }) ?? await prisma.plantTaxonomy.create({
       data: {
@@ -53,7 +54,7 @@ async function processPlantRow(row: any, index: number) {
       plant = await prisma.plantNomenclature.create({
         data: {
           plantScientificName: scientificName,
-          plantCommonName: row['Common Name'] ? 
+          plantCommonName: row['Common Name'] ?
             row['Common Name'].split(',').map((name: string) => name.trim()).filter(Boolean) : [],
           plantPinyin: row['Pinyin (Plant Name)'] || null,
           plantChineseName: row['Mandarin (Plant Name)'] || null,
@@ -63,70 +64,70 @@ async function processPlantRow(row: any, index: number) {
           links: linkList
         }
       });
-      
-    console.log(`Created plant: ${plant.plantScientificName}`);
-  } else {
-    console.log(`Plant already exists: ${scientificName}`);
-  }
-  // STEP 3: Create related records for the plant
-   
-  // create PlantEcologyDistribution:
-      await prisma.plantEcologyDistribution.create({
-        data: {
-          plant: {
-            connect: {
-              internalId: plant.internalId
-            }
-          },
-          habitat: row['Habitat'] || null,
-          plantOrigin: row['Plant Origin (province/ region)'] || null,
-          globalRange: row['Range/ Distribution'] || null,
-          chinaRange: row['Range in China'] || null,
-          endemic: row['Endemic'] || null,
-        }
-      });
 
-      // create PlantConservation:
-      await prisma.plantConservation.create({
-        data: {
-          plant: {
-            connect: {
-              internalId: plant.internalId
-            }
-          },
-          globalConservationStatus: row['Worldwide Conservation Status (IUCN Red List)'].toUpperCase().split(' ').join('_') || null,
-          chinaConservationStatus: row['National Conservation Status (China)'] || null,
-          protectedStatus: row['Protected Status'] || null,
-          invasiveStatus: row['Invasive?'].toLowerCase() === 'yes' 
-                    ? 'INVASIVE' 
-                    : row['Invasive?'].toLowerCase() === 'possible' 
-                      ? 'POSSIBLY_INVASIVE' 
-                      : row['Invasive?'].toLowerCase() === 'no' 
-                        ? 'NON_INVASIVE'
-                        : null,
-          invasiveRange: row['Invasive Range'] || null,
-        }
-      });
+      // console.log(`Created plant: ${plant.plantScientificName}`);
+    } else {
+      // console.log(`Plant already exists: ${scientificName}`);
+    }
+    // STEP 3: Create related records for the plant
 
-      // create Ethnobotany:
-      await prisma.ethnobotany.create({
-        data: {
-          plant: {
-            connect: {
-              internalId: plant.internalId
-            }
-          },
-          folkMedicinalUses: row['Folk Medicinal Uses'] || null,
-          otherCulturalUses: row['Other Cultural Uses'].split(',').map((use: string) => use.trim()) || null,
-          references: null,
-        }
-      });
+    // create PlantEcologyDistribution:
+    await prisma.plantEcologyDistribution.create({
+      data: {
+        plant: {
+          connect: {
+            internalId: plant.internalId
+          }
+        },
+        habitat: row['Habitat'] || null,
+        plantOrigin: row['Plant Origin (province/ region)'] || null,
+        globalRange: row['Range/ Distribution'] || null,
+        chinaRange: row['Range in China'] || null,
+        endemic: row['Endemic'] || null,
+      }
+    });
 
-      // create plantSynonym if they exist
-      if (row['Botanical Synonyms']) {
-        const synonyms = row['Botanical Synonyms'].split(',').map((syn: string) => syn.trim());
-        // console.log("synonyms : " , synonyms);
-        for (const synonym of synonyms) {
+    // create PlantConservation:
+    await prisma.plantConservation.create({
+      data: {
+        plant: {
+          connect: {
+            internalId: plant.internalId
+          }
+        },
+        globalConservationStatus: row['Worldwide Conservation Status (IUCN Red List)'].toUpperCase().split(' ').join('_') || null,
+        chinaConservationStatus: row['National Conservation Status (China)'] || null,
+        protectedStatus: row['Protected Status'] || null,
+        invasiveStatus: row['Invasive?'].toLowerCase() === 'yes'
+          ? 'INVASIVE'
+          : row['Invasive?'].toLowerCase() === 'possible'
+            ? 'POSSIBLY_INVASIVE'
+            : row['Invasive?'].toLowerCase() === 'no'
+              ? 'NON_INVASIVE'
+              : null,
+        invasiveRange: row['Invasive Range'] || null,
+      }
+    });
+
+    // create Ethnobotany:
+    await prisma.ethnobotany.create({
+      data: {
+        plant: {
+          connect: {
+            internalId: plant.internalId
+          }
+        },
+        folkMedicinalUses: row['Folk Medicinal Uses'] || null,
+        otherCulturalUses: row['Other Cultural Uses'].split(',').map((use: string) => use.trim()) || null,
+        references: null,
+      }
+    });
+
+    // create plantSynonym if they exist
+    if (row['Botanical Synonyms']) {
+      const synonyms = row['Botanical Synonyms'].split(',').map((syn: string) => syn.trim());
+      // console.log("synonyms : " , synonyms);
+      for (const synonym of synonyms) {
         await prisma.plantSynonym.create({
           data: {
             name: synonym,
@@ -140,19 +141,19 @@ async function processPlantRow(row: any, index: number) {
       }
     }
 
-     // create PlantMorphology: 
-     // TO BE REVIEWED LATER: clean floweringPeriod and fruitingPeriod, then create unique records
-    
-   await prisma.plantMorphology.create({
+    // create PlantMorphology: 
+    // TO BE REVIEWED LATER: clean floweringPeriod and fruitingPeriod, then create unique records
+
+    await prisma.plantMorphology.create({
       data: {
         lifecycle: row['Lifecycle'] ? row['Lifecycle'].split(',').map((l: string) => l.trim().toUpperCase()) : [],
-        isTerrestrial: row['Aquatic or Terrestrial']? (row['Aquatic or Terrestrial'].toLowerCase().trim() === 'aquatic' ? false : true): null,
+        isTerrestrial: row['Aquatic or Terrestrial'] ? (row['Aquatic or Terrestrial'].toLowerCase().trim() === 'aquatic' ? false : true) : null,
         growthHabit: row['Growth Habit']?.trim() || null,
-        isDeciduous: row['Deciduous/ Evergreen']? (row['Deciduous/ Evergreen'].toLowerCase().trim() === 'deciduous' ? true : false) : null,
+        isDeciduous: row['Deciduous/ Evergreen'] ? (row['Deciduous/ Evergreen'].toLowerCase().trim() === 'deciduous' ? true : false) : null,
         isDeciduousNote: row['Deciduous/ Evergreen']?.toLowerCase().trim() || null,
         reproductiveSystem: row['Reproductive Morphology']?.trim() || null,
         floweringPeriod: [],
-        fruitingPeriod:[],
+        fruitingPeriod: [],
         floweringPeriodNote: row['Flowering Period']?.trim() || null, // to be reviewed/removed later
         fruitingPeriodNote: row['Fruiting Period']?.trim() || null, // to be reviewed/removed later
         plants: {
@@ -161,9 +162,9 @@ async function processPlantRow(row: any, index: number) {
       }
     });
 
-   
-  // console.log(`Created plant: ${plant.plantScientificName}`);
-  return plant;
+
+    // console.log(`Created plant: ${plant.plantScientificName}`);
+    return plant;
 
   } catch (error) {
     console.error(`Error processing row ${index}:`, error);
@@ -171,105 +172,145 @@ async function processPlantRow(row: any, index: number) {
   }
 }
 
- // Step 4: create medicinal properties and their relationships
+// Step 4: create medicinal properties and their relationships
 async function processMedicinalProperties(row: any, index: number) {
- 
-    if (!row['Pharmaceutical Name']) {
-      console.warn(`Skipping row ${index}: Pharmaceutical Name`);
+
+  if (!row['Pharmaceutical Name']) {
+    console.warn(`Skipping row ${index}: Pharmaceutical Name`);
+    return null;
+  }
+  const pharmaceuticalName = row['Pharmaceutical Name'].trim();
+
+  if (processedMedicialProperties.has(pharmaceuticalName)) {
+    // console.log(`Skipping duplicate pharmaceutical name: ${pharmaceuticalName}`);
+    return null;
+  }
+  processedMedicialProperties.add(pharmaceuticalName);
+  // Find existing plant (if any)
+  let medicinalProperty = await prisma.medicinalProperties.findUnique({
+    where: { pharmaceuticalName: pharmaceuticalName }
+  });
+  // If medicinal property does not exist, create it
+  if (!medicinalProperty) {
+    try {
+      medicinalProperty = await prisma.medicinalProperties.create({
+        data: {
+          pharmaceuticalName: pharmaceuticalName,
+          herbalDrugPinyin: row['Pinyin (Medicinal Material)']?.trim() || null,
+          taste: row['Taste']?.split(',').map((t: string) => t.trim()?.toUpperCase()).filter(Boolean) || [],
+          energyFlow: row['Energy Flow']?.split(',').map((e: string) => e.trim().toUpperCase().replace(' ', '_')).filter(Boolean) || [],
+          meridians: row['Meridian']?.split(',').map((m: string) => m.trim().toUpperCase().replace(/ /g, '_')).filter(Boolean) || [],
+          actions: row['TCM Properties']?.trim() || null,
+          pharmacologicalProperties: row['Medicinal/ Pharmacological Properties']?.split(',').map((p: string) => p.trim()) || [],
+          indications: row['Indications']?.split(',').map((i: string) => i.trim()) || [],
+          toxicity: row['Toxicity']?.trim() || null,
+          secondaryMetabolites: row['Secondary Metabolites']?.trim() || null,
+        }
+      });
+      // console.log(`Created medicinal property: ${medicinalProperty.pharmaceuticalName}`);
+    } catch (error) {
+      console.error(`Error creating medicinal property for row ${index}:`, error);
       return null;
     }
+  } else {
+    // console.log(`Medicinal property already exists: ${pharmaceuticalName}`);
+  }
+
+  return medicinalProperty;
+}
+
+async function processHerbalDrugBackground(row: any, index: number, plant: any, medicinalProperty: any) {
+  if (!plant || !medicinalProperty) {
+    console.warn(`Skipping row ${index}: Plant or Medicinal Property not found`);
+    return null;
+  }
+  try {
+    const scientificName = row['Specific Epiphet'].trim();
     const pharmaceuticalName = row['Pharmaceutical Name'].trim();
+    const key = `${scientificName}-${pharmaceuticalName}`;
 
-    if (processedMedicialProperties.has(pharmaceuticalName)) {
-      console.log(`Skipping duplicate pharmaceutical name: ${pharmaceuticalName}`);
+    if (processedHerbalDrugBackground.has(key)) {
+      console.log(`Skipping duplicate herbal drug: ${key}`);
       return null;
     }
-    processedMedicialProperties.add(pharmaceuticalName);
-    // Find existing plant (if any)
-    let medicinalProperty = await prisma.medicinalProperties.findUnique({
-      where: { pharmaceuticalName: pharmaceuticalName }
-    });
-    // If medicinal property does not exist, create it
-    if (!medicinalProperty) {
-      try {
-        medicinalProperty = await prisma.medicinalProperties.create({
-          data: {
-            pharmaceuticalName: pharmaceuticalName,
-            herbalDrugPinyin: row['Pinyin (Medicinal Material)']?.trim() || null,
-            taste: row['Taste']?.split(',').map((t: string) => t.trim()?.toUpperCase()).filter(Boolean) || [],
-            energyFlow: row['Energy Flow']?.split(',').map((e: string) => e.trim().toUpperCase().replace(' ', '_')).filter(Boolean) || [],
-            meridians: row['Meridian']?.split(',').map((m: string) => m.trim().toUpperCase().replace(/ /g, '_')).filter(Boolean) || [],
-            actions: row['TCM Properties']?.trim() || null,
-            pharmacologicalProperties: row['Medicinal/ Pharmacological Properties']?.split(',').map((p: string) => p.trim()) || [],
-            indications: row['Indications']?.split(',').map((i: string) => i.trim()) || [],
-            toxicity: row['Toxicity']?.trim() || null,
-            secondaryMetabolites: row['Secondary Metabolites']?.trim() || null,
+    processedHerbalDrugBackground.add(key);
+    // Find existing herbal drug background
+    let herbalDrugBackground = await prisma.herbalDrugBackground.create({
+      data: {
+        plant: {
+          connect: {
+            plantScientificName: scientificName
           }
-        });
-        console.log(`Created medicinal property: ${medicinalProperty.pharmaceuticalName}`);
-      } catch (error) {
-        console.error(`Error creating medicinal property for row ${index}:`, error);
-        return null;
+        },
+        medicinalProperty: {
+          connect: {
+            pharmaceuticalName: pharmaceuticalName
+          }
+        },
+        herbalDrugPinyin: row['Pinyin (Medicinal Material)']?.trim() || null,
+        plantPartUsed: row['Plant Part Used']?.trim() || null,
+        officialStatus: null,
+        harvestingTime: [],
+        harvestingTimeNote: row['Harvesting Time']?.trim() || null,
+        primaryProcessing: row['PPrimary Processing']?.trim() || null,
+        secondaryProcessing: row['Secondary Processing']?.trim() || null,
+        herbalDruglImage: null,
       }
-      } else {
-      console.log(`Medicinal property already exists: ${pharmaceuticalName}`);
-    }
-    // Create  herbal drug relationship
-
-  //   try {
-  //   const pharmaceuticalName = row['Pharmaceutical Name'].trim();
-  //   if (row['Pharmaceutical Name'] && !processedMedicialProperties.has(pharmaceuticalName)) {
-  //     processedMedicialProperties.add(pharmaceuticalName);
-  //     const medicinalProperties = await prisma.medicinalProperties.create({
-  //       data: {
-  //         pharmaceuticalName: pharmaceuticalName,
-  //         herbalDrugPinyin: row['Pinyin (Medicinal Material)']?.trim() || null,
-  //         taste: row['Taste']?.split(',').map((t: string) => t.trim()?.toUpperCase()) || [null],
-  //         energyFlow: row['Energy Flow']?.split(',').map((e: string) => e.trim().toUpperCase().replace(' ', '_')) || [null],
-  //         meridians: row['Meridian']?.split(',').map((m: string) => m.trim().toUpperCase().replace(' ', '_')) || [null],
-  //         actions: row['TCM Properties']?.trim() || null,
-  //         pharmacologicalProperties: row['Medicinal/ Pharmacological Properties']?.split(',').map((p: string) => p.trim()) || [],
-  //         indications: row['Indications']?.split(',').map((i: string) => i.trim()) || [],
-  //         toxicity: row['Toxicity']?.trim() || null,
-  //         secondaryMetabolites: row['Secondary Metabolites']?.trim() || null,
-  //       }
-  //     });
-  //   }
-  // } catch (error) {
-  //   console.error(`\nError creating medicinal properties for row ${index}:`, row['Taste'], error);
-  //   return null;
-  // }
+    });
+    console.log(`Created herbal drug background: ${plant.plantScientificName} - ${medicinalProperty.pharmaceuticalName}`);
+    return herbalDrugBackground;
+  } catch (error) {
+    console.error(`Error processing herbal drug background for row ${index}:`, error);
+    return null;
+  }
 }
 
 async function main() {
   await prisma.$executeRawUnsafe(`
-  TRUNCATE TABLE plant_nomenclature, plant_taxonomy, plant_synonym, plant_ecology_distribution, plant_conservation, ethnobotany, plant_morphology, medicinal_properties RESTART IDENTITY CASCADE;
+  TRUNCATE TABLE plant_nomenclature, plant_taxonomy, plant_synonym, plant_ecology_distribution, plant_conservation, ethnobotany, plant_morphology, medicinal_properties, herbal_drug_background RESTART IDENTITY CASCADE;
 `);
   const results: any[] = [];
-  
+
   // Read CSV file
   fs.createReadStream('./files/TCM_dataframe_v2.csv')
     .pipe(csv())
     .on('data', (data: any) => results.push(data))
     .on('end', async () => {
       console.log(`CSV file successfully processed, ${results.length} records found`);
-      
+
       // Process in batches of 50
       const BATCH_SIZE = 50;
       let successCount = 0;
-      
+
       for (let i = 0; i < results.length; i += BATCH_SIZE) {
         const batch = results.slice(i, i + BATCH_SIZE);
-        const batchResults = await Promise.all(
-          batch.map((row, idx) => {
-            processPlantRow(row, i + idx)
-            processMedicinalProperties(row, i + idx);
-          })
+        
+        // First process all plants
+        const plants = await Promise.all(
+          batch.map((row, idx) => processPlantRow(row, i + idx))
         );
-        successCount += batchResults.filter(r => r !== null).length;
+        
+        // Then process all medicinal properties
+        const medicinalProperties = await Promise.all(
+          batch.map((row, idx) => processMedicinalProperties(row, i + idx))
+        );
+        
+        // Finally process herbal drug backgrounds with the created plants and properties
+        const herbalDrugBackgrounds = await Promise.all(
+          batch.map((row, idx) => 
+            processHerbalDrugBackground(
+              row, 
+              i + idx, 
+              plants[idx], 
+              medicinalProperties[idx]
+            )
+          )
+        );
+        
+        successCount += herbalDrugBackgrounds.filter(r => r !== null).length;
       }
 
-      console.log(`Seed complete. Successfully processed ${successCount} unique plants`);
+      console.log(`Seed complete. Successfully processed ${successCount} records`);
     });
 }
 

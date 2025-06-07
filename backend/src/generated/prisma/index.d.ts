@@ -12312,14 +12312,10 @@ export namespace Prisma {
 
   export type HerbalDrugBackgroundAvgAggregateOutputType = {
     id: number | null
-    plantId: number | null
-    merdicinalPropertyId: number | null
   }
 
   export type HerbalDrugBackgroundSumAggregateOutputType = {
     id: number | null
-    plantId: number | null
-    merdicinalPropertyId: number | null
   }
 
   export type HerbalDrugBackgroundMinAggregateOutputType = {
@@ -12327,11 +12323,12 @@ export namespace Prisma {
     herbalDrugPinyin: string | null
     plantPartUsed: string | null
     officialStatus: boolean | null
+    harvestingTimeNote: string | null
     primaryProcessing: string | null
     secondaryProcessing: string | null
     herbalDruglImage: string | null
-    plantId: number | null
-    merdicinalPropertyId: number | null
+    plantScientificName: string | null
+    pharmaceuticalName: string | null
   }
 
   export type HerbalDrugBackgroundMaxAggregateOutputType = {
@@ -12339,11 +12336,12 @@ export namespace Prisma {
     herbalDrugPinyin: string | null
     plantPartUsed: string | null
     officialStatus: boolean | null
+    harvestingTimeNote: string | null
     primaryProcessing: string | null
     secondaryProcessing: string | null
     herbalDruglImage: string | null
-    plantId: number | null
-    merdicinalPropertyId: number | null
+    plantScientificName: string | null
+    pharmaceuticalName: string | null
   }
 
   export type HerbalDrugBackgroundCountAggregateOutputType = {
@@ -12352,25 +12350,22 @@ export namespace Prisma {
     plantPartUsed: number
     officialStatus: number
     harvestingTime: number
+    harvestingTimeNote: number
     primaryProcessing: number
     secondaryProcessing: number
     herbalDruglImage: number
-    plantId: number
-    merdicinalPropertyId: number
+    plantScientificName: number
+    pharmaceuticalName: number
     _all: number
   }
 
 
   export type HerbalDrugBackgroundAvgAggregateInputType = {
     id?: true
-    plantId?: true
-    merdicinalPropertyId?: true
   }
 
   export type HerbalDrugBackgroundSumAggregateInputType = {
     id?: true
-    plantId?: true
-    merdicinalPropertyId?: true
   }
 
   export type HerbalDrugBackgroundMinAggregateInputType = {
@@ -12378,11 +12373,12 @@ export namespace Prisma {
     herbalDrugPinyin?: true
     plantPartUsed?: true
     officialStatus?: true
+    harvestingTimeNote?: true
     primaryProcessing?: true
     secondaryProcessing?: true
     herbalDruglImage?: true
-    plantId?: true
-    merdicinalPropertyId?: true
+    plantScientificName?: true
+    pharmaceuticalName?: true
   }
 
   export type HerbalDrugBackgroundMaxAggregateInputType = {
@@ -12390,11 +12386,12 @@ export namespace Prisma {
     herbalDrugPinyin?: true
     plantPartUsed?: true
     officialStatus?: true
+    harvestingTimeNote?: true
     primaryProcessing?: true
     secondaryProcessing?: true
     herbalDruglImage?: true
-    plantId?: true
-    merdicinalPropertyId?: true
+    plantScientificName?: true
+    pharmaceuticalName?: true
   }
 
   export type HerbalDrugBackgroundCountAggregateInputType = {
@@ -12403,11 +12400,12 @@ export namespace Prisma {
     plantPartUsed?: true
     officialStatus?: true
     harvestingTime?: true
+    harvestingTimeNote?: true
     primaryProcessing?: true
     secondaryProcessing?: true
     herbalDruglImage?: true
-    plantId?: true
-    merdicinalPropertyId?: true
+    plantScientificName?: true
+    pharmaceuticalName?: true
     _all?: true
   }
 
@@ -12503,11 +12501,12 @@ export namespace Prisma {
     plantPartUsed: string | null
     officialStatus: boolean | null
     harvestingTime: $Enums.Month[]
+    harvestingTimeNote: string | null
     primaryProcessing: string | null
     secondaryProcessing: string | null
     herbalDruglImage: string | null
-    plantId: number
-    merdicinalPropertyId: number
+    plantScientificName: string
+    pharmaceuticalName: string
     _count: HerbalDrugBackgroundCountAggregateOutputType | null
     _avg: HerbalDrugBackgroundAvgAggregateOutputType | null
     _sum: HerbalDrugBackgroundSumAggregateOutputType | null
@@ -12535,13 +12534,14 @@ export namespace Prisma {
     plantPartUsed?: boolean
     officialStatus?: boolean
     harvestingTime?: boolean
+    harvestingTimeNote?: boolean
     primaryProcessing?: boolean
     secondaryProcessing?: boolean
     herbalDruglImage?: boolean
-    plantId?: boolean
-    merdicinalPropertyId?: boolean
+    plantScientificName?: boolean
+    pharmaceuticalName?: boolean
     plant?: boolean | PlantNomenclatureDefaultArgs<ExtArgs>
-    merdicinalProperty?: boolean | MedicinalPropertiesDefaultArgs<ExtArgs>
+    medicinalProperty?: boolean | MedicinalPropertiesDefaultArgs<ExtArgs>
     sourcingBackgrounds?: boolean | HerbalDrugBackground$sourcingBackgroundsArgs<ExtArgs>
   }, ExtArgs["result"]["herbalDrugBackground"]>
 
@@ -12551,13 +12551,14 @@ export namespace Prisma {
     plantPartUsed?: boolean
     officialStatus?: boolean
     harvestingTime?: boolean
+    harvestingTimeNote?: boolean
     primaryProcessing?: boolean
     secondaryProcessing?: boolean
     herbalDruglImage?: boolean
-    plantId?: boolean
-    merdicinalPropertyId?: boolean
+    plantScientificName?: boolean
+    pharmaceuticalName?: boolean
     plant?: boolean | PlantNomenclatureDefaultArgs<ExtArgs>
-    merdicinalProperty?: boolean | MedicinalPropertiesDefaultArgs<ExtArgs>
+    medicinalProperty?: boolean | MedicinalPropertiesDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["herbalDrugBackground"]>
 
   export type HerbalDrugBackgroundSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -12566,13 +12567,14 @@ export namespace Prisma {
     plantPartUsed?: boolean
     officialStatus?: boolean
     harvestingTime?: boolean
+    harvestingTimeNote?: boolean
     primaryProcessing?: boolean
     secondaryProcessing?: boolean
     herbalDruglImage?: boolean
-    plantId?: boolean
-    merdicinalPropertyId?: boolean
+    plantScientificName?: boolean
+    pharmaceuticalName?: boolean
     plant?: boolean | PlantNomenclatureDefaultArgs<ExtArgs>
-    merdicinalProperty?: boolean | MedicinalPropertiesDefaultArgs<ExtArgs>
+    medicinalProperty?: boolean | MedicinalPropertiesDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["herbalDrugBackground"]>
 
   export type HerbalDrugBackgroundSelectScalar = {
@@ -12581,33 +12583,34 @@ export namespace Prisma {
     plantPartUsed?: boolean
     officialStatus?: boolean
     harvestingTime?: boolean
+    harvestingTimeNote?: boolean
     primaryProcessing?: boolean
     secondaryProcessing?: boolean
     herbalDruglImage?: boolean
-    plantId?: boolean
-    merdicinalPropertyId?: boolean
+    plantScientificName?: boolean
+    pharmaceuticalName?: boolean
   }
 
-  export type HerbalDrugBackgroundOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "herbalDrugPinyin" | "plantPartUsed" | "officialStatus" | "harvestingTime" | "primaryProcessing" | "secondaryProcessing" | "herbalDruglImage" | "plantId" | "merdicinalPropertyId", ExtArgs["result"]["herbalDrugBackground"]>
+  export type HerbalDrugBackgroundOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "herbalDrugPinyin" | "plantPartUsed" | "officialStatus" | "harvestingTime" | "harvestingTimeNote" | "primaryProcessing" | "secondaryProcessing" | "herbalDruglImage" | "plantScientificName" | "pharmaceuticalName", ExtArgs["result"]["herbalDrugBackground"]>
   export type HerbalDrugBackgroundInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     plant?: boolean | PlantNomenclatureDefaultArgs<ExtArgs>
-    merdicinalProperty?: boolean | MedicinalPropertiesDefaultArgs<ExtArgs>
+    medicinalProperty?: boolean | MedicinalPropertiesDefaultArgs<ExtArgs>
     sourcingBackgrounds?: boolean | HerbalDrugBackground$sourcingBackgroundsArgs<ExtArgs>
   }
   export type HerbalDrugBackgroundIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     plant?: boolean | PlantNomenclatureDefaultArgs<ExtArgs>
-    merdicinalProperty?: boolean | MedicinalPropertiesDefaultArgs<ExtArgs>
+    medicinalProperty?: boolean | MedicinalPropertiesDefaultArgs<ExtArgs>
   }
   export type HerbalDrugBackgroundIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     plant?: boolean | PlantNomenclatureDefaultArgs<ExtArgs>
-    merdicinalProperty?: boolean | MedicinalPropertiesDefaultArgs<ExtArgs>
+    medicinalProperty?: boolean | MedicinalPropertiesDefaultArgs<ExtArgs>
   }
 
   export type $HerbalDrugBackgroundPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "HerbalDrugBackground"
     objects: {
       plant: Prisma.$PlantNomenclaturePayload<ExtArgs>
-      merdicinalProperty: Prisma.$MedicinalPropertiesPayload<ExtArgs>
+      medicinalProperty: Prisma.$MedicinalPropertiesPayload<ExtArgs>
       sourcingBackgrounds: Prisma.$SourcingBackgroundPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -12616,11 +12619,12 @@ export namespace Prisma {
       plantPartUsed: string | null
       officialStatus: boolean | null
       harvestingTime: $Enums.Month[]
+      harvestingTimeNote: string | null
       primaryProcessing: string | null
       secondaryProcessing: string | null
       herbalDruglImage: string | null
-      plantId: number
-      merdicinalPropertyId: number
+      plantScientificName: string
+      pharmaceuticalName: string
     }, ExtArgs["result"]["herbalDrugBackground"]>
     composites: {}
   }
@@ -13016,7 +13020,7 @@ export namespace Prisma {
   export interface Prisma__HerbalDrugBackgroundClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     plant<T extends PlantNomenclatureDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlantNomenclatureDefaultArgs<ExtArgs>>): Prisma__PlantNomenclatureClient<$Result.GetResult<Prisma.$PlantNomenclaturePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    merdicinalProperty<T extends MedicinalPropertiesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MedicinalPropertiesDefaultArgs<ExtArgs>>): Prisma__MedicinalPropertiesClient<$Result.GetResult<Prisma.$MedicinalPropertiesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    medicinalProperty<T extends MedicinalPropertiesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MedicinalPropertiesDefaultArgs<ExtArgs>>): Prisma__MedicinalPropertiesClient<$Result.GetResult<Prisma.$MedicinalPropertiesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     sourcingBackgrounds<T extends HerbalDrugBackground$sourcingBackgroundsArgs<ExtArgs> = {}>(args?: Subset<T, HerbalDrugBackground$sourcingBackgroundsArgs<ExtArgs>>): Prisma__SourcingBackgroundClient<$Result.GetResult<Prisma.$SourcingBackgroundPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -13052,11 +13056,12 @@ export namespace Prisma {
     readonly plantPartUsed: FieldRef<"HerbalDrugBackground", 'String'>
     readonly officialStatus: FieldRef<"HerbalDrugBackground", 'Boolean'>
     readonly harvestingTime: FieldRef<"HerbalDrugBackground", 'Month[]'>
+    readonly harvestingTimeNote: FieldRef<"HerbalDrugBackground", 'String'>
     readonly primaryProcessing: FieldRef<"HerbalDrugBackground", 'String'>
     readonly secondaryProcessing: FieldRef<"HerbalDrugBackground", 'String'>
     readonly herbalDruglImage: FieldRef<"HerbalDrugBackground", 'String'>
-    readonly plantId: FieldRef<"HerbalDrugBackground", 'Int'>
-    readonly merdicinalPropertyId: FieldRef<"HerbalDrugBackground", 'Int'>
+    readonly plantScientificName: FieldRef<"HerbalDrugBackground", 'String'>
+    readonly pharmaceuticalName: FieldRef<"HerbalDrugBackground", 'String'>
   }
     
 
@@ -15870,11 +15875,12 @@ export namespace Prisma {
     plantPartUsed: 'plantPartUsed',
     officialStatus: 'officialStatus',
     harvestingTime: 'harvestingTime',
+    harvestingTimeNote: 'harvestingTimeNote',
     primaryProcessing: 'primaryProcessing',
     secondaryProcessing: 'secondaryProcessing',
     herbalDruglImage: 'herbalDruglImage',
-    plantId: 'plantId',
-    merdicinalPropertyId: 'merdicinalPropertyId'
+    plantScientificName: 'plantScientificName',
+    pharmaceuticalName: 'pharmaceuticalName'
   };
 
   export type HerbalDrugBackgroundScalarFieldEnum = (typeof HerbalDrugBackgroundScalarFieldEnum)[keyof typeof HerbalDrugBackgroundScalarFieldEnum]
@@ -16712,13 +16718,14 @@ export namespace Prisma {
     plantPartUsed?: StringNullableFilter<"HerbalDrugBackground"> | string | null
     officialStatus?: BoolNullableFilter<"HerbalDrugBackground"> | boolean | null
     harvestingTime?: EnumMonthNullableListFilter<"HerbalDrugBackground">
+    harvestingTimeNote?: StringNullableFilter<"HerbalDrugBackground"> | string | null
     primaryProcessing?: StringNullableFilter<"HerbalDrugBackground"> | string | null
     secondaryProcessing?: StringNullableFilter<"HerbalDrugBackground"> | string | null
     herbalDruglImage?: StringNullableFilter<"HerbalDrugBackground"> | string | null
-    plantId?: IntFilter<"HerbalDrugBackground"> | number
-    merdicinalPropertyId?: IntFilter<"HerbalDrugBackground"> | number
+    plantScientificName?: StringFilter<"HerbalDrugBackground"> | string
+    pharmaceuticalName?: StringFilter<"HerbalDrugBackground"> | string
     plant?: XOR<PlantNomenclatureScalarRelationFilter, PlantNomenclatureWhereInput>
-    merdicinalProperty?: XOR<MedicinalPropertiesScalarRelationFilter, MedicinalPropertiesWhereInput>
+    medicinalProperty?: XOR<MedicinalPropertiesScalarRelationFilter, MedicinalPropertiesWhereInput>
     sourcingBackgrounds?: XOR<SourcingBackgroundNullableScalarRelationFilter, SourcingBackgroundWhereInput> | null
   }
 
@@ -16728,19 +16735,20 @@ export namespace Prisma {
     plantPartUsed?: SortOrderInput | SortOrder
     officialStatus?: SortOrderInput | SortOrder
     harvestingTime?: SortOrder
+    harvestingTimeNote?: SortOrderInput | SortOrder
     primaryProcessing?: SortOrderInput | SortOrder
     secondaryProcessing?: SortOrderInput | SortOrder
     herbalDruglImage?: SortOrderInput | SortOrder
-    plantId?: SortOrder
-    merdicinalPropertyId?: SortOrder
+    plantScientificName?: SortOrder
+    pharmaceuticalName?: SortOrder
     plant?: PlantNomenclatureOrderByWithRelationInput
-    merdicinalProperty?: MedicinalPropertiesOrderByWithRelationInput
+    medicinalProperty?: MedicinalPropertiesOrderByWithRelationInput
     sourcingBackgrounds?: SourcingBackgroundOrderByWithRelationInput
   }
 
   export type HerbalDrugBackgroundWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    plantId_merdicinalPropertyId?: HerbalDrugBackgroundPlantIdMerdicinalPropertyIdCompoundUniqueInput
+    plantScientificName_pharmaceuticalName?: HerbalDrugBackgroundPlantScientificNamePharmaceuticalNameCompoundUniqueInput
     AND?: HerbalDrugBackgroundWhereInput | HerbalDrugBackgroundWhereInput[]
     OR?: HerbalDrugBackgroundWhereInput[]
     NOT?: HerbalDrugBackgroundWhereInput | HerbalDrugBackgroundWhereInput[]
@@ -16748,15 +16756,16 @@ export namespace Prisma {
     plantPartUsed?: StringNullableFilter<"HerbalDrugBackground"> | string | null
     officialStatus?: BoolNullableFilter<"HerbalDrugBackground"> | boolean | null
     harvestingTime?: EnumMonthNullableListFilter<"HerbalDrugBackground">
+    harvestingTimeNote?: StringNullableFilter<"HerbalDrugBackground"> | string | null
     primaryProcessing?: StringNullableFilter<"HerbalDrugBackground"> | string | null
     secondaryProcessing?: StringNullableFilter<"HerbalDrugBackground"> | string | null
     herbalDruglImage?: StringNullableFilter<"HerbalDrugBackground"> | string | null
-    plantId?: IntFilter<"HerbalDrugBackground"> | number
-    merdicinalPropertyId?: IntFilter<"HerbalDrugBackground"> | number
+    plantScientificName?: StringFilter<"HerbalDrugBackground"> | string
+    pharmaceuticalName?: StringFilter<"HerbalDrugBackground"> | string
     plant?: XOR<PlantNomenclatureScalarRelationFilter, PlantNomenclatureWhereInput>
-    merdicinalProperty?: XOR<MedicinalPropertiesScalarRelationFilter, MedicinalPropertiesWhereInput>
+    medicinalProperty?: XOR<MedicinalPropertiesScalarRelationFilter, MedicinalPropertiesWhereInput>
     sourcingBackgrounds?: XOR<SourcingBackgroundNullableScalarRelationFilter, SourcingBackgroundWhereInput> | null
-  }, "id" | "plantId_merdicinalPropertyId">
+  }, "id" | "plantScientificName_pharmaceuticalName">
 
   export type HerbalDrugBackgroundOrderByWithAggregationInput = {
     id?: SortOrder
@@ -16764,11 +16773,12 @@ export namespace Prisma {
     plantPartUsed?: SortOrderInput | SortOrder
     officialStatus?: SortOrderInput | SortOrder
     harvestingTime?: SortOrder
+    harvestingTimeNote?: SortOrderInput | SortOrder
     primaryProcessing?: SortOrderInput | SortOrder
     secondaryProcessing?: SortOrderInput | SortOrder
     herbalDruglImage?: SortOrderInput | SortOrder
-    plantId?: SortOrder
-    merdicinalPropertyId?: SortOrder
+    plantScientificName?: SortOrder
+    pharmaceuticalName?: SortOrder
     _count?: HerbalDrugBackgroundCountOrderByAggregateInput
     _avg?: HerbalDrugBackgroundAvgOrderByAggregateInput
     _max?: HerbalDrugBackgroundMaxOrderByAggregateInput
@@ -16785,11 +16795,12 @@ export namespace Prisma {
     plantPartUsed?: StringNullableWithAggregatesFilter<"HerbalDrugBackground"> | string | null
     officialStatus?: BoolNullableWithAggregatesFilter<"HerbalDrugBackground"> | boolean | null
     harvestingTime?: EnumMonthNullableListFilter<"HerbalDrugBackground">
+    harvestingTimeNote?: StringNullableWithAggregatesFilter<"HerbalDrugBackground"> | string | null
     primaryProcessing?: StringNullableWithAggregatesFilter<"HerbalDrugBackground"> | string | null
     secondaryProcessing?: StringNullableWithAggregatesFilter<"HerbalDrugBackground"> | string | null
     herbalDruglImage?: StringNullableWithAggregatesFilter<"HerbalDrugBackground"> | string | null
-    plantId?: IntWithAggregatesFilter<"HerbalDrugBackground"> | number
-    merdicinalPropertyId?: IntWithAggregatesFilter<"HerbalDrugBackground"> | number
+    plantScientificName?: StringWithAggregatesFilter<"HerbalDrugBackground"> | string
+    pharmaceuticalName?: StringWithAggregatesFilter<"HerbalDrugBackground"> | string
   }
 
   export type SourcingBackgroundWhereInput = {
@@ -17447,7 +17458,7 @@ export namespace Prisma {
     indications?: MedicinalPropertiesCreateindicationsInput | string[]
     toxicity?: string | null
     secondaryMetabolites?: string | null
-    herbalDrugs?: HerbalDrugBackgroundCreateNestedManyWithoutMerdicinalPropertyInput
+    herbalDrugs?: HerbalDrugBackgroundCreateNestedManyWithoutMedicinalPropertyInput
   }
 
   export type MedicinalPropertiesUncheckedCreateInput = {
@@ -17462,7 +17473,7 @@ export namespace Prisma {
     indications?: MedicinalPropertiesCreateindicationsInput | string[]
     toxicity?: string | null
     secondaryMetabolites?: string | null
-    herbalDrugs?: HerbalDrugBackgroundUncheckedCreateNestedManyWithoutMerdicinalPropertyInput
+    herbalDrugs?: HerbalDrugBackgroundUncheckedCreateNestedManyWithoutMedicinalPropertyInput
   }
 
   export type MedicinalPropertiesUpdateInput = {
@@ -17476,7 +17487,7 @@ export namespace Prisma {
     indications?: MedicinalPropertiesUpdateindicationsInput | string[]
     toxicity?: NullableStringFieldUpdateOperationsInput | string | null
     secondaryMetabolites?: NullableStringFieldUpdateOperationsInput | string | null
-    herbalDrugs?: HerbalDrugBackgroundUpdateManyWithoutMerdicinalPropertyNestedInput
+    herbalDrugs?: HerbalDrugBackgroundUpdateManyWithoutMedicinalPropertyNestedInput
   }
 
   export type MedicinalPropertiesUncheckedUpdateInput = {
@@ -17491,7 +17502,7 @@ export namespace Prisma {
     indications?: MedicinalPropertiesUpdateindicationsInput | string[]
     toxicity?: NullableStringFieldUpdateOperationsInput | string | null
     secondaryMetabolites?: NullableStringFieldUpdateOperationsInput | string | null
-    herbalDrugs?: HerbalDrugBackgroundUncheckedUpdateManyWithoutMerdicinalPropertyNestedInput
+    herbalDrugs?: HerbalDrugBackgroundUncheckedUpdateManyWithoutMedicinalPropertyNestedInput
   }
 
   export type MedicinalPropertiesCreateManyInput = {
@@ -17540,11 +17551,12 @@ export namespace Prisma {
     plantPartUsed?: string | null
     officialStatus?: boolean | null
     harvestingTime?: HerbalDrugBackgroundCreateharvestingTimeInput | $Enums.Month[]
+    harvestingTimeNote?: string | null
     primaryProcessing?: string | null
     secondaryProcessing?: string | null
     herbalDruglImage?: string | null
     plant: PlantNomenclatureCreateNestedOneWithoutHerbalDrugsInput
-    merdicinalProperty: MedicinalPropertiesCreateNestedOneWithoutHerbalDrugsInput
+    medicinalProperty: MedicinalPropertiesCreateNestedOneWithoutHerbalDrugsInput
     sourcingBackgrounds?: SourcingBackgroundCreateNestedOneWithoutHerbalDrugInput
   }
 
@@ -17554,11 +17566,12 @@ export namespace Prisma {
     plantPartUsed?: string | null
     officialStatus?: boolean | null
     harvestingTime?: HerbalDrugBackgroundCreateharvestingTimeInput | $Enums.Month[]
+    harvestingTimeNote?: string | null
     primaryProcessing?: string | null
     secondaryProcessing?: string | null
     herbalDruglImage?: string | null
-    plantId: number
-    merdicinalPropertyId: number
+    plantScientificName: string
+    pharmaceuticalName: string
     sourcingBackgrounds?: SourcingBackgroundUncheckedCreateNestedOneWithoutHerbalDrugInput
   }
 
@@ -17567,11 +17580,12 @@ export namespace Prisma {
     plantPartUsed?: NullableStringFieldUpdateOperationsInput | string | null
     officialStatus?: NullableBoolFieldUpdateOperationsInput | boolean | null
     harvestingTime?: HerbalDrugBackgroundUpdateharvestingTimeInput | $Enums.Month[]
+    harvestingTimeNote?: NullableStringFieldUpdateOperationsInput | string | null
     primaryProcessing?: NullableStringFieldUpdateOperationsInput | string | null
     secondaryProcessing?: NullableStringFieldUpdateOperationsInput | string | null
     herbalDruglImage?: NullableStringFieldUpdateOperationsInput | string | null
     plant?: PlantNomenclatureUpdateOneRequiredWithoutHerbalDrugsNestedInput
-    merdicinalProperty?: MedicinalPropertiesUpdateOneRequiredWithoutHerbalDrugsNestedInput
+    medicinalProperty?: MedicinalPropertiesUpdateOneRequiredWithoutHerbalDrugsNestedInput
     sourcingBackgrounds?: SourcingBackgroundUpdateOneWithoutHerbalDrugNestedInput
   }
 
@@ -17581,11 +17595,12 @@ export namespace Prisma {
     plantPartUsed?: NullableStringFieldUpdateOperationsInput | string | null
     officialStatus?: NullableBoolFieldUpdateOperationsInput | boolean | null
     harvestingTime?: HerbalDrugBackgroundUpdateharvestingTimeInput | $Enums.Month[]
+    harvestingTimeNote?: NullableStringFieldUpdateOperationsInput | string | null
     primaryProcessing?: NullableStringFieldUpdateOperationsInput | string | null
     secondaryProcessing?: NullableStringFieldUpdateOperationsInput | string | null
     herbalDruglImage?: NullableStringFieldUpdateOperationsInput | string | null
-    plantId?: IntFieldUpdateOperationsInput | number
-    merdicinalPropertyId?: IntFieldUpdateOperationsInput | number
+    plantScientificName?: StringFieldUpdateOperationsInput | string
+    pharmaceuticalName?: StringFieldUpdateOperationsInput | string
     sourcingBackgrounds?: SourcingBackgroundUncheckedUpdateOneWithoutHerbalDrugNestedInput
   }
 
@@ -17595,11 +17610,12 @@ export namespace Prisma {
     plantPartUsed?: string | null
     officialStatus?: boolean | null
     harvestingTime?: HerbalDrugBackgroundCreateharvestingTimeInput | $Enums.Month[]
+    harvestingTimeNote?: string | null
     primaryProcessing?: string | null
     secondaryProcessing?: string | null
     herbalDruglImage?: string | null
-    plantId: number
-    merdicinalPropertyId: number
+    plantScientificName: string
+    pharmaceuticalName: string
   }
 
   export type HerbalDrugBackgroundUpdateManyMutationInput = {
@@ -17607,6 +17623,7 @@ export namespace Prisma {
     plantPartUsed?: NullableStringFieldUpdateOperationsInput | string | null
     officialStatus?: NullableBoolFieldUpdateOperationsInput | boolean | null
     harvestingTime?: HerbalDrugBackgroundUpdateharvestingTimeInput | $Enums.Month[]
+    harvestingTimeNote?: NullableStringFieldUpdateOperationsInput | string | null
     primaryProcessing?: NullableStringFieldUpdateOperationsInput | string | null
     secondaryProcessing?: NullableStringFieldUpdateOperationsInput | string | null
     herbalDruglImage?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17618,11 +17635,12 @@ export namespace Prisma {
     plantPartUsed?: NullableStringFieldUpdateOperationsInput | string | null
     officialStatus?: NullableBoolFieldUpdateOperationsInput | boolean | null
     harvestingTime?: HerbalDrugBackgroundUpdateharvestingTimeInput | $Enums.Month[]
+    harvestingTimeNote?: NullableStringFieldUpdateOperationsInput | string | null
     primaryProcessing?: NullableStringFieldUpdateOperationsInput | string | null
     secondaryProcessing?: NullableStringFieldUpdateOperationsInput | string | null
     herbalDruglImage?: NullableStringFieldUpdateOperationsInput | string | null
-    plantId?: IntFieldUpdateOperationsInput | number
-    merdicinalPropertyId?: IntFieldUpdateOperationsInput | number
+    plantScientificName?: StringFieldUpdateOperationsInput | string
+    pharmaceuticalName?: StringFieldUpdateOperationsInput | string
   }
 
   export type SourcingBackgroundCreateInput = {
@@ -18371,9 +18389,9 @@ export namespace Prisma {
     isNot?: SourcingBackgroundWhereInput | null
   }
 
-  export type HerbalDrugBackgroundPlantIdMerdicinalPropertyIdCompoundUniqueInput = {
-    plantId: number
-    merdicinalPropertyId: number
+  export type HerbalDrugBackgroundPlantScientificNamePharmaceuticalNameCompoundUniqueInput = {
+    plantScientificName: string
+    pharmaceuticalName: string
   }
 
   export type HerbalDrugBackgroundCountOrderByAggregateInput = {
@@ -18382,17 +18400,16 @@ export namespace Prisma {
     plantPartUsed?: SortOrder
     officialStatus?: SortOrder
     harvestingTime?: SortOrder
+    harvestingTimeNote?: SortOrder
     primaryProcessing?: SortOrder
     secondaryProcessing?: SortOrder
     herbalDruglImage?: SortOrder
-    plantId?: SortOrder
-    merdicinalPropertyId?: SortOrder
+    plantScientificName?: SortOrder
+    pharmaceuticalName?: SortOrder
   }
 
   export type HerbalDrugBackgroundAvgOrderByAggregateInput = {
     id?: SortOrder
-    plantId?: SortOrder
-    merdicinalPropertyId?: SortOrder
   }
 
   export type HerbalDrugBackgroundMaxOrderByAggregateInput = {
@@ -18400,11 +18417,12 @@ export namespace Prisma {
     herbalDrugPinyin?: SortOrder
     plantPartUsed?: SortOrder
     officialStatus?: SortOrder
+    harvestingTimeNote?: SortOrder
     primaryProcessing?: SortOrder
     secondaryProcessing?: SortOrder
     herbalDruglImage?: SortOrder
-    plantId?: SortOrder
-    merdicinalPropertyId?: SortOrder
+    plantScientificName?: SortOrder
+    pharmaceuticalName?: SortOrder
   }
 
   export type HerbalDrugBackgroundMinOrderByAggregateInput = {
@@ -18412,17 +18430,16 @@ export namespace Prisma {
     herbalDrugPinyin?: SortOrder
     plantPartUsed?: SortOrder
     officialStatus?: SortOrder
+    harvestingTimeNote?: SortOrder
     primaryProcessing?: SortOrder
     secondaryProcessing?: SortOrder
     herbalDruglImage?: SortOrder
-    plantId?: SortOrder
-    merdicinalPropertyId?: SortOrder
+    plantScientificName?: SortOrder
+    pharmaceuticalName?: SortOrder
   }
 
   export type HerbalDrugBackgroundSumOrderByAggregateInput = {
     id?: SortOrder
-    plantId?: SortOrder
-    merdicinalPropertyId?: SortOrder
   }
 
   export type EnumHarvestingPracticeNullableListFilter<$PrismaModel = never> = {
@@ -19044,17 +19061,17 @@ export namespace Prisma {
     set: string[]
   }
 
-  export type HerbalDrugBackgroundCreateNestedManyWithoutMerdicinalPropertyInput = {
-    create?: XOR<HerbalDrugBackgroundCreateWithoutMerdicinalPropertyInput, HerbalDrugBackgroundUncheckedCreateWithoutMerdicinalPropertyInput> | HerbalDrugBackgroundCreateWithoutMerdicinalPropertyInput[] | HerbalDrugBackgroundUncheckedCreateWithoutMerdicinalPropertyInput[]
-    connectOrCreate?: HerbalDrugBackgroundCreateOrConnectWithoutMerdicinalPropertyInput | HerbalDrugBackgroundCreateOrConnectWithoutMerdicinalPropertyInput[]
-    createMany?: HerbalDrugBackgroundCreateManyMerdicinalPropertyInputEnvelope
+  export type HerbalDrugBackgroundCreateNestedManyWithoutMedicinalPropertyInput = {
+    create?: XOR<HerbalDrugBackgroundCreateWithoutMedicinalPropertyInput, HerbalDrugBackgroundUncheckedCreateWithoutMedicinalPropertyInput> | HerbalDrugBackgroundCreateWithoutMedicinalPropertyInput[] | HerbalDrugBackgroundUncheckedCreateWithoutMedicinalPropertyInput[]
+    connectOrCreate?: HerbalDrugBackgroundCreateOrConnectWithoutMedicinalPropertyInput | HerbalDrugBackgroundCreateOrConnectWithoutMedicinalPropertyInput[]
+    createMany?: HerbalDrugBackgroundCreateManyMedicinalPropertyInputEnvelope
     connect?: HerbalDrugBackgroundWhereUniqueInput | HerbalDrugBackgroundWhereUniqueInput[]
   }
 
-  export type HerbalDrugBackgroundUncheckedCreateNestedManyWithoutMerdicinalPropertyInput = {
-    create?: XOR<HerbalDrugBackgroundCreateWithoutMerdicinalPropertyInput, HerbalDrugBackgroundUncheckedCreateWithoutMerdicinalPropertyInput> | HerbalDrugBackgroundCreateWithoutMerdicinalPropertyInput[] | HerbalDrugBackgroundUncheckedCreateWithoutMerdicinalPropertyInput[]
-    connectOrCreate?: HerbalDrugBackgroundCreateOrConnectWithoutMerdicinalPropertyInput | HerbalDrugBackgroundCreateOrConnectWithoutMerdicinalPropertyInput[]
-    createMany?: HerbalDrugBackgroundCreateManyMerdicinalPropertyInputEnvelope
+  export type HerbalDrugBackgroundUncheckedCreateNestedManyWithoutMedicinalPropertyInput = {
+    create?: XOR<HerbalDrugBackgroundCreateWithoutMedicinalPropertyInput, HerbalDrugBackgroundUncheckedCreateWithoutMedicinalPropertyInput> | HerbalDrugBackgroundCreateWithoutMedicinalPropertyInput[] | HerbalDrugBackgroundUncheckedCreateWithoutMedicinalPropertyInput[]
+    connectOrCreate?: HerbalDrugBackgroundCreateOrConnectWithoutMedicinalPropertyInput | HerbalDrugBackgroundCreateOrConnectWithoutMedicinalPropertyInput[]
+    createMany?: HerbalDrugBackgroundCreateManyMedicinalPropertyInputEnvelope
     connect?: HerbalDrugBackgroundWhereUniqueInput | HerbalDrugBackgroundWhereUniqueInput[]
   }
 
@@ -19083,31 +19100,31 @@ export namespace Prisma {
     push?: string | string[]
   }
 
-  export type HerbalDrugBackgroundUpdateManyWithoutMerdicinalPropertyNestedInput = {
-    create?: XOR<HerbalDrugBackgroundCreateWithoutMerdicinalPropertyInput, HerbalDrugBackgroundUncheckedCreateWithoutMerdicinalPropertyInput> | HerbalDrugBackgroundCreateWithoutMerdicinalPropertyInput[] | HerbalDrugBackgroundUncheckedCreateWithoutMerdicinalPropertyInput[]
-    connectOrCreate?: HerbalDrugBackgroundCreateOrConnectWithoutMerdicinalPropertyInput | HerbalDrugBackgroundCreateOrConnectWithoutMerdicinalPropertyInput[]
-    upsert?: HerbalDrugBackgroundUpsertWithWhereUniqueWithoutMerdicinalPropertyInput | HerbalDrugBackgroundUpsertWithWhereUniqueWithoutMerdicinalPropertyInput[]
-    createMany?: HerbalDrugBackgroundCreateManyMerdicinalPropertyInputEnvelope
+  export type HerbalDrugBackgroundUpdateManyWithoutMedicinalPropertyNestedInput = {
+    create?: XOR<HerbalDrugBackgroundCreateWithoutMedicinalPropertyInput, HerbalDrugBackgroundUncheckedCreateWithoutMedicinalPropertyInput> | HerbalDrugBackgroundCreateWithoutMedicinalPropertyInput[] | HerbalDrugBackgroundUncheckedCreateWithoutMedicinalPropertyInput[]
+    connectOrCreate?: HerbalDrugBackgroundCreateOrConnectWithoutMedicinalPropertyInput | HerbalDrugBackgroundCreateOrConnectWithoutMedicinalPropertyInput[]
+    upsert?: HerbalDrugBackgroundUpsertWithWhereUniqueWithoutMedicinalPropertyInput | HerbalDrugBackgroundUpsertWithWhereUniqueWithoutMedicinalPropertyInput[]
+    createMany?: HerbalDrugBackgroundCreateManyMedicinalPropertyInputEnvelope
     set?: HerbalDrugBackgroundWhereUniqueInput | HerbalDrugBackgroundWhereUniqueInput[]
     disconnect?: HerbalDrugBackgroundWhereUniqueInput | HerbalDrugBackgroundWhereUniqueInput[]
     delete?: HerbalDrugBackgroundWhereUniqueInput | HerbalDrugBackgroundWhereUniqueInput[]
     connect?: HerbalDrugBackgroundWhereUniqueInput | HerbalDrugBackgroundWhereUniqueInput[]
-    update?: HerbalDrugBackgroundUpdateWithWhereUniqueWithoutMerdicinalPropertyInput | HerbalDrugBackgroundUpdateWithWhereUniqueWithoutMerdicinalPropertyInput[]
-    updateMany?: HerbalDrugBackgroundUpdateManyWithWhereWithoutMerdicinalPropertyInput | HerbalDrugBackgroundUpdateManyWithWhereWithoutMerdicinalPropertyInput[]
+    update?: HerbalDrugBackgroundUpdateWithWhereUniqueWithoutMedicinalPropertyInput | HerbalDrugBackgroundUpdateWithWhereUniqueWithoutMedicinalPropertyInput[]
+    updateMany?: HerbalDrugBackgroundUpdateManyWithWhereWithoutMedicinalPropertyInput | HerbalDrugBackgroundUpdateManyWithWhereWithoutMedicinalPropertyInput[]
     deleteMany?: HerbalDrugBackgroundScalarWhereInput | HerbalDrugBackgroundScalarWhereInput[]
   }
 
-  export type HerbalDrugBackgroundUncheckedUpdateManyWithoutMerdicinalPropertyNestedInput = {
-    create?: XOR<HerbalDrugBackgroundCreateWithoutMerdicinalPropertyInput, HerbalDrugBackgroundUncheckedCreateWithoutMerdicinalPropertyInput> | HerbalDrugBackgroundCreateWithoutMerdicinalPropertyInput[] | HerbalDrugBackgroundUncheckedCreateWithoutMerdicinalPropertyInput[]
-    connectOrCreate?: HerbalDrugBackgroundCreateOrConnectWithoutMerdicinalPropertyInput | HerbalDrugBackgroundCreateOrConnectWithoutMerdicinalPropertyInput[]
-    upsert?: HerbalDrugBackgroundUpsertWithWhereUniqueWithoutMerdicinalPropertyInput | HerbalDrugBackgroundUpsertWithWhereUniqueWithoutMerdicinalPropertyInput[]
-    createMany?: HerbalDrugBackgroundCreateManyMerdicinalPropertyInputEnvelope
+  export type HerbalDrugBackgroundUncheckedUpdateManyWithoutMedicinalPropertyNestedInput = {
+    create?: XOR<HerbalDrugBackgroundCreateWithoutMedicinalPropertyInput, HerbalDrugBackgroundUncheckedCreateWithoutMedicinalPropertyInput> | HerbalDrugBackgroundCreateWithoutMedicinalPropertyInput[] | HerbalDrugBackgroundUncheckedCreateWithoutMedicinalPropertyInput[]
+    connectOrCreate?: HerbalDrugBackgroundCreateOrConnectWithoutMedicinalPropertyInput | HerbalDrugBackgroundCreateOrConnectWithoutMedicinalPropertyInput[]
+    upsert?: HerbalDrugBackgroundUpsertWithWhereUniqueWithoutMedicinalPropertyInput | HerbalDrugBackgroundUpsertWithWhereUniqueWithoutMedicinalPropertyInput[]
+    createMany?: HerbalDrugBackgroundCreateManyMedicinalPropertyInputEnvelope
     set?: HerbalDrugBackgroundWhereUniqueInput | HerbalDrugBackgroundWhereUniqueInput[]
     disconnect?: HerbalDrugBackgroundWhereUniqueInput | HerbalDrugBackgroundWhereUniqueInput[]
     delete?: HerbalDrugBackgroundWhereUniqueInput | HerbalDrugBackgroundWhereUniqueInput[]
     connect?: HerbalDrugBackgroundWhereUniqueInput | HerbalDrugBackgroundWhereUniqueInput[]
-    update?: HerbalDrugBackgroundUpdateWithWhereUniqueWithoutMerdicinalPropertyInput | HerbalDrugBackgroundUpdateWithWhereUniqueWithoutMerdicinalPropertyInput[]
-    updateMany?: HerbalDrugBackgroundUpdateManyWithWhereWithoutMerdicinalPropertyInput | HerbalDrugBackgroundUpdateManyWithWhereWithoutMerdicinalPropertyInput[]
+    update?: HerbalDrugBackgroundUpdateWithWhereUniqueWithoutMedicinalPropertyInput | HerbalDrugBackgroundUpdateWithWhereUniqueWithoutMedicinalPropertyInput[]
+    updateMany?: HerbalDrugBackgroundUpdateManyWithWhereWithoutMedicinalPropertyInput | HerbalDrugBackgroundUpdateManyWithWhereWithoutMedicinalPropertyInput[]
     deleteMany?: HerbalDrugBackgroundScalarWhereInput | HerbalDrugBackgroundScalarWhereInput[]
   }
 
@@ -19541,10 +19558,11 @@ export namespace Prisma {
     plantPartUsed?: string | null
     officialStatus?: boolean | null
     harvestingTime?: HerbalDrugBackgroundCreateharvestingTimeInput | $Enums.Month[]
+    harvestingTimeNote?: string | null
     primaryProcessing?: string | null
     secondaryProcessing?: string | null
     herbalDruglImage?: string | null
-    merdicinalProperty: MedicinalPropertiesCreateNestedOneWithoutHerbalDrugsInput
+    medicinalProperty: MedicinalPropertiesCreateNestedOneWithoutHerbalDrugsInput
     sourcingBackgrounds?: SourcingBackgroundCreateNestedOneWithoutHerbalDrugInput
   }
 
@@ -19554,10 +19572,11 @@ export namespace Prisma {
     plantPartUsed?: string | null
     officialStatus?: boolean | null
     harvestingTime?: HerbalDrugBackgroundCreateharvestingTimeInput | $Enums.Month[]
+    harvestingTimeNote?: string | null
     primaryProcessing?: string | null
     secondaryProcessing?: string | null
     herbalDruglImage?: string | null
-    merdicinalPropertyId: number
+    pharmaceuticalName: string
     sourcingBackgrounds?: SourcingBackgroundUncheckedCreateNestedOneWithoutHerbalDrugInput
   }
 
@@ -19776,11 +19795,12 @@ export namespace Prisma {
     plantPartUsed?: StringNullableFilter<"HerbalDrugBackground"> | string | null
     officialStatus?: BoolNullableFilter<"HerbalDrugBackground"> | boolean | null
     harvestingTime?: EnumMonthNullableListFilter<"HerbalDrugBackground">
+    harvestingTimeNote?: StringNullableFilter<"HerbalDrugBackground"> | string | null
     primaryProcessing?: StringNullableFilter<"HerbalDrugBackground"> | string | null
     secondaryProcessing?: StringNullableFilter<"HerbalDrugBackground"> | string | null
     herbalDruglImage?: StringNullableFilter<"HerbalDrugBackground"> | string | null
-    plantId?: IntFilter<"HerbalDrugBackground"> | number
-    merdicinalPropertyId?: IntFilter<"HerbalDrugBackground"> | number
+    plantScientificName?: StringFilter<"HerbalDrugBackground"> | string
+    pharmaceuticalName?: StringFilter<"HerbalDrugBackground"> | string
   }
 
   export type EthnobotanyUpsertWithoutPlantInput = {
@@ -20215,11 +20235,12 @@ export namespace Prisma {
     data: XOR<PlantNomenclatureUpdateManyMutationInput, PlantNomenclatureUncheckedUpdateManyWithoutBotanicalGardenListInput>
   }
 
-  export type HerbalDrugBackgroundCreateWithoutMerdicinalPropertyInput = {
+  export type HerbalDrugBackgroundCreateWithoutMedicinalPropertyInput = {
     herbalDrugPinyin: string
     plantPartUsed?: string | null
     officialStatus?: boolean | null
     harvestingTime?: HerbalDrugBackgroundCreateharvestingTimeInput | $Enums.Month[]
+    harvestingTimeNote?: string | null
     primaryProcessing?: string | null
     secondaryProcessing?: string | null
     herbalDruglImage?: string | null
@@ -20227,43 +20248,44 @@ export namespace Prisma {
     sourcingBackgrounds?: SourcingBackgroundCreateNestedOneWithoutHerbalDrugInput
   }
 
-  export type HerbalDrugBackgroundUncheckedCreateWithoutMerdicinalPropertyInput = {
+  export type HerbalDrugBackgroundUncheckedCreateWithoutMedicinalPropertyInput = {
     id?: number
     herbalDrugPinyin: string
     plantPartUsed?: string | null
     officialStatus?: boolean | null
     harvestingTime?: HerbalDrugBackgroundCreateharvestingTimeInput | $Enums.Month[]
+    harvestingTimeNote?: string | null
     primaryProcessing?: string | null
     secondaryProcessing?: string | null
     herbalDruglImage?: string | null
-    plantId: number
+    plantScientificName: string
     sourcingBackgrounds?: SourcingBackgroundUncheckedCreateNestedOneWithoutHerbalDrugInput
   }
 
-  export type HerbalDrugBackgroundCreateOrConnectWithoutMerdicinalPropertyInput = {
+  export type HerbalDrugBackgroundCreateOrConnectWithoutMedicinalPropertyInput = {
     where: HerbalDrugBackgroundWhereUniqueInput
-    create: XOR<HerbalDrugBackgroundCreateWithoutMerdicinalPropertyInput, HerbalDrugBackgroundUncheckedCreateWithoutMerdicinalPropertyInput>
+    create: XOR<HerbalDrugBackgroundCreateWithoutMedicinalPropertyInput, HerbalDrugBackgroundUncheckedCreateWithoutMedicinalPropertyInput>
   }
 
-  export type HerbalDrugBackgroundCreateManyMerdicinalPropertyInputEnvelope = {
-    data: HerbalDrugBackgroundCreateManyMerdicinalPropertyInput | HerbalDrugBackgroundCreateManyMerdicinalPropertyInput[]
+  export type HerbalDrugBackgroundCreateManyMedicinalPropertyInputEnvelope = {
+    data: HerbalDrugBackgroundCreateManyMedicinalPropertyInput | HerbalDrugBackgroundCreateManyMedicinalPropertyInput[]
     skipDuplicates?: boolean
   }
 
-  export type HerbalDrugBackgroundUpsertWithWhereUniqueWithoutMerdicinalPropertyInput = {
+  export type HerbalDrugBackgroundUpsertWithWhereUniqueWithoutMedicinalPropertyInput = {
     where: HerbalDrugBackgroundWhereUniqueInput
-    update: XOR<HerbalDrugBackgroundUpdateWithoutMerdicinalPropertyInput, HerbalDrugBackgroundUncheckedUpdateWithoutMerdicinalPropertyInput>
-    create: XOR<HerbalDrugBackgroundCreateWithoutMerdicinalPropertyInput, HerbalDrugBackgroundUncheckedCreateWithoutMerdicinalPropertyInput>
+    update: XOR<HerbalDrugBackgroundUpdateWithoutMedicinalPropertyInput, HerbalDrugBackgroundUncheckedUpdateWithoutMedicinalPropertyInput>
+    create: XOR<HerbalDrugBackgroundCreateWithoutMedicinalPropertyInput, HerbalDrugBackgroundUncheckedCreateWithoutMedicinalPropertyInput>
   }
 
-  export type HerbalDrugBackgroundUpdateWithWhereUniqueWithoutMerdicinalPropertyInput = {
+  export type HerbalDrugBackgroundUpdateWithWhereUniqueWithoutMedicinalPropertyInput = {
     where: HerbalDrugBackgroundWhereUniqueInput
-    data: XOR<HerbalDrugBackgroundUpdateWithoutMerdicinalPropertyInput, HerbalDrugBackgroundUncheckedUpdateWithoutMerdicinalPropertyInput>
+    data: XOR<HerbalDrugBackgroundUpdateWithoutMedicinalPropertyInput, HerbalDrugBackgroundUncheckedUpdateWithoutMedicinalPropertyInput>
   }
 
-  export type HerbalDrugBackgroundUpdateManyWithWhereWithoutMerdicinalPropertyInput = {
+  export type HerbalDrugBackgroundUpdateManyWithWhereWithoutMedicinalPropertyInput = {
     where: HerbalDrugBackgroundScalarWhereInput
-    data: XOR<HerbalDrugBackgroundUpdateManyMutationInput, HerbalDrugBackgroundUncheckedUpdateManyWithoutMerdicinalPropertyInput>
+    data: XOR<HerbalDrugBackgroundUpdateManyMutationInput, HerbalDrugBackgroundUncheckedUpdateManyWithoutMedicinalPropertyInput>
   }
 
   export type PlantNomenclatureCreateWithoutHerbalDrugsInput = {
@@ -20481,11 +20503,12 @@ export namespace Prisma {
     plantPartUsed?: string | null
     officialStatus?: boolean | null
     harvestingTime?: HerbalDrugBackgroundCreateharvestingTimeInput | $Enums.Month[]
+    harvestingTimeNote?: string | null
     primaryProcessing?: string | null
     secondaryProcessing?: string | null
     herbalDruglImage?: string | null
     plant: PlantNomenclatureCreateNestedOneWithoutHerbalDrugsInput
-    merdicinalProperty: MedicinalPropertiesCreateNestedOneWithoutHerbalDrugsInput
+    medicinalProperty: MedicinalPropertiesCreateNestedOneWithoutHerbalDrugsInput
   }
 
   export type HerbalDrugBackgroundUncheckedCreateWithoutSourcingBackgroundsInput = {
@@ -20494,11 +20517,12 @@ export namespace Prisma {
     plantPartUsed?: string | null
     officialStatus?: boolean | null
     harvestingTime?: HerbalDrugBackgroundCreateharvestingTimeInput | $Enums.Month[]
+    harvestingTimeNote?: string | null
     primaryProcessing?: string | null
     secondaryProcessing?: string | null
     herbalDruglImage?: string | null
-    plantId: number
-    merdicinalPropertyId: number
+    plantScientificName: string
+    pharmaceuticalName: string
   }
 
   export type HerbalDrugBackgroundCreateOrConnectWithoutSourcingBackgroundsInput = {
@@ -20522,11 +20546,12 @@ export namespace Prisma {
     plantPartUsed?: NullableStringFieldUpdateOperationsInput | string | null
     officialStatus?: NullableBoolFieldUpdateOperationsInput | boolean | null
     harvestingTime?: HerbalDrugBackgroundUpdateharvestingTimeInput | $Enums.Month[]
+    harvestingTimeNote?: NullableStringFieldUpdateOperationsInput | string | null
     primaryProcessing?: NullableStringFieldUpdateOperationsInput | string | null
     secondaryProcessing?: NullableStringFieldUpdateOperationsInput | string | null
     herbalDruglImage?: NullableStringFieldUpdateOperationsInput | string | null
     plant?: PlantNomenclatureUpdateOneRequiredWithoutHerbalDrugsNestedInput
-    merdicinalProperty?: MedicinalPropertiesUpdateOneRequiredWithoutHerbalDrugsNestedInput
+    medicinalProperty?: MedicinalPropertiesUpdateOneRequiredWithoutHerbalDrugsNestedInput
   }
 
   export type HerbalDrugBackgroundUncheckedUpdateWithoutSourcingBackgroundsInput = {
@@ -20535,11 +20560,12 @@ export namespace Prisma {
     plantPartUsed?: NullableStringFieldUpdateOperationsInput | string | null
     officialStatus?: NullableBoolFieldUpdateOperationsInput | boolean | null
     harvestingTime?: HerbalDrugBackgroundUpdateharvestingTimeInput | $Enums.Month[]
+    harvestingTimeNote?: NullableStringFieldUpdateOperationsInput | string | null
     primaryProcessing?: NullableStringFieldUpdateOperationsInput | string | null
     secondaryProcessing?: NullableStringFieldUpdateOperationsInput | string | null
     herbalDruglImage?: NullableStringFieldUpdateOperationsInput | string | null
-    plantId?: IntFieldUpdateOperationsInput | number
-    merdicinalPropertyId?: IntFieldUpdateOperationsInput | number
+    plantScientificName?: StringFieldUpdateOperationsInput | string
+    pharmaceuticalName?: StringFieldUpdateOperationsInput | string
   }
 
   export type PlantNomenclatureCreateWithoutEthnobotaniesInput = {
@@ -20631,10 +20657,11 @@ export namespace Prisma {
     plantPartUsed?: string | null
     officialStatus?: boolean | null
     harvestingTime?: HerbalDrugBackgroundCreateharvestingTimeInput | $Enums.Month[]
+    harvestingTimeNote?: string | null
     primaryProcessing?: string | null
     secondaryProcessing?: string | null
     herbalDruglImage?: string | null
-    merdicinalPropertyId: number
+    pharmaceuticalName: string
   }
 
   export type BotanicalGardenUpdateWithoutPlantsInput = {
@@ -20711,10 +20738,11 @@ export namespace Prisma {
     plantPartUsed?: NullableStringFieldUpdateOperationsInput | string | null
     officialStatus?: NullableBoolFieldUpdateOperationsInput | boolean | null
     harvestingTime?: HerbalDrugBackgroundUpdateharvestingTimeInput | $Enums.Month[]
+    harvestingTimeNote?: NullableStringFieldUpdateOperationsInput | string | null
     primaryProcessing?: NullableStringFieldUpdateOperationsInput | string | null
     secondaryProcessing?: NullableStringFieldUpdateOperationsInput | string | null
     herbalDruglImage?: NullableStringFieldUpdateOperationsInput | string | null
-    merdicinalProperty?: MedicinalPropertiesUpdateOneRequiredWithoutHerbalDrugsNestedInput
+    medicinalProperty?: MedicinalPropertiesUpdateOneRequiredWithoutHerbalDrugsNestedInput
     sourcingBackgrounds?: SourcingBackgroundUpdateOneWithoutHerbalDrugNestedInput
   }
 
@@ -20724,10 +20752,11 @@ export namespace Prisma {
     plantPartUsed?: NullableStringFieldUpdateOperationsInput | string | null
     officialStatus?: NullableBoolFieldUpdateOperationsInput | boolean | null
     harvestingTime?: HerbalDrugBackgroundUpdateharvestingTimeInput | $Enums.Month[]
+    harvestingTimeNote?: NullableStringFieldUpdateOperationsInput | string | null
     primaryProcessing?: NullableStringFieldUpdateOperationsInput | string | null
     secondaryProcessing?: NullableStringFieldUpdateOperationsInput | string | null
     herbalDruglImage?: NullableStringFieldUpdateOperationsInput | string | null
-    merdicinalPropertyId?: IntFieldUpdateOperationsInput | number
+    pharmaceuticalName?: StringFieldUpdateOperationsInput | string
     sourcingBackgrounds?: SourcingBackgroundUncheckedUpdateOneWithoutHerbalDrugNestedInput
   }
 
@@ -20737,10 +20766,11 @@ export namespace Prisma {
     plantPartUsed?: NullableStringFieldUpdateOperationsInput | string | null
     officialStatus?: NullableBoolFieldUpdateOperationsInput | boolean | null
     harvestingTime?: HerbalDrugBackgroundUpdateharvestingTimeInput | $Enums.Month[]
+    harvestingTimeNote?: NullableStringFieldUpdateOperationsInput | string | null
     primaryProcessing?: NullableStringFieldUpdateOperationsInput | string | null
     secondaryProcessing?: NullableStringFieldUpdateOperationsInput | string | null
     herbalDruglImage?: NullableStringFieldUpdateOperationsInput | string | null
-    merdicinalPropertyId?: IntFieldUpdateOperationsInput | number
+    pharmaceuticalName?: StringFieldUpdateOperationsInput | string
   }
 
   export type PlantNomenclatureCreateManyTaxonomyInput = {
@@ -20874,23 +20904,25 @@ export namespace Prisma {
     links?: PlantNomenclatureUpdatelinksInput | string[]
   }
 
-  export type HerbalDrugBackgroundCreateManyMerdicinalPropertyInput = {
+  export type HerbalDrugBackgroundCreateManyMedicinalPropertyInput = {
     id?: number
     herbalDrugPinyin: string
     plantPartUsed?: string | null
     officialStatus?: boolean | null
     harvestingTime?: HerbalDrugBackgroundCreateharvestingTimeInput | $Enums.Month[]
+    harvestingTimeNote?: string | null
     primaryProcessing?: string | null
     secondaryProcessing?: string | null
     herbalDruglImage?: string | null
-    plantId: number
+    plantScientificName: string
   }
 
-  export type HerbalDrugBackgroundUpdateWithoutMerdicinalPropertyInput = {
+  export type HerbalDrugBackgroundUpdateWithoutMedicinalPropertyInput = {
     herbalDrugPinyin?: StringFieldUpdateOperationsInput | string
     plantPartUsed?: NullableStringFieldUpdateOperationsInput | string | null
     officialStatus?: NullableBoolFieldUpdateOperationsInput | boolean | null
     harvestingTime?: HerbalDrugBackgroundUpdateharvestingTimeInput | $Enums.Month[]
+    harvestingTimeNote?: NullableStringFieldUpdateOperationsInput | string | null
     primaryProcessing?: NullableStringFieldUpdateOperationsInput | string | null
     secondaryProcessing?: NullableStringFieldUpdateOperationsInput | string | null
     herbalDruglImage?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20898,29 +20930,31 @@ export namespace Prisma {
     sourcingBackgrounds?: SourcingBackgroundUpdateOneWithoutHerbalDrugNestedInput
   }
 
-  export type HerbalDrugBackgroundUncheckedUpdateWithoutMerdicinalPropertyInput = {
+  export type HerbalDrugBackgroundUncheckedUpdateWithoutMedicinalPropertyInput = {
     id?: IntFieldUpdateOperationsInput | number
     herbalDrugPinyin?: StringFieldUpdateOperationsInput | string
     plantPartUsed?: NullableStringFieldUpdateOperationsInput | string | null
     officialStatus?: NullableBoolFieldUpdateOperationsInput | boolean | null
     harvestingTime?: HerbalDrugBackgroundUpdateharvestingTimeInput | $Enums.Month[]
+    harvestingTimeNote?: NullableStringFieldUpdateOperationsInput | string | null
     primaryProcessing?: NullableStringFieldUpdateOperationsInput | string | null
     secondaryProcessing?: NullableStringFieldUpdateOperationsInput | string | null
     herbalDruglImage?: NullableStringFieldUpdateOperationsInput | string | null
-    plantId?: IntFieldUpdateOperationsInput | number
+    plantScientificName?: StringFieldUpdateOperationsInput | string
     sourcingBackgrounds?: SourcingBackgroundUncheckedUpdateOneWithoutHerbalDrugNestedInput
   }
 
-  export type HerbalDrugBackgroundUncheckedUpdateManyWithoutMerdicinalPropertyInput = {
+  export type HerbalDrugBackgroundUncheckedUpdateManyWithoutMedicinalPropertyInput = {
     id?: IntFieldUpdateOperationsInput | number
     herbalDrugPinyin?: StringFieldUpdateOperationsInput | string
     plantPartUsed?: NullableStringFieldUpdateOperationsInput | string | null
     officialStatus?: NullableBoolFieldUpdateOperationsInput | boolean | null
     harvestingTime?: HerbalDrugBackgroundUpdateharvestingTimeInput | $Enums.Month[]
+    harvestingTimeNote?: NullableStringFieldUpdateOperationsInput | string | null
     primaryProcessing?: NullableStringFieldUpdateOperationsInput | string | null
     secondaryProcessing?: NullableStringFieldUpdateOperationsInput | string | null
     herbalDruglImage?: NullableStringFieldUpdateOperationsInput | string | null
-    plantId?: IntFieldUpdateOperationsInput | number
+    plantScientificName?: StringFieldUpdateOperationsInput | string
   }
 
 

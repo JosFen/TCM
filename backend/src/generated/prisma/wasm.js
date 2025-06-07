@@ -210,11 +210,12 @@ exports.Prisma.HerbalDrugBackgroundScalarFieldEnum = {
   plantPartUsed: 'plantPartUsed',
   officialStatus: 'officialStatus',
   harvestingTime: 'harvestingTime',
+  harvestingTimeNote: 'harvestingTimeNote',
   primaryProcessing: 'primaryProcessing',
   secondaryProcessing: 'secondaryProcessing',
   herbalDruglImage: 'herbalDruglImage',
-  plantId: 'plantId',
-  merdicinalPropertyId: 'merdicinalPropertyId'
+  plantScientificName: 'plantScientificName',
+  pharmaceuticalName: 'pharmaceuticalName'
 };
 
 exports.Prisma.SourcingBackgroundScalarFieldEnum = {
