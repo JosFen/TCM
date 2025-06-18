@@ -1,18 +1,16 @@
 services:
-  frontend:
-    container_name: frontend
-    build:
-      context: ./frontend
-      dockerfile: frontend.dockerfile
+  db:
+    container_name: tcm
+    image: postgres:14
+    restart: always
     ports:
-      - "5173:5173"
+      - "5432:5432"
     networks:
       - tcm_net
+    env_file:
+      - ./backend/.env
     volumes:
-      - ./frontend:/app
-      - /app/node_modules
-    depends_on:
-      - backend
+      - pgdata:/data/tcm
 
   backend:
     container_name: backend
@@ -30,20 +28,25 @@ services:
       - /app/node_modules
     depends_on:
       - db
+    environment:
+      - NODE_ENV=development
+    # command: sh -c "npx prisma generate && nodemon src/app.ts"
 
-  db:
-    container_name: tcm
-    image: postgres:14
-    restart: always
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: frontend.dockerfile
     ports:
-      - "5432:5432"
+      - "5173:5173"
     networks:
       - tcm_net
-    env_file:
-      - ./backend/.env
     volumes:
-      - pgdata:/data/tcm
-  
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+
   studio:
     container_name: prisma_studio
     build:

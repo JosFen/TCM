@@ -1,16 +1,32 @@
-# FROM node:22
+# FROM node:22-alpine
+
 # WORKDIR /app
-# COPY package*.json .
+
+# # 1. Install dependencies (separate layer for caching)
+# COPY package*.json ./
 # RUN npm install
-# COPY prisma ./prisma
+
+# # 2. Copy Prisma schema and generate client
+# COPY prisma ./prisma/
 # RUN npx prisma generate
+
+# # 3. Copy all source files
 # COPY . .
-# EXPOSE 3000
+
+# # 4. Install ts-node and typescript globally (for better performance)
 # RUN npm install -g nodemon ts-node
-# CMD ["nodemon", "src/index.ts"]
+
+# # 5. Health check
+# HEALTHCHECK --interval=30s --timeout=3s \
+#   CMD node -e "require('@prisma/client').PrismaClient" || exit 1
+
+# EXPOSE 3000
+
+# # Use nodemon for development with ts-node
+# CMD ["nodemon", "src/app.ts"]
+
 
 FROM node:22
-
 WORKDIR /app
 
 # Install dependencies
@@ -31,4 +47,4 @@ RUN npm install -g nodemon ts-node
 EXPOSE 3000
 
 # Run the app
-CMD ["nodemon", "src/index.ts"]
+CMD ["nodemon", "src/app.ts"]

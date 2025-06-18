@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client"
+import { PrismaClient } from "./generated/prisma";
 import "dotenv/config"
 
 // Extend the global object with PrismaClient

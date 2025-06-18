@@ -278,7 +278,15 @@ async function processHerbalDrugBackground(row: any, index: number) {
       }
     });
 
-    // import/update harvestingPracticeNote for some edge cases:
+    return herbalDrugBackground;
+  } catch (error) {
+    console.error(`Error processing herbal drug background for row ${index}:`, error);
+    return null;
+  }
+}
+
+async function handleEdgeCases() {
+   // import/update harvestingPracticeNote for some edge cases:
     const updates = [
       {
         where: {
@@ -321,13 +329,7 @@ async function processHerbalDrugBackground(row: any, index: number) {
     for (const update of updates) {
       await prisma.sourcingBackground.updateMany(update);
     }
-
-
-    return herbalDrugBackground;
-  } catch (error) {
-    console.error(`Error processing herbal drug background for row ${index}:`, error);
-    return null;
-  }
+    console.log("Edge cases handled successfully");
 }
 
 async function main() {
@@ -372,16 +374,13 @@ async function main() {
             processHerbalDrugBackground(
               row,
               i + idx
-              // , 
-              // plants[idx], 
-              // medicinalProperties[idx]
             )
           )
         );
 
         successCount += herbalDrugBackgrounds.filter(r => r !== null).length;
       }
-
+      await handleEdgeCases();
       console.log(`Seed complete. Successfully processed ${successCount} records`);
     });
 }

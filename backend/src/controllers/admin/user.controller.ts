@@ -8,7 +8,9 @@ export const UserController = {
   create: async (req: Request, res: Response) => {
     try {
       const user = await UserService.create(req.body);
-      res.status(201).json(user);
+      // Exclude password from the response
+      const { password, ...userWithoutPassword } = user;
+      res.status(201).json(userWithoutPassword);
     } catch (error) {
       res.status(400).json({ error: 'Invalid data' });
     }
@@ -30,7 +32,7 @@ export const UserController = {
   update: async (req: Request, res: Response) => {
     try {
       const user = await UserService.update(req.params.id, req.body);
-      res.json(user);
+      res.status(200).send(`Username "${user.username}" has been updated successfully`);
     } catch (error) {
       res.status(404).json({ error: 'User not found' });
     }
