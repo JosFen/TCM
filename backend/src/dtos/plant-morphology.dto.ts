@@ -1,27 +1,28 @@
 import { z } from 'zod';
-import { Lifecycle, Month } from '../prismadb';
-// import { Lifecycle, Month } from '@prisma/client';
+// import { Lifecycle, Month } from '../prismadb';  // string for now
 
-// enum Month {
-//   JANUARY,
-//   FEBRUARY,
-//   MARCH,
-//   APRIL,
-//   MAY,
-//   JUNE,
-//   JULY,
-//   AUGUST,
-//   SEPTEMBER,
-//   OCTOBER,
-//   NOVEMBER,
-//   DECEMBER,
-// }
+// Enums for lifecycle and month - redefined here:
+export enum Month {
+  JANUARY = 'JANUARY',
+  FEBRUARY = 'FEBRUARY',
+  MARCH = 'MARCH',
+  APRIL = 'APRIL',
+  MAY = 'MAY',
+  JUNE = 'JUNE',
+  JULY = 'JULY',
+  AUGUST = 'AUGUST',
+  SEPTEMBER = 'SEPTEMBER',
+  OCTOBER = 'OCTOBER',
+  NOVEMBER = 'NOVEMBER',
+  DECEMBER = 'DECEMBER',
+}
 
-// enum Lifecycle {
-//   ANNUAL,
-//   BIENNIAL,
-//   PERENNIAL,
-// }
+export enum Lifecycle {
+  ANNUAL = 'ANNUAL',
+  BIENNIAL = 'BIENNIAL',
+  PERENNIAL = 'PERENNIAL',
+}
+
 
 export const LifecycleEnum = z.nativeEnum(Lifecycle);
 export const MonthEnum = z.nativeEnum(Month);
@@ -45,8 +46,8 @@ export const UpdatePlantMorphologyDto = z.object({
   lifecycle: z.array(LifecycleEnum).optional(),
   isTerrestrial: z.boolean().optional(),
   growthHabit: z.string().optional(),
-  isDeciduous: z.boolean().optional(),
-  isDeciduousNote: z.string().optional(),
+  isDeciduous: z.boolean().optional() || z.null(),
+  isDeciduousNote: z.string().optional() || z.null(),
   reproductiveSystem: z.string().optional(),
   floweringPeriod: z.array(MonthEnum).optional(),
   fruitingPeriod: z.array(MonthEnum).optional(),
