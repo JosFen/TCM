@@ -5,6 +5,8 @@ import plantTaxonomyRoutes from './plant-taxonomy.routes';
 import plantNomenclatureRoutes from './plant-nomenclature.routes';
 import plantSynonymRoutes from './plant-synonym.routes';
 import plantMorphologyRoutes from './plant-morphology.routes';
+import plantEcologyDistributionRoutes from './plant-ecology-distribution.routes';
+import plantConservationRoutes from './plant-conservation.routes';
 
 const router = Router();
 
@@ -16,5 +18,7 @@ router.use('/api/v1/plant-taxonomies', plantTaxonomyRoutes);
 router.use('/api/v1/plant-nomenclatures', plantNomenclatureRoutes);
 router.use('/api/v1/plant-synonyms', plantSynonymRoutes);
 router.use('/api/v1/plant-morphologies', plantMorphologyRoutes);
+router.use('/api/v1/plant-ecology-distributions', plantEcologyDistributionRoutes);
+router.use('/api/v1/plant-conservations', plantConservationRoutes);
 
 export default router;

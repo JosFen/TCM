@@ -47,4 +47,4 @@ RUN npm install -g nodemon ts-node
 EXPOSE 3000
 
 # Run the app
-CMD ["nodemon", "src/app.ts"]
+CMD ["nodemon", "src/app.ts"] 
