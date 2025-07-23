@@ -1,6 +1,7 @@
 import { PrismaClient } from '../src/generated/prisma';
 import fs from 'fs';
 import csv from 'csv-parser';
+import bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient();
 
@@ -286,50 +287,79 @@ async function processHerbalDrugBackground(row: any, index: number) {
 }
 
 async function handleEdgeCases() {
-   // import/update harvestingPracticeNote for some edge cases:
-    const updates = [
-      {
-        where: {
-          herbalDrug: {
-            plantScientificName: {
-              in: ["Scrophularia ningpoensis Hemsl.", "Scutellaria baicalensis Georgi"]
-            }
+  // import/update harvestingPracticeNote for some edge cases:
+  const updates = [
+    {
+      where: {
+        herbalDrug: {
+          plantScientificName: {
+            in: ["Scrophularia ningpoensis Hemsl.", "Scutellaria baicalensis Georgi"]
           }
-        },
-        data: {
-          harvestingPracticeNote: "Cultivated (wild-harvested?)"
         }
       },
-      {
-        where: {
-          herbalDrug: {
-            plantScientificName: {
-              in: ["Gardenia jasminoides J. Ellis"]
-            }
-          }
-        },
-        data: {
-          harvestingPracticeNote: "Cultivated, wildharvested (?)"
-        }
-      },
-      {
-        where: {
-          herbalDrug: {
-            plantScientificName: {
-              in: ["Dendrobium nobile Lindl."]
-            }
-          }
-        },
-        data: {
-          harvestingPracticeNote: "Fostered', wild-harvested"
-        }
+      data: {
+        harvestingPracticeNote: "Cultivated (wild-harvested?)"
       }
-    ];
-
-    for (const update of updates) {
-      await prisma.sourcingBackground.updateMany(update);
+    },
+    {
+      where: {
+        herbalDrug: {
+          plantScientificName: {
+            in: ["Gardenia jasminoides J. Ellis"]
+          }
+        }
+      },
+      data: {
+        harvestingPracticeNote: "Cultivated, wildharvested (?)"
+      }
+    },
+    {
+      where: {
+        herbalDrug: {
+          plantScientificName: {
+            in: ["Dendrobium nobile Lindl."]
+          }
+        }
+      },
+      data: {
+        harvestingPracticeNote: "Fostered', wild-harvested"
+      }
     }
-    console.log("Edge cases handled successfully");
+  ];
+
+  for (const update of updates) {
+    await prisma.sourcingBackground.updateMany(update);
+  }
+  console.log("Edge cases handled successfully");
+}
+
+async function seedUsers() {
+  await prisma.user.deleteMany();
+
+  await prisma.user.createMany({
+    data: [
+      {
+        username: 'admin',
+        password: await bcrypt.hash('adminpassword', 10),
+        email: 'admin@example.com',
+        role: 'ADMIN'
+      },
+      {
+        username: 'chris',
+        password: await bcrypt.hash('chrispassword', 10),
+        email: 'chris@example.com',
+        role: 'ADMIN'
+      },
+      {
+        username: 'generalUser',
+        password: await bcrypt.hash('generalUser123', 10),
+        email: 'generalUser@example.com',
+        role: 'USER'
+      }
+    ]
+  });
+
+  console.log("Users seeded successfully");
 }
 
 async function main() {
@@ -341,6 +371,7 @@ async function main() {
   sourcing_background 
   RESTART IDENTITY CASCADE;
 `);
+  await seedUsers();
 
   const results: any[] = [];
 

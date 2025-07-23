@@ -1,7 +1,6 @@
-// src/controllers/user.controller.ts
+// src/controllers/admin/user.controller.ts
 import { Request, Response } from 'express';
 import { UserService } from '../../services/admin/user.service';
-import { CreateUserDto, UpdateUserDto } from '../../dtos/user.dto';
 
 export const UserController = {
   // POST /users

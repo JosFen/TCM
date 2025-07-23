@@ -10,14 +10,15 @@ datasource db {
 
 // for initial setup testing:
 model User {
-  id        String   @id @default(uuid())
-  username  String   @unique
-  password  String
-  email     String?  @unique
-  isActive  Boolean  @default(true)
-  role      String   @default("ADMIN")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String   @id @default(uuid())
+  username     String   @unique
+  password     String
+  email        String?  @unique
+  isActive     Boolean  @default(true)
+  role         String   @default("USER")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  refreshToken String?
 
   @@map("users")
 }
@@ -287,7 +288,7 @@ model HerbalDrugBackground {
   herbalDrugPinyin    String   @map("pinyin")
   // plantPartUsed          PlantPartUsed[] @map("parts_used")
   plantPartUsed       String?  @map("plant_parts_used") // has remarks in (), just make it String type, later we could standardize 
-  officialStatus      Boolean? @map("official_status")  //? row: Pharmacopoeia or Substitute Species?
+  officialStatus      Boolean? @map("official_status") //? row: Pharmacopoeia or Substitute Species?
   harvestingTime      Month[]  @map("harvesting_time")
   harvestingTimeNote  String?  @map("harvesting_time_note") // record the original data first
   primaryProcessing   String?  @map("primary_processing")

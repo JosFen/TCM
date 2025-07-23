@@ -10,14 +10,15 @@ datasource db {
 
 // for initial setup testing:
 model User {
-  id        String   @id @default(uuid())
-  username  String   @unique
-  password  String
-  email     String?  @unique
-  isActive  Boolean  @default(true)
-  role      String   @default("ADMIN")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String   @id @default(uuid())
+  username     String   @unique
+  password     String
+  email        String?  @unique
+  isActive     Boolean  @default(true)
+  role         String   @default("USER")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  refreshToken String?
 
   @@map("users")
 }

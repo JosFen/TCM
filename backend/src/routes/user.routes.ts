@@ -1,11 +1,11 @@
 import { Router } from 'express';
 import { UserController } from '../controllers/admin/user.controller';
-// import { userAuth } from '../middleware/userAuth';
+// import { auth } from '../middleware/auth';
 
 const router = Router();
 
 // Apply auth middleware to all user routes
-// router.use(userAuth);
+// router.use(auth);
 
 // Admin User CRUD Routes
 router.post('/register', UserController.create);
