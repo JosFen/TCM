@@ -31,7 +31,7 @@ function App() {
     <>
     <div className="flex justify-center items-center h-screen">
       <form onSubmit={saveUser} className="flex flex-col justify-center bg-gray-50 shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <div className="text-center text-lg font-semibold text-gray-700">Admin Login/Register</div>
+        <div className="text-center text-lg font-semibold text-gray-700">TCM Admin Login</div>
         <input
           type="text"
           onChange={(e) => setUsername(e.target.value)}
