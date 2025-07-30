@@ -14,7 +14,7 @@ COPY . .
 RUN npx prisma generate
 
 # Expose the app port
-EXPOSE 3000
+EXPOSE 4000
 
 # Run the app
 # CMD ["nodemon", "src/app.ts"] 
