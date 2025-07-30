@@ -10,7 +10,7 @@ export const config = {
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const proxy = createProxyMiddleware({
-    target: 'http://localhost:4000', // Express backend
+    target: 'http://backend:4000', // Express backend
     changeOrigin: true,
     pathRewrite: { '^/api/proxy': '' },
   })
