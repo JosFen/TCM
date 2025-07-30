@@ -1,4 +1,5 @@
 import { z } from 'zod';
+// import { IsOptional, IsString } from 'class-validator';
 
 export const CreatePlantTaxonomyDto = z.object({
   class: z.string().optional(),
@@ -13,3 +14,9 @@ export const UpdatePlantTaxonomyDto = z.object({
   vascular: z.boolean().optional(),
 });
 export type UpdatePlantTaxonomyDto = z.infer<typeof UpdatePlantTaxonomyDto>;
+
+// export class PlantTaxonomySuggestionQueryDto {
+//   @IsOptional()
+//   @IsString()
+//   q?: string;
+// }
