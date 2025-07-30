@@ -33,7 +33,7 @@ export default function LoginPage() {
 
   return (
     <div className="max-w-md mx-auto p-8">
-      <h1 className="text-xl font-bold mb-4">Login</h1>
+      <h1 className="text-xl font-bold mb-4 text-center">TCM Login</h1>
       <form onSubmit={handleLogin} className="flex flex-col gap-4">
         <input
           type="text"
@@ -51,7 +51,7 @@ export default function LoginPage() {
           required
           className='border p-2 rounded'
         />
-        <button className="bg-blue-600 text-white py-2 rounded" type="submit">
+        <button className="bg-teal-400 hover:bg-teal-500 text-white py-2 rounded" type="submit">
           Login
         </button>
       </form>

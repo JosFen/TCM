@@ -24,6 +24,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             {user?.role === 'ADMIN' && (
               <Link href="/dashboard/users">Users</Link>
             )}
+            
+            <Link href="/dashboard/plant-taxonomy">Plant Taxonomy</Link>
+            
           </nav>
         </div>
         <hr className="my-4" />
