@@ -20,13 +20,23 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div>
           <h2 className="font-bold mb-4">Admin Menu</h2>
           <nav className="flex flex-col space-y-2">
-            <Link href="/dashboard">Dashboard</Link>
+            <Link href="/dashboard" className=' hover:text-blue-700 hover:underline'>Dashboard</Link>
             {user?.role === 'ADMIN' && (
-              <Link href="/dashboard/users">Users</Link>
+              <Link href="/dashboard/users" className=' hover:text-blue-700 hover:underline'>Users</Link>
             )}
-            
-            <Link href="/dashboard/plant-taxonomy">Plant Taxonomy</Link>
-            
+
+            <Link href="/dashboard/plant-taxonomy" className=' hover:text-blue-700 hover:underline'>Plant Taxonomy</Link>
+            <Link href="/dashboard/plant-nomenclature" className=' hover:text-blue-700 hover:underline'>Plant Nomenclature</Link>
+            <Link href="/dashboard/plant-synonym" className=' hover:text-blue-700 hover:underline'>Plant Synonym</Link>
+            <Link href="/dashboard/plant-morphology" className=' hover:text-blue-700 hover:underline'>Plant Morphology</Link>
+            <Link href="/dashboard/plant-ecology-distribution" className=' hover:text-blue-700 hover:underline'>Plant Ecology Distribution</Link>
+            <Link href="/dashboard/botanical-garden" className=' hover:text-blue-700 hover:underline'>Botanical Garden</Link>
+            <Link href="/dashboard/medicinal-properties" className=' hover:text-blue-700 hover:underline'>Medicinal Properties</Link>
+            <Link href="/dashboard/herbal-drug-background" className=' hover:text-blue-700 hover:underline'>Herbal Drug Background</Link>
+            <Link href="/dashboard/sourcing-background" className=' hover:text-blue-700 hover:underline'>Sourcing Background</Link>
+            <Link href="/dashboard/ethnobotany" className=' hover:text-blue-700 hover:underline'>Ethnobotany</Link>
+
+
           </nav>
         </div>
         <hr className="my-4" />
