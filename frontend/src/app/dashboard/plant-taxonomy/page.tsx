@@ -126,15 +126,8 @@ export default function PlantTaxonomyPage() {
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold">Plant Taxonomy</h1>
-
-      <Input
-        placeholder="Search by class or family..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
-
       {isAdmin && (
-        <div className="flex gap-2">
+        <div className="flex gap-2 border-2 rounded-md p-4">
           <Input placeholder="Class" value={newItem.class || ''} onChange={(e) => setNewItem((p) => ({ ...p, class: e.target.value }))} />
           <Input placeholder="Family" value={newItem.family || ''} onChange={(e) => setNewItem((p) => ({ ...p, family: e.target.value }))} />
           <label className="flex items-center gap-1">
@@ -144,6 +137,14 @@ export default function PlantTaxonomyPage() {
           <Button onClick={handleCreate}>Add</Button>
         </div>
       )}
+      
+      <hr />
+
+      <Input
+        placeholder="Search by class or family..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
 
       <Table>
         <TableHeader>

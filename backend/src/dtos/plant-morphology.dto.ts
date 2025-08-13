@@ -46,8 +46,8 @@ export const UpdatePlantMorphologyDto = z.object({
   lifecycle: z.array(LifecycleEnum).optional(),
   isTerrestrial: z.boolean().optional(),
   growthHabit: z.string().optional(),
-  isDeciduous: z.boolean().optional() || z.null(),
-  isDeciduousNote: z.string().optional() || z.null(),
+  isDeciduous: z.boolean().optional().nullable(),         // <-- fix
+  isDeciduousNote: z.string().optional().nullable(),
   reproductiveSystem: z.string().optional(),
   floweringPeriod: z.array(MonthEnum).optional(),
   fruitingPeriod: z.array(MonthEnum).optional(),

@@ -29,7 +29,7 @@ export default function DashboardPage() {
 
       <div className='text-gray-600 text-2xl inline-block bg-gradient-to-r from-teal-200 to-blue-400 p-6'> For Data Visualization Later</div>
 
-      <div className="mt-6">
+      {/* <div className="mt-6">
         <ul className="list-disc ml-6 mt-2 text-blue-600 space-y-1">
           {user.role === 'ADMIN' && (
             <li>
@@ -44,7 +44,7 @@ export default function DashboardPage() {
            <hr />
           <span className="text-gray-600 mt-2">Herbal Drug</span>
         </ul>
-      </div>
+      </div> */}
     </div>
   )
 }
