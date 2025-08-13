@@ -27,7 +27,7 @@ export default function DashboardPage() {
       <h1 className="text-2xl font-bold">Welcome, {user.username}</h1>
       <p className="text-gray-600">Role: {user.role}</p>
 
-      <div className='text-gray-600 text-2xl'> For Data Visualization Later</div>
+      <div className='text-gray-600 text-2xl inline-block bg-gradient-to-r from-teal-200 to-blue-400 p-6'> For Data Visualization Later</div>
 
       <div className="mt-6">
         <ul className="list-disc ml-6 mt-2 text-blue-600 space-y-1">
