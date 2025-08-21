@@ -1,4 +1,4 @@
-// app/dashboard/plant-morphology/page.tsx
+// app/dashboard/plant-ecology-distribution/page.tsx
 'use client'
 
 import { useEffect, useState } from 'react'
@@ -11,27 +11,23 @@ import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { Search } from 'lucide-react'
 
-interface PlantMorphology {
+interface EcologyDistribution {
     id: number
-    lifecycle: string[]
-    isTerrestrial?: boolean
-    growthHabit?: string
-    isDeciduous?: boolean
-    isDeciduousNote?: string
-    reproductiveSystem?: string
-    floweringPeriod?: string[]
-    fruitingPeriod?: string[]
-    floweringPeriodNote?: string
-    fruitingPeriodNote?: string
+    habitat?: string
+    plantOrigin?: string
+    globalRange?: string
+    chinaRange?: string
+    endemic?: string
+    plantId: number
 }
 
-type SortKey = keyof PlantMorphology
+type SortKey = keyof EcologyDistribution
 
-export default function PlantMorphologyPage() {
-    const [items, setItems] = useState<PlantMorphology[]>([])
+export default function PlantEcologyDistributionPage() {
+    const [items, setItems] = useState<EcologyDistribution[]>([])
     const [editingId, setEditingId] = useState<number | null>(null)
-    const [editBuffer, setEditBuffer] = useState<Partial<PlantMorphology>>({})
-    const [newItem, setNewItem] = useState<Partial<PlantMorphology & { plantId: number }>>({})
+    const [editBuffer, setEditBuffer] = useState<Partial<EcologyDistribution>>({})
+    const [newItem, setNewItem] = useState<Partial<EcologyDistribution>>({})
     const [page, setPage] = useState(1)
     const [columnFilters, setColumnFilters] = useState<Partial<Record<SortKey, string>>>({})
     const [showFilterInput, setShowFilterInput] = useState<Record<string, boolean>>({})
@@ -41,67 +37,31 @@ export default function PlantMorphologyPage() {
     const router = useRouter()
     const pageSize = 30
     const isAdmin = user?.role === 'ADMIN'
-    const plantMorphologyAPI = '/api/proxy/api/v1/plant-morphologies'
+    const ecologyDistributionAPI = '/api/proxy/api/v1/plant-ecology-distributions'
 
     useEffect(() => {
         if (!user) router.push('/auth')
     }, [user, router])
 
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState<string | null>(null)
-
     useEffect(() => {
-        setLoading(true)
-        setError(null)
-        fetch(plantMorphologyAPI, {
+        fetch('/api/proxy/api/v1/plant-ecology-distributions', {
             headers: { Authorization: `Bearer ${accessToken}` },
         })
             .then((res) => res.json())
-            .then((data) => {
-                if (Array.isArray(data)) setItems(data)
-                else if (Array.isArray(data.data)) setItems(data.data)
-                else throw new Error('Unexpected API format')
-            })
-            .catch(err => setError(err.message))
-            .finally(() => setLoading(false))
+            .then((data) => Array.isArray(data['plant-ecology-distributions']) && setItems(data['plant-ecology-distributions']))
     }, [accessToken])
-
-    if (loading) return <p>Loading...</p>
-    if (error) return <p className="text-red-500">Error: {error}</p>
-
-
-
-    const handleCreate = async () => {
-        try {
-            const res = await fetch('/api/proxy/api/v1/plant-morphologies', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${accessToken}`,
-                },
-                body: JSON.stringify(newItem),
-            })
-            if (!res.ok) throw new Error('Create failed')
-            toast.success('Created')
-            const created = await res.json()
-            setItems((prev) => [...prev, created.data])
-            setNewItem({})
-        } catch (err) {
-            toast.error('Error creating plant morphology')
-        }
-    }
 
     const handleColumnFilter = (key: SortKey, value: string) => {
         setColumnFilters((prev) => ({ ...prev, [key]: value }))
     }
 
-    const handleEditChange = (key: keyof PlantMorphology, value: unknown) => {
+    const handleEditChange = (key: keyof EcologyDistribution, value: unknown) => {
         setEditBuffer((prev) => ({ ...prev, [key]: value }))
     }
 
     const handleUpdate = async (id: number) => {
         try {
-            const res = await fetch(`${plantMorphologyAPI}/${id}`, {
+            const res = await fetch(`${ecologyDistributionAPI}/${id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -112,7 +72,7 @@ export default function PlantMorphologyPage() {
             if (!res.ok) throw new Error('Update failed')
             toast.success('Updated')
             const updated = await res.json()
-            setItems((prev) => prev.map((it) => (it.id === id ? updated.data : it)))
+            setItems((prev) => prev.map((it) => (it.id === id ? updated : it)))
             setEditingId(null)
         } catch (err) {
             toast.error('Error updating')
@@ -120,9 +80,9 @@ export default function PlantMorphologyPage() {
     }
 
     const handleDelete = async (id: number) => {
-        if (!confirm('Are you sure you want to delete this item?')) return
+        if (!confirm('Are you sure?')) return
         try {
-            const res = await fetch(`${plantMorphologyAPI}/${id}`, {
+            const res = await fetch(`${ecologyDistributionAPI}/${id}`, {
                 method: 'DELETE',
                 headers: { Authorization: `Bearer ${accessToken}` },
             })
@@ -131,6 +91,26 @@ export default function PlantMorphologyPage() {
             setItems((prev) => prev.filter((it) => it.id !== id))
         } catch (err) {
             toast.error('Error deleting')
+        }
+    }
+
+    const handleCreate = async () => {
+        try {
+            const res = await fetch(ecologyDistributionAPI, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${accessToken}`,
+                },
+                body: JSON.stringify(newItem),
+            })
+            if (!res.ok) throw new Error('Create failed')
+            toast.success('Created')
+            const created = await res.json()
+            setItems((prev) => [...prev, created])
+            setNewItem({})
+        } catch (err) {
+            toast.error('Error creating')
         }
     }
 
@@ -144,34 +124,31 @@ export default function PlantMorphologyPage() {
         .sort((a, b) => {
             const aVal = a[sortKey] ?? ''
             const bVal = b[sortKey] ?? ''
-            if (sortKey === 'id') return sortAsc ? a.id - b.id : b.id - a.id
+            if (sortKey === 'id' || sortKey === 'plantId') return sortAsc ? (aVal as number) - (bVal as number) : (bVal as number) - (aVal as number)
             return sortAsc ? ('' + aVal).localeCompare('' + bVal) : ('' + bVal).localeCompare('' + aVal)
         })
 
     const totalPages = Math.ceil(filteredSortedItems.length / pageSize)
     const pagedItems = filteredSortedItems.slice((page - 1) * pageSize, page * pageSize)
 
-    if (!user) return null
-
-    const columnKeys: SortKey[] = ['id', 'lifecycle', 'isTerrestrial', 'growthHabit', 'isDeciduous', 'isDeciduousNote', 'reproductiveSystem', 'floweringPeriod', 'fruitingPeriod', 'floweringPeriodNote', 'fruitingPeriodNote']
+    const columnKeys: SortKey[] = ['id', 'plantId', 'habitat', 'plantOrigin', 'globalRange', 'chinaRange', 'endemic']
 
     return (
         <div className="space-y-6 overflow-x-auto w-full">
-            <h1 className="text-2xl font-bold">Plant Morphology </h1>
+            <h1 className="text-2xl font-bold">Plant Ecology Distribution</h1>
 
             {isAdmin && (
                 <div className="flex flex-wrap gap-2 border-2 rounded-md p-6">
-                    <Input type="text" placeholder="Lifecycle (comma-separated)" value={newItem.lifecycle?.join(', ') || ''} onChange={(e) => setNewItem((p) => ({ ...p, lifecycle: e.target.value.split(',').map(s => s.trim()) }))} />
-                    <Input placeholder="Growth Habit" value={newItem.growthHabit || ''} onChange={(e) => setNewItem((p) => ({ ...p, growthHabit: e.target.value }))} />
-                    <Input placeholder="Reproductive System" value={newItem.reproductiveSystem || ''} onChange={(e) => setNewItem((p) => ({ ...p, reproductiveSystem: e.target.value }))} />
-                    <Input placeholder="Flowering Period (comma-separated)" value={newItem.floweringPeriod?.join(', ') || ''} onChange={(e) => setNewItem((p) => ({ ...p, floweringPeriod: e.target.value.split(',').map(s => s.trim()) }))} />
-                    <Input placeholder="Fruiting Period (comma-separated)" value={newItem.fruitingPeriod?.join(', ') || ''} onChange={(e) => setNewItem((p) => ({ ...p, fruitingPeriod: e.target.value.split(',').map(s => s.trim()) }))} />
-                    <Textarea placeholder="Flowering Period Note" value={newItem.floweringPeriodNote || ''} onChange={(e) => setNewItem((p) => ({ ...p, floweringPeriodNote: e.target.value }))} />
-                    <Textarea placeholder="Fruiting Period Note" value={newItem.fruitingPeriodNote || ''} onChange={(e) => setNewItem((p) => ({ ...p, fruitingPeriodNote: e.target.value }))} />
+                    <Input type="number" placeholder="Plant ID" value={newItem.plantId || ''} onChange={(e) => setNewItem((p) => ({ ...p, plantId: Number(e.target.value) }))} />
+                    <Input placeholder="Habitat" value={newItem.habitat || ''} onChange={(e) => setNewItem((p) => ({ ...p, habitat: e.target.value }))} />
+                    <Input placeholder="Plant Origin" value={newItem.plantOrigin || ''} onChange={(e) => setNewItem((p) => ({ ...p, plantOrigin: e.target.value }))} />
+                    <Input placeholder="Global Range" value={newItem.globalRange || ''} onChange={(e) => setNewItem((p) => ({ ...p, globalRange: e.target.value }))} />
+                    <Input placeholder="China Range" value={newItem.chinaRange || ''} onChange={(e) => setNewItem((p) => ({ ...p, chinaRange: e.target.value }))} />
+                    <Input placeholder="Endemic" value={newItem.endemic || ''} onChange={(e) => setNewItem((p) => ({ ...p, endemic: e.target.value }))} />
                     <Button onClick={handleCreate}>Add</Button>
                 </div>
             )}
-            <hr />
+
             <Table className='w-full table-auto'>
                 <TableHeader>
                     <TableRow>
@@ -200,6 +177,7 @@ export default function PlantMorphologyPage() {
                                         onChange={(e) => handleColumnFilter(key, e.target.value)}
                                     />
                                 )}
+
                             </TableHead>
                         ))}
                         {isAdmin && <TableHead>Actions</TableHead>}
@@ -211,13 +189,9 @@ export default function PlantMorphologyPage() {
                             {columnKeys.map((key) => (
                                 <TableCell key={key} className="whitespace-normal break-words align-top">
                                     {editingId === item.id ? (
-                                        <>{key.endsWith('Note') ? (
-                                            <Textarea value={(editBuffer[key] as string) || ''} onChange={(e) => handleEditChange(key, e.target.value)} />
-                                        ) : (
-                                            <Input value={(editBuffer[key] as string) || ''} onChange={(e) => handleEditChange(key, e.target.value)} />
-                                        )}</>
+                                        <Input value={(editBuffer[key] as string) || ''} onChange={(e) => handleEditChange(key, e.target.value)} />
                                     ) : (
-                                        Array.isArray(item[key]) ? (item[key] as string[]).join(', ') : String(item[key] ?? '')
+                                        item[key] || ''
                                     )}
                                 </TableCell>
                             ))}

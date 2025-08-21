@@ -126,7 +126,7 @@ export default function PlantNomenclaturePage() {
     if (!user) return null
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 overflow-x-auto w-full">
             <h1 className="text-2xl font-bold">Plant Nomenclature</h1>
 
             {isAdmin && (
@@ -142,7 +142,7 @@ export default function PlantNomenclaturePage() {
             )}
             <hr />
 
-            <Table>
+            <Table className='w-full table-auto'>
                 <TableHeader>
                     <TableRow>
                         {(['internalId', 'taxonomyId', 'plantScientificName', 'plantPinyin', 'plantChineseName', 'plantCommonName', 'links'] as SortKey[]).map((key) => (
@@ -178,13 +178,13 @@ export default function PlantNomenclaturePage() {
                 </TableHeader>
                 <TableBody>
                     {pagedItems.map((item) => (
-                        <TableRow key={item.internalId}>
-                            <TableCell>{editingId === item.internalId ? <Input type="number" value={item.taxonomyId} onChange={(e) => setItems((prev) => prev.map((i) => i.internalId === item.internalId ? { ...i, taxonomyId: Number(e.target.value) } : i))} /> : item.taxonomyId}</TableCell>
-                            <TableCell>{item.internalId}</TableCell>
-                            <TableCell>{editingId === item.internalId ? <Input value={item.plantScientificName} onChange={(e) => setItems((prev) => prev.map((i) => i.internalId === item.internalId ? { ...i, plantScientificName: e.target.value } : i))} /> : item.plantScientificName}</TableCell>
-                            <TableCell>{editingId === item.internalId ? <Input value={item.plantPinyin || ''} onChange={(e) => setItems((prev) => prev.map((i) => i.internalId === item.internalId ? { ...i, plantPinyin: e.target.value } : i))} /> : item.plantPinyin || '-'}</TableCell>
-                            <TableCell>{editingId === item.internalId ? <Input value={item.plantChineseName || ''} onChange={(e) => setItems((prev) => prev.map((i) => i.internalId === item.internalId ? { ...i, plantChineseName: e.target.value } : i))} /> : item.plantChineseName || '-'}</TableCell>
-                            <TableCell>{editingId === item.internalId ? <Input value={item.plantCommonName.join(', ')} onChange={(e) => setItems((prev) => prev.map((i) => i.internalId === item.internalId ? { ...i, plantCommonName: e.target.value.split(',').map(s => s.trim()) } : i))} /> : item.plantCommonName.join(', ')}</TableCell>
+                        <TableRow key={item.internalId} className='text-wrap'>
+                            <TableCell className="whitespace-normal break-words align-top">{editingId === item.internalId ? <Input type="number" value={item.taxonomyId} onChange={(e) => setItems((prev) => prev.map((i) => i.internalId === item.internalId ? { ...i, taxonomyId: Number(e.target.value) } : i))} /> : item.taxonomyId}</TableCell>
+                            <TableCell className="whitespace-normal break-words align-top">{item.internalId}</TableCell>
+                            <TableCell className="whitespace-normal break-words align-top">{editingId === item.internalId ? <Input value={item.plantScientificName} onChange={(e) => setItems((prev) => prev.map((i) => i.internalId === item.internalId ? { ...i, plantScientificName: e.target.value } : i))} /> : item.plantScientificName}</TableCell>
+                            <TableCell className="whitespace-normal break-words align-top">{editingId === item.internalId ? <Input value={item.plantPinyin || ''} onChange={(e) => setItems((prev) => prev.map((i) => i.internalId === item.internalId ? { ...i, plantPinyin: e.target.value } : i))} /> : item.plantPinyin || '-'}</TableCell>
+                            <TableCell className="whitespace-normal break-words align-top">{editingId === item.internalId ? <Input value={item.plantChineseName || ''} onChange={(e) => setItems((prev) => prev.map((i) => i.internalId === item.internalId ? { ...i, plantChineseName: e.target.value } : i))} /> : item.plantChineseName || '-'}</TableCell>
+                            <TableCell className="whitespace-normal break-words align-top">{editingId === item.internalId ? <Input value={item.plantCommonName.join(', ')} onChange={(e) => setItems((prev) => prev.map((i) => i.internalId === item.internalId ? { ...i, plantCommonName: e.target.value.split(',').map(s => s.trim()) } : i))} /> : item.plantCommonName.join(', ')}</TableCell>
                             <TableCell className="max-w-xs whitespace-pre-wrap break-words">{editingId === item.internalId ? <Input value={item.links.join(', ')} onChange={(e) => setItems((prev) => prev.map((i) => i.internalId === item.internalId ? { ...i, links: e.target.value.split(',').map(s => s.trim()) } : i))} /> : item.links.join(', ')}</TableCell>
                             {isAdmin && (
                                 <TableCell className="space-x-2">{editingId === item.internalId ? (<><Button size="sm" variant="outline" onClick={() => handleUpdate(item.internalId, item)}>Save</Button><Button size="sm" variant="ghost" onClick={() => setEditingId(null)}>Cancel</Button></>) : (<><Button size="sm" variant="outline" onClick={() => setEditingId(item.internalId)}>Edit</Button><Button size="sm" variant="destructive" onClick={() => handleDelete(item.internalId)}>Delete</Button></>)}</TableCell>

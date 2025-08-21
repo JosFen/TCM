@@ -30,7 +30,7 @@ export default {
       const accessToken = jwt.sign(
         { id: user.id, username: user.username, role: user.role },
         jwtConfig.secret,
-        { expiresIn: '1h' }
+        { expiresIn: '23h' }
       );
 
       const refreshToken = jwt.sign(
