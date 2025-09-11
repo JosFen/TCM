@@ -340,19 +340,19 @@ async function seedUsers() {
     data: [
       {
         username: 'admin',
-        password: await bcrypt.hash('adminpassword', 10),
+        password: await bcrypt.hash('admin', 10),
         email: 'admin@example.com',
         role: 'ADMIN'
       },
       {
         username: 'chris',
-        password: await bcrypt.hash('chrispassword', 10),
+        password: await bcrypt.hash('chris', 10),
         email: 'chris@example.com',
         role: 'ADMIN'
       },
       {
-        username: 'generalUser',
-        password: await bcrypt.hash('generalUser123', 10),
+        username: 'general',
+        password: await bcrypt.hash('general', 10),
         email: 'generalUser@example.com',
         role: 'USER'
       }

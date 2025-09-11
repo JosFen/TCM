@@ -14,5 +14,5 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     changeOrigin: true,
     pathRewrite: { '^/api/proxy': '' },
   })
-  return proxy(req, res, () => null)
+  return proxy(req, res, () => console.log('error in proxy') )
 }
