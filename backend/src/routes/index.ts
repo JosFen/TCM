@@ -85,20 +85,27 @@ import {
 const router = Router();
 
 // ---------- Helpers ----------
-const isReadMethod = (m: string) => m === 'GET' || m === 'HEAD' || m === 'OPTIONS';
-
 /**
  * Public for reads; writes require ADMIN.
  * - GET/HEAD/OPTIONS: no auth required
- * - other methods: authenticate + admin
+ * - other methods (POST/PUT/PATCH/DELETE): authenticate + admin
  */
-const publicReadProtectedWrite: RequestHandler = (
+const publicReadProtectedWrite = (
   req: AuthenticatedRequest,
   res: Response,
   next: NextFunction
 ) => {
-  if (isReadMethod(req.method)) return next();
-  return authenticateJWT(req, res, () => authorizeAdmin(req, res, next));
+  const method = req.method.toUpperCase();
+  
+  // Allow public access for read methods
+  if (method === 'GET' || method === 'HEAD' || method === 'OPTIONS') {
+    return next();
+  }
+  
+  // For write methods, require authentication and admin role
+  return authenticateJWT(req, res, () => {
+    authorizeAdmin(req, res, next);
+  });
 };
 
 // (kept for other areas where you still want logged-in READ-only)
