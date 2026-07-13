@@ -1,14 +1,22 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { useAuthStore } from '@/stores/auth'
+import { useAuthStore, useAuthHydrated } from '@/stores/auth'
 
 export default function LoginPage() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const router = useRouter()
   const login = useAuthStore((s) => s.login)
+  const user = useAuthStore((s) => s.user)
+  const hydrated = useAuthHydrated()
+
+  useEffect(() => {
+    if (hydrated && user) {
+      router.replace('/dashboard')
+    }
+  }, [hydrated, user, router])
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault()
@@ -30,6 +38,16 @@ export default function LoginPage() {
       alert('Invalid credentials')
     }
   }
+
+  if (!hydrated) {
+    return (
+      <div className="flex min-h-screen items-center justify-center text-neutral-600">
+        Loading…
+      </div>
+    )
+  }
+
+  if (user) return null
 
   return (
     <div className="max-w-md mx-auto p-8">

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from '@/components/ui/sonner'
+import { AuthHydration } from '@/components/auth-hydration'
 
 
 const geistSans = Geist({
@@ -29,7 +30,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <AuthHydration>{children}</AuthHydration>
         <Toaster position="top-center" richColors />
       </body>
     </html>

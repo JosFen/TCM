@@ -1,18 +1,37 @@
 'use client'
 
 import Link from 'next/link'
+import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { useAuthStore } from '@/stores/auth'
+import { useAuthStore, useAuthHydrated } from '@/stores/auth'
 import { Button } from '@/components/ui/button'
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const { user, logout } = useAuthStore()
+  const user = useAuthStore((s) => s.user)
+  const logout = useAuthStore((s) => s.logout)
+  const hydrated = useAuthHydrated()
   const router = useRouter()
+
+  useEffect(() => {
+    if (hydrated && !user) {
+      router.replace('/auth')
+    }
+  }, [hydrated, user, router])
 
   const handleLogout = () => {
     logout()
     router.push('/auth')
   }
+
+  if (!hydrated) {
+    return (
+      <div className="flex h-screen items-center justify-center text-neutral-600">
+        Loading session…
+      </div>
+    )
+  }
+
+  if (!user) return null
 
   return (
     <div className="flex h-screen">
@@ -21,7 +40,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <h2 className="font-bold mb-4">Admin Menu</h2>
           <nav className="flex flex-col space-y-2">
             <Link href="/dashboard" className=' hover:text-blue-700 hover:underline'>Dashboard</Link>
-            {user?.role === 'ADMIN' && (
+            {user.role === 'ADMIN' && (
               <Link href="/dashboard/users" className=' hover:text-blue-700 hover:underline'>Users</Link>
             )}
 
@@ -35,13 +54,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <Link href="/dashboard/herbal-drug-background" className=' hover:text-blue-700 hover:underline'>Herbal Drug Background</Link>
             <Link href="/dashboard/sourcing-background" className=' hover:text-blue-700 hover:underline'>Sourcing Background</Link>
             <Link href="/dashboard/ethnobotany" className=' hover:text-blue-700 hover:underline'>Ethnobotany</Link>
-
-
           </nav>
         </div>
         <hr className="my-4" />
         <div className="space-y-4">
-          <p className="text-xs">Logged in as: {user?.username}</p>
+          <p className="text-xs">Logged in as: {user.username}</p>
           <Button variant="destructive" size="sm" onClick={handleLogout}>
             Logout
           </Button>
