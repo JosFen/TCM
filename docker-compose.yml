@@ -52,7 +52,7 @@ services:
     build:
       context: ./backend
       dockerfile: backend.dockerfile
-    command: sh -c "npx prisma studio"
+    command: ["npx", "prisma", "studio"]
     working_dir: /app
     env_file:
       - ./backend/.env

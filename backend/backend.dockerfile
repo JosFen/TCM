@@ -16,6 +16,8 @@ RUN npx prisma generate
 # Expose the app port
 EXPOSE 4000
 
-# Run the app
-# CMD ["nodemon", "src/app.ts"] 
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["npm", "run", "dev"]
