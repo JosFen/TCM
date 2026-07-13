@@ -8,7 +8,8 @@
     "server": "ts-node src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/app.ts",
-    "seed": "npx prisma db seed"
+    "seed": "npx prisma db seed",
+    "setup-db": "npx prisma migrate deploy && node scripts/ensure-seed.js"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
@@ -32,11 +33,19 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "prisma": "^6.7.0",
+    "ts-node": "^10.9.2",
     "typescript": "^5.8.3",
     "zod": "^3.25.61"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^22.15.21",
     "nodemon": "^3.1.10",
-    "ts-node": "^10.9.2"
+    "prisma": "^6.7.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   }
 }
