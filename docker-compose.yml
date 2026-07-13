@@ -11,6 +11,11 @@ services:
       - ./backend/.env
     volumes:
       - pgdata:/data/tcm
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   backend:
     container_name: backend
@@ -27,7 +32,8 @@ services:
       - ./backend:/app
       - /app/node_modules
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       - NODE_ENV=development
     # command: sh -c "npx prisma generate && nodemon src/app.ts"
@@ -44,6 +50,8 @@ services:
     volumes:
       - ./frontend:/app
       - /app/node_modules
+    environment:
+      - BACKEND_URL=http://backend:4000
     depends_on:
       - backend
 
@@ -59,7 +67,8 @@ services:
     ports:
       - "5555:5555"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - tcm_net
     volumes:

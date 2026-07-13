@@ -2,7 +2,7 @@
 set -e
 
 echo "Waiting for database..."
-until npx prisma migrate deploy > /dev/null 2>&1; do
+until npx prisma migrate deploy; do
   echo "Database not ready yet, retrying in 2s..."
   sleep 2
 done
