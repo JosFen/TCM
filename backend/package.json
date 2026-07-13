@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "build": "prisma generate && tsc && cp -r src/generated dist/generated",
+    "start": "node dist/app.js",
     "server": "ts-node src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/app.ts",
